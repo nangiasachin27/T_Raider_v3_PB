@@ -575,15 +575,30 @@ class MacroFilter:
         """Fetch VIX (or market-equivalent volatility index) via yfinance."""
         try:
             ticker = self.config.vix_ticker
-            data   = yf.Ticker(ticker).history(period="2d")
+            data = yf.Ticker(ticker).history(period="2d", progress=False)
             if data.empty:
                 return None, "UNAVAILABLE"
             vix = float(data['Close'].iloc[-1])
-            c   = self.config
-            status = ("EXTREME"  if vix >= c.vix_extreme  else
-                      "ELEVATED" if vix >= c.vix_elevated else
-                      "NORMAL")
+            c = self.config
+            status = ("EXTREME" if vix >= c.vix_extreme else
+                     "ELEVATED" if vix >= c.vix_elevated else
+                     "NORMAL")
             return vix, status
+        except TypeError:
+            # Newer yfinance doesn't accept progress parameter
+            try:
+                data = yf.Ticker(ticker).history(period="2d")
+                if data.empty:
+                    return None, "UNAVAILABLE"
+                vix = float(data['Close'].iloc[-1])
+                c = self.config
+                status = ("EXTREME" if vix >= c.vix_extreme else
+                         "ELEVATED" if vix >= c.vix_elevated else
+                         "NORMAL")
+                return vix, status
+            except Exception as e2:
+                warnings.warn(f"VIX fetch failed ({self.config.vix_ticker}): {e2}")
+                return None, "FETCH_ERROR"
         except Exception as e:
             warnings.warn(f"VIX fetch failed ({self.config.vix_ticker}): {e}")
             return None, "FETCH_ERROR"
@@ -704,21 +719,27 @@ class MacroFilter:
             return None, "NSE_FETCH_ERROR"
 
     def _fetch_overnight_change(self) -> Optional[float]:
-        """
-        Fetch the most recent daily change of the overnight reference market.
-        Returns percentage change, e.g. -1.5 means down 1.5%.
-        Returns None on failure (gate will PASS by default).
-        """
         ref = self.config.overnight_ref_ticker
         if ref is None:
             return None
         try:
-            data = yf.Ticker(ref).history(period="3d")
+            data = yf.Ticker(ref).history(period="3d", progress=False)
             if len(data) < 2:
                 return None
-            prev  = float(data['Close'].iloc[-2])
-            last  = float(data['Close'].iloc[-1])
+            prev = float(data['Close'].iloc[-2])
+            last = float(data['Close'].iloc[-1])
             return (last / prev - 1) * 100 if prev > 0 else None
+        except TypeError:
+            try:
+                data = yf.Ticker(ref).history(period="3d")
+                if len(data) < 2:
+                    return None
+                prev = float(data['Close'].iloc[-2])
+                last = float(data['Close'].iloc[-1])
+                return (last / prev - 1) * 100 if prev > 0 else None
+            except Exception as e2:
+                warnings.warn(f"Overnight reference fetch failed ({ref}): {e2}")
+                return None
         except Exception as e:
             warnings.warn(f"Overnight reference fetch failed ({ref}): {e}")
             return None

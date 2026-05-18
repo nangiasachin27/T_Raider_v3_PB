@@ -166,36 +166,49 @@ class ScreenerSignal:
 # ── Portfolio context (FIX 7) ─────────────────────────────────────────────────
 
 def get_portfolio_context(portfolio: Dict, ticker: str,
-                          latest_price: float) -> Tuple[int, float, float, float]:
+                         latest_price: float) -> Tuple[int, float, float, float]:
     """
-    FIX 7: Uses actual market value of holdings (qty × price) instead of
-    cost-basis arithmetic (buy_totals − sell_totals).
+    FIX 7 CORRECTED: Returns accurate portfolio context for signal evaluation.
+    
+    Returns:
+        current_qty: shares held of this ticker
+        weight_pct: this ticker's weight in portfolio (using latest_price)
+        total_value: total portfolio value (cash + all holdings at market value)
+        cash: available cash
     """
     holdings = portfolio.get('holdings', {})
-    raw = holdings.get(ticker, 0)
-    current_qty = int(raw['qty'] if isinstance(raw, dict) else (raw or 0))
     cash = portfolio.get('cash', 0)
-
+    
     def _qty(v) -> int:
         return v['qty'] if isinstance(v, dict) else int(v or 0)
-
-    market_value = 0.0
+    
+    # Calculate total portfolio market value
+    total_market_value = 0.0
+    
     for hticker, hdata in holdings.items():
         qty = _qty(hdata)
+        if qty <= 0:
+            continue
+            
         if hticker == ticker:
-            market_value += qty * latest_price
+            # Use the passed latest_price for current ticker
+            total_market_value += qty * latest_price
         else:
+            # For other holdings, we need their current price
+            # Since we don't have it here, use entry_price as conservative estimate
+            # (The caller should ideally pass all prices, but this is a screener)
             entry = hdata.get('entry_price', 0) if isinstance(hdata, dict) else 0
-            market_value += qty * (entry or latest_price)
-
-    total_value = cash + market_value
-    if total_value <= 0:
-        total_value = cash
-
+            total_market_value += qty * (entry if entry > 0 else latest_price)
+    
+    total_value = cash + total_market_value
+    
+    # Current ticker specific
+    raw = holdings.get(ticker, 0)
+    current_qty = int(raw['qty'] if isinstance(raw, dict) else (raw or 0))
+    
     weight_pct = (current_qty * latest_price / total_value * 100) if total_value > 0 else 0
+    
     return current_qty, weight_pct, total_value, cash
-
-
 # ── Confidence classification ─────────────────────────────────────────────────
 
 def classify_buy_confidence(stability: float, weight_pct: float, current_qty: int,

@@ -95,7 +95,57 @@ def check_partial_exits(tickers, full_market_data, partial_exit_threshold=0.20,
 
     return exits_executed
 
-
+def check_stop_losses(tickers, full_market_data, hard_stop_pct=0.10):
+    """
+    Daily stop-loss check for ALL open positions.
+    Triggers hard stop at -10% from entry_price.
+    """
+    print("\n--- PHASE 0.5: STOP-LOSS CHECK ---")
+    
+    portfolio = load_portfolio()
+    holdings = portfolio.get('holdings', {})
+    
+    if not holdings:
+        print(" No open positions.")
+        return 0
+    
+    stops_triggered = 0
+    
+    for ticker, holding_data in list(holdings.items()):
+        holding = _normalise_holding(holding_data)
+        qty = holding['qty']
+        entry_price = holding.get('entry_price', 0)
+        
+        if entry_price <= 0 or qty <= 0:
+            continue
+        
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty:
+            continue
+        
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        
+        price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
+        current_price = float(df[price_col].iloc[-1])
+        
+        loss_pct = (current_price - entry_price) / entry_price
+        
+        print(f" {ticker:18} | Entry: ₹{entry_price:.2f} | Now: ₹{current_price:.2f} "
+              f"| Loss: {loss_pct*100:+.1f}%", end="")
+        
+        if loss_pct <= -hard_stop_pct:
+            print(f" → 🔴 STOP LOSS: Selling {qty} shares")
+            record_transaction(ticker, 'sell', qty, current_price, 
+                             f"Stop Loss ({loss_pct*100:.1f}%)")
+            stops_triggered += 1
+        else:
+            print()
+    
+    if stops_triggered == 0:
+        print(" No positions hit stop loss.")
+    
+    return stops_triggered
 def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
     print("\n" + "=" * 60)
     print(f"🤖 T_RAIDER AUTOPILOT — MODE: {mode}")
@@ -111,6 +161,9 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
 
     # ── PHASE 0: PARTIAL EXITS ────────────────────────────────────────────
     check_partial_exits(tickers=tickers, full_market_data=full_market_data)
+    
+    # ── PHASE 0.5: STOP LOSSES ────────────────────────────────────────────
+    check_stop_losses(tickers, full_market_data)
 
     # ── Get signals (pass mode to screener) ───────────────────────────────
     buy_signals, sell_signals = run_screener(tickers, mode=mode)
