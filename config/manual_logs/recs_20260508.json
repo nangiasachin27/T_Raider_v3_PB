@@ -1,0 +1,18 @@
+{
+  "date": "20260508",
+  "timestamp": "2026-05-08T11:42:32.158807",
+  "market_regime": {
+    "is_uptrend": false,
+    "nifty_close": 24176.15,
+    "nifty_ema50": 24191.96,
+    "summary": "Nifty 50: DOWNTREND \u25bc  |  Close: 24,176  |  EMA50: 24,192  |  Spread: -0.07%"
+  },
+  "portfolio_snapshot": {
+    "cash": 999.6999816894531,
+    "holdings_count": 8
+  },
+  "total_signals": 20,
+  "high_confidence": 0,
+  "medium_confidence": 0,
+  "recommendations": []
+}

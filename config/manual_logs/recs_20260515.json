@@ -1,0 +1,28 @@
+{
+  "date": "20260515",
+  "timestamp": "2026-05-15T17:30:28.961120",
+  "market_regime": {
+    "is_uptrend": false,
+    "nifty_close": 23643.5,
+    "nifty_ema50": 24083.67,
+    "nifty_drop_50d_high": 0.061,
+    "summary": "Nifty 50: DOWNTREND \u25bc  |  Close: 23,644  |  EMA50: 24,084  |  Spread: -1.83%",
+    "macro": {
+      "vix": null,
+      "vix_status": "FETCH_ERROR",
+      "inst_flow": null,
+      "flow_status": "NSE_FETCH_ERROR",
+      "overnight_pct": null,
+      "high_risk_day": false,
+      "high_risk_reason": ""
+    }
+  },
+  "portfolio_snapshot": {
+    "cash": 11.299758911132812,
+    "holdings_count": 9
+  },
+  "total_signals": 14,
+  "high_confidence": 0,
+  "medium_confidence": 0,
+  "recommendations": []
+}

@@ -1,0 +1,163 @@
+{
+    "cash": 11.299758911132812,
+    "holdings": {
+        "BANKBARODA.NS": 75,
+        "GRASIM.NS": 7,
+        "HDFCLIFE.NS": 29,
+        "TORNTPHARM.NS": 1,
+        "VEDL.NS": 8,
+        "TECHM.NS": 3,
+        "ASHOKLEY.NS": {
+            "qty": 103,
+            "entry_price": 153.2100067138672,
+            "entry_date": "2026-05-13"
+        },
+        "INDIANB.NS": {
+            "qty": 17,
+            "entry_price": 813.9500122070312,
+            "entry_date": "2026-05-13"
+        },
+        "PNB.NS": {
+            "qty": 56,
+            "entry_price": 102.7699966430664,
+            "entry_date": "2026-05-13"
+        }
+    },
+    "history": [
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "BAJFINANCE.NS",
+            "side": "buy",
+            "qty": 20,
+            "price": 937.0,
+            "strategy": "ATR Sized (ATR:24.7)",
+            "total": 18740.0
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "BANKBARODA.NS",
+            "side": "buy",
+            "qty": 75,
+            "price": 263.4599914550781,
+            "strategy": "ATR Sized (ATR:6.5)",
+            "total": 19759.49935913086
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "BRITANNIA.NS",
+            "side": "buy",
+            "qty": 3,
+            "price": 5726.0,
+            "strategy": "ATR Sized (ATR:135.5)",
+            "total": 17178.0
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "GRASIM.NS",
+            "side": "buy",
+            "qty": 7,
+            "price": 2794.5,
+            "strategy": "ATR Sized (ATR:59.5)",
+            "total": 19561.5
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "HDFCLIFE.NS",
+            "side": "buy",
+            "qty": 29,
+            "price": 586.9000244140625,
+            "strategy": "ATR Sized (ATR:17.2)",
+            "total": 17020.100708007812
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "TORNTPHARM.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 4185.10009765625,
+            "strategy": "ATR Sized (ATR:86.8)",
+            "total": 4185.10009765625
+        },
+        {
+            "timestamp": "2026-04-30 22:55:14",
+            "ticker": "VEDL.NS",
+            "side": "buy",
+            "qty": 8,
+            "price": 271.54998779296875,
+            "strategy": "ATR Sized (ATR:59.6)",
+            "total": 2172.39990234375
+        },
+        {
+            "timestamp": "2026-05-01 01:20:38",
+            "ticker": "VEDL.NS",
+            "side": "sell",
+            "qty": 8,
+            "price": 773.5999755859375,
+            "strategy": "Signal Exit",
+            "total": 6188.7998046875
+        },
+        {
+            "timestamp": "2026-05-01 11:35:39",
+            "ticker": "VEDL.NS",
+            "side": "buy",
+            "qty": 8,
+            "price": 271.54998779296875,
+            "strategy": "ATR Sized (ATR:59.6)",
+            "total": 2172.39990234375
+        },
+        {
+            "timestamp": "2026-05-06 10:11:08",
+            "ticker": "TECHM.NS",
+            "side": "buy",
+            "qty": 3,
+            "price": 1466.699951171875,
+            "strategy": "ATR Sized (ATR:43.7)",
+            "total": 4400.099853515625
+        },
+        {
+            "timestamp": "2026-05-11 10:11:10",
+            "ticker": "BRITANNIA.NS",
+            "side": "sell",
+            "qty": 3,
+            "price": 5410.5,
+            "strategy": "Signal Exit",
+            "total": 16231.5
+        },
+        {
+            "timestamp": "2026-05-12 08:36:48",
+            "ticker": "BAJFINANCE.NS",
+            "side": "sell",
+            "qty": 20,
+            "price": 907.6500244140625,
+            "strategy": "Signal Exit",
+            "total": 18153.0
+        },
+        {
+            "timestamp": "2026-05-13 16:08:11",
+            "ticker": "ASHOKLEY.NS",
+            "side": "buy",
+            "qty": 103,
+            "price": 153.2100067138672,
+            "strategy": "ATR Sized (ATR:4.8) [AGGRESSIVE]",
+            "total": 15780.63
+        },
+        {
+            "timestamp": "2026-05-13 16:08:11",
+            "ticker": "INDIANB.NS",
+            "side": "buy",
+            "qty": 17,
+            "price": 813.9500122070312,
+            "strategy": "ATR Sized (ATR:29.3) [AGGRESSIVE]",
+            "total": 13837.15
+        },
+        {
+            "timestamp": "2026-05-13 16:08:11",
+            "ticker": "PNB.NS",
+            "side": "buy",
+            "qty": 56,
+            "price": 102.7699966430664,
+            "strategy": "ATR Sized (ATR:2.6) [AGGRESSIVE]",
+            "total": 5755.12
+        }
+    ]
+}

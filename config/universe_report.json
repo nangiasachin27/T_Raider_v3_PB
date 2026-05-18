@@ -1,0 +1,1402 @@
+{
+  "360ONE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ABB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "APLAPOLLO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "AUBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ADANIENSOL.NS": {
+    "status": "ok",
+    "data_start": "2023-08-16",
+    "data_end": "2026-05-13",
+    "num_rows": 670,
+    "note": "Short history \u2014 only ~0 WF fold(s) possible"
+  },
+  "ADANIENT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ADANIGREEN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ADANIPORTS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ADANIPOWER.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ATGL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ABCAPITAL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ALKEM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "AMBUJACEM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "APOLLOHOSP.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ASHOKLEY.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ASIANPAINT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ASTRAL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "AUROPHARMA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DMART.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "AXISBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BSE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BAJAJ-AUTO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BAJFINANCE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BAJAJFINSV.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BAJAJHLDNG.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BANKBARODA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BANKINDIA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BDL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BHARATFORG.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BHEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BPCL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BHARTIARTL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GROWW.NS": {
+    "status": "insufficient",
+    "data_start": "2025-11-12",
+    "data_end": "2026-05-13",
+    "num_rows": 124,
+    "note": "Only 124 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "BIOCON.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BLUESTARCO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BOSCHLTD.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "BRITANNIA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CGPOWER.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CANBK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CHOLAFIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CIPLA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "COALINDIA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "COCHINSHIP.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "COFORGE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "COLPAL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CONCOR.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "COROMANDEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "CUMMINSIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DLF.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DABUR.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DIVISLAB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DIXON.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "DRREDDY.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "EICHERMOT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ETERNAL.NS": {
+    "status": "ok",
+    "data_start": "2021-07-23",
+    "data_end": "2026-05-13",
+    "num_rows": 1165,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "EXIDEIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NYKAA.NS": {
+    "status": "ok",
+    "data_start": "2021-11-10",
+    "data_end": "2026-05-13",
+    "num_rows": 1114,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "FEDERALBNK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "FORTIS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GAIL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GVT&D.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GMRAIRPORT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GLENMARK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GODFRYPHLP.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GODREJCP.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GODREJPROP.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "GRASIM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HCLTECH.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HDFCAMC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HDFCBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HDFCLIFE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HAVELLS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HEROMOTOCO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HINDALCO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HAL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HINDPETRO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HINDUNILVR.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HINDZINC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "POWERINDIA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HUDCO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "HYUNDAI.NS": {
+    "status": "insufficient",
+    "data_start": "2024-10-22",
+    "data_end": "2026-05-13",
+    "num_rows": 386,
+    "note": "Only 386 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "ICICIBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ICICIGI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ICICIAMC.NS": {
+    "status": "insufficient",
+    "data_start": "2025-12-19",
+    "data_end": "2026-05-13",
+    "num_rows": 97,
+    "note": "Only 97 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "IDFCFIRSTB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ITC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "INDIANB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "INDHOTEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "IOC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "IRCTC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "IRFC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "IREDA.NS": {
+    "status": "ok",
+    "data_start": "2023-11-29",
+    "data_end": "2026-05-13",
+    "num_rows": 606,
+    "note": "Short history \u2014 only ~0 WF fold(s) possible"
+  },
+  "INDUSTOWER.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "INDUSINDBK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NAUKRI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "INFY.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "INDIGO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "JSWENERGY.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "JSWSTEEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "JINDALSTEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "JIOFIN.NS": {
+    "status": "ok",
+    "data_start": "2023-08-21",
+    "data_end": "2026-05-13",
+    "num_rows": 667,
+    "note": "Short history \u2014 only ~0 WF fold(s) possible"
+  },
+  "JUBLFOOD.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "KEI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "KPITTECH.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "KALYANKJIL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "KOTAKBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LTF.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LGEINDIA.NS": {
+    "status": "insufficient",
+    "data_start": "2025-10-14",
+    "data_end": "2026-05-13",
+    "num_rows": 143,
+    "note": "Only 143 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "LICHSGFIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LTM.NS": {
+    "status": "insufficient",
+    "data_start": "2026-02-18",
+    "data_end": "2026-05-13",
+    "num_rows": 55,
+    "note": "Only 55 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "LT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LAURUSLABS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LENSKART.NS": {
+    "status": "insufficient",
+    "data_start": "2025-11-10",
+    "data_end": "2026-05-13",
+    "num_rows": 126,
+    "note": "Only 126 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "LODHA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "LUPIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MRF.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "M&MFIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "M&M.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MANKIND.NS": {
+    "status": "ok",
+    "data_start": "2023-05-09",
+    "data_end": "2026-05-13",
+    "num_rows": 744,
+    "note": "Short history \u2014 only ~0 WF fold(s) possible"
+  },
+  "MARICO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MARUTI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MFSL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MAXHEALTH.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MAZDOCK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MOTILALOFS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MPHASIS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MCX.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MUTHOOTFIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NHPC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NMDC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NTPC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NATIONALUM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "NESTLEIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "OBEROIRLTY.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ONGC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "OIL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PAYTM.NS": {
+    "status": "ok",
+    "data_start": "2021-11-18",
+    "data_end": "2026-05-13",
+    "num_rows": 1108,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "OFSS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "POLICYBZR.NS": {
+    "status": "ok",
+    "data_start": "2021-11-15",
+    "data_end": "2026-05-13",
+    "num_rows": 1110,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PIIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PAGEIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1235,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PATANJALI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PERSISTENT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PHOENIXLTD.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1235,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PIDILITIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "POLYCAB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PFC.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "POWERGRID.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PREMIERENE.NS": {
+    "status": "insufficient",
+    "data_start": "2024-09-03",
+    "data_end": "2026-05-13",
+    "num_rows": 420,
+    "note": "Only 420 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "PRESTIGE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "PNB.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "RECLTD.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "RADICO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "RVNL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "RELIANCE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SBICARD.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SBILIFE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SRF.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "MOTHERSON.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SHREECEM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SHRIRAMFIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ENRIN.NS": {
+    "status": "insufficient",
+    "data_start": "2025-06-19",
+    "data_end": "2026-05-13",
+    "num_rows": 220,
+    "note": "Only 220 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "SIEMENS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SOLARINDS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1236,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SBIN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SAIL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SUNPHARMA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SUPREMEIND.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SUZLON.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "SWIGGY.NS": {
+    "status": "insufficient",
+    "data_start": "2024-11-13",
+    "data_end": "2026-05-13",
+    "num_rows": 370,
+    "note": "Only 370 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "TVSMOTOR.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TATACAP.NS": {
+    "status": "insufficient",
+    "data_start": "2025-10-13",
+    "data_end": "2026-05-13",
+    "num_rows": 144,
+    "note": "Only 144 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "TATACOMM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TCS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TATACONSUM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TATAELXSI.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TATAINVEST.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TMCV.NS": {
+    "status": "insufficient",
+    "data_start": "2025-11-12",
+    "data_end": "2026-05-13",
+    "num_rows": 124,
+    "note": "Only 124 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "TMPV.NS": {
+    "status": "insufficient",
+    "data_start": "2025-10-15",
+    "data_end": "2026-05-13",
+    "num_rows": 140,
+    "note": "Only 140 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "TATAPOWER.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TATASTEEL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TECHM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TITAN.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TORNTPHARM.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TRENT.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "TIINDIA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "UPL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ULTRACEMCO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "UNIONBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "UNITDSPR.NS": {
+    "status": "insufficient",
+    "data_start": "2024-05-30",
+    "data_end": "2026-05-13",
+    "num_rows": 480,
+    "note": "Only 480 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "VBL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "VEDL.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "VMM.NS": {
+    "status": "insufficient",
+    "data_start": "2024-12-18",
+    "data_end": "2026-05-13",
+    "num_rows": 347,
+    "note": "Only 347 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "IDEA.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "VOLTAS.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "WAAREEENER.NS": {
+    "status": "insufficient",
+    "data_start": "2024-10-28",
+    "data_end": "2026-05-13",
+    "num_rows": 382,
+    "note": "Only 382 rows \u2014 below 500-day minimum for WF validation"
+  },
+  "WIPRO.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "YESBANK.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  },
+  "ZYDUSLIFE.NS": {
+    "status": "ok",
+    "data_start": "2021-05-14",
+    "data_end": "2026-05-13",
+    "num_rows": 1237,
+    "note": "Short history \u2014 only ~1 WF fold(s) possible"
+  }
+}

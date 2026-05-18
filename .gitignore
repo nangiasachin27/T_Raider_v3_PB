@@ -1,0 +1,17 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Environments
+venv/
+.env
+
+# Project specific junk
+.DS_Store
+config/broker_config.json
+config/capital_override.json
+config/upstox_instrument_cache.json
+*.log
+
+# OPTIONAL: Ignore your actual portfolio if you want to keep your money private
+# config/portfolio.json

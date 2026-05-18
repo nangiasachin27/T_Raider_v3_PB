@@ -1,0 +1,62 @@
+name: T_Raider Daily Autopilot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 10 * * 1-5'  # 15:40 IST
+
+permissions:
+  contents: write
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      # ── MODIFIED: Run Quarterly Manager ─────────────────────────────
+      - name: Run Quarterly Autopilot
+        id: bot_run
+        env:
+          # If using Upstox, token can be passed via secrets
+          UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
+        run: python -u autopilot/quarterly_manager.py --mode CONSERVATIVE
+
+      - name: Commit & Push State Updates
+        if: always()
+        run: |
+          git config --global user.name 'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
+          echo "Run at: $(date) | Status: ${{ steps.bot_run.outcome }}" > config/last_run_log.txt
+          git add .
+          git commit -m "Autopilot: $(date) [${{ steps.bot_run.outcome }}]" || true
+          git push
+
+      - name: Generate & Publish Performance Report
+        if: success() || steps.bot_run.outcome == 'success'
+        run: |
+          echo "### 📈 T_RAIDER PERFORMANCE REPORT" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          python autopilot/tracker.py >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          python plot_performance.py
+          echo "### 📊 Performance Chart" >> $GITHUB_STEP_SUMMARY
+          echo "![Performance Chart](https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/config/performance_chart.png)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Commit & Push Artifacts
+        if: always()
+        run: |
+          git config --global user.name 'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
+          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/performance_chart.png config/quarterly_config.json config/capital_override.json
+          git commit -m "Autopilot: Updated Portfolio & Chart" || true
+          git push
