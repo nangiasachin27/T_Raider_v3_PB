@@ -3,6 +3,9 @@ autopilot/quarterly_manager.py
 ──────────────────────────────
 Quarterly profit-booking + compounding engine.
 Hybrid: Profit target + Trailing stop + Min/Max time caps.
+
+v4 — INTEGRATED: Active Profit Engineering layered between Harvest check
+and daily bot cycle. No new config files.
 """
 
 import json
@@ -84,7 +87,7 @@ def get_execution_adapter(state: QuarterState) -> ExecutionAdapter:
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# SECTION 3: HARVEST ENGINE
+# SECTION 3: HARVEST ENGINE (UNCHANGED)
 # ═════════════════════════════════════════════════════════════════════════════
 
 class HarvestEngine:
@@ -119,18 +122,18 @@ class HarvestEngine:
         print(f"\n{'='*60}")
         print(f"📊 QUARTER {self.state.quarter_number} STATUS")
         print(f"{'='*60}")
-        print(f"  Start Date     : {start.date()}")
-        print(f"  Elapsed Days   : {elapsed} / {max_days} (min: {min_days})")
-        print(f"  Base Capital   : ₹{base:,.2f}")
-        print(f"  Cash           : ₹{snapshot.cash:,.2f}")
-        print(f"  Market Value   : ₹{snapshot.market_value:,.2f}")
-        print(f"  Total Value    : ₹{current_value:,.2f}")
-        print(f"  Quarter High   : ₹{peak:,.2f}")
-        print(f"  Trailing Stop  : ₹{trailing_stop_level:,.2f} ({trail_pct*100:.0f}% below peak)")
-        print(f"  Current Return : {current_return*100:+.2f}%")
-        print(f"  Target Return  : +{target*100:.0f}%")
-        print(f"  Compound Mode  : {'ON' if self.state.compound_mode else 'OFF'}")
-        print(f"  Broker         : {self.state.broker} ({'paper' if self.state.paper_trading else 'live'})")
+        print(f" Start Date    : {start.date()}")
+        print(f" Elapsed Days  : {elapsed} / {max_days} (min: {min_days})")
+        print(f" Base Capital  : ₹{base:,.2f}")
+        print(f" Cash          : ₹{snapshot.cash:,.2f}")
+        print(f" Market Value  : ₹{snapshot.market_value:,.2f}")
+        print(f" Total Value   : ₹{current_value:,.2f}")
+        print(f" Quarter High  : ₹{peak:,.2f}")
+        print(f" Trailing Stop : ₹{trailing_stop_level:,.2f} ({trail_pct*100:.0f}% below peak)")
+        print(f" Current Return: {current_return*100:+.2f}%")
+        print(f" Target Return : +{target*100:.0f}%")
+        print(f" Compound Mode : {'ON' if self.state.compound_mode else 'OFF'}")
+        print(f" Broker        : {self.state.broker} ({'paper' if self.state.paper_trading else 'live'})")
 
         # Rule 1: Minimum hold period
         if elapsed < min_days:
@@ -145,8 +148,8 @@ class HarvestEngine:
         # Rule 3: Trailing stop
         if current_value <= trailing_stop_level and current_value < peak:
             return True, (f"🛑 Trailing stop hit! "
-                         f"Down {drawdown_from_peak*100:.1f}% from peak ₹{peak:,.0f} "
-                         f"(stop was ₹{trailing_stop_level:,.0f})")
+                          f"Down {drawdown_from_peak*100:.1f}% from peak ₹{peak:,.0f} "
+                          f"(stop was ₹{trailing_stop_level:,.0f})")
 
         # Rule 4: Maximum time cap
         if elapsed >= max_days:
@@ -157,8 +160,8 @@ class HarvestEngine:
         days_left = max_days - elapsed
         cushion = (current_value - trailing_stop_level) / base * 100 if base > 0 else 0
         return False, (f"⏳ Hold. {days_left} days left. "
-                      f"Need +{(target - current_return)*100:.2f}% for target. "
-                      f"Trailing cushion: {cushion:+.2f}%")
+                       f"Need +{(target - current_return)*100:.2f}% for target. "
+                       f"Trailing cushion: {cushion:+.2f}%")
 
     def execute(self) -> QuarterState:
         print(f"\n{'='*60}")
@@ -186,9 +189,9 @@ class HarvestEngine:
             booked = post_value - self.state.original_capital
             print(f"\n📤 RESET: Returning to original ₹{new_base:,.2f}")
             if booked > 0:
-                print(f"   💵 Profit to withdraw: ₹{booked:,.2f}")
+                print(f" 💵 Profit to withdraw: ₹{booked:,.2f}")
             elif booked < 0:
-                print(f"   🔴 Loss absorbed: ₹{abs(booked):,.2f}")
+                print(f" 🔴 Loss absorbed: ₹{abs(booked):,.2f}")
 
         # Update state
         self.state.quarter_number += 1
@@ -209,10 +212,10 @@ class HarvestEngine:
 
         print(f"\n{'='*60}")
         print(f"✅ HARVEST COMPLETE — Q{self.state.quarter_number - 1}")
-        print(f"  Realized P&L   : ₹{realized_pnl:,.2f} ({realized_pct:+.2f}%)")
-        print(f"  Next Base      : ₹{new_base:,.2f}")
-        print(f"  Next Quarter   : #{self.state.quarter_number}")
-        print(f"  Start Date     : {self.state.quarter_start_date[:10]}")
+        print(f" Realized P&L : ₹{realized_pnl:,.2f} ({realized_pct:+.2f}%)")
+        print(f" Next Base    : ₹{new_base:,.2f}")
+        print(f" Next Quarter : #{self.state.quarter_number}")
+        print(f" Start Date   : {self.state.quarter_start_date[:10]}")
         print(f"{'='*60}")
 
         return self.state
@@ -232,7 +235,7 @@ class HarvestEngine:
             ltp = self.adapter.get_ltp(ticker)
             pnl_emoji = "🟢"
 
-            print(f"  {pnl_emoji} {ticker}: {qty} shares @ ₹{ltp:.2f}")
+            print(f" {pnl_emoji} {ticker}: {qty} shares @ ₹{ltp:.2f}")
 
             result = self.adapter.place_market_order(
                 ticker=ticker,
@@ -243,13 +246,80 @@ class HarvestEngine:
             )
 
             if result.success:
-                print(f"     ✅ Order {result.order_id} | Status: {result.status}")
+                print(f" ✅ Order {result.order_id} | Status: {result.status}")
             else:
-                print(f"     ❌ FAILED: {result.message}")
+                print(f" ❌ FAILED: {result.message}")
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# SECTION 4: MAIN ORCHESTRATOR
+# SECTION 4: ACTIVE PROFIT ENGINE INTEGRATION
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _run_active_engine(state: QuarterState) -> Dict:
+    """
+    Run ActiveProfitEngine between Harvest check and daily bot cycle.
+    Returns result dict with actions taken and risk multiplier.
+    """
+    from autopilot.active_manager import ActiveProfitEngine
+
+    print(f"\n{'─'*60}")
+    print("🎯 ACTIVE PROFIT ENGINE")
+    print(f"{'─'*60}")
+
+    engine = ActiveProfitEngine()
+    result = engine.run()
+
+    # Write risk multiplier for bot.py
+    with open("config/.active_risk_mult.json", "w") as f:
+        json.dump({"risk_multiplier": result["risk_multiplier"]}, f)
+
+    return result
+
+
+def _print_active_results(result: Dict):
+    """Pretty-print ActiveProfitEngine results."""
+    m = result["milestone"]
+    print(f"\n📊 Quarter Status")
+    print(f"   Base Capital: ₹{result['base_capital']:,.0f}")
+    print(f"   Target: +{result['target_pct']:.1f}%")
+    print(f"   Current Return: {result['current_return_pct']:+.2f}%")
+    print(f"   Days: {result['days_elapsed']}/{result['quarter_days']}")
+    print(f"   Milestone: {m['action']} — {m['message']}")
+    print(f"   Risk Multiplier: {result['risk_multiplier']:.1f}x")
+
+    if result.get("per_stock_targets"):
+        print(f"\n📋 Per-Stock Targets (sample):")
+        for ticker, target in list(result["per_stock_targets"].items())[:5]:
+            print(f"   {ticker}: {target*100:.1f}%")
+
+    if result["trims"]:
+        print(f"\n🟢 Trims ({len(result['trims'])}):")
+        for t in result["trims"]:
+            print(f"   {t['ticker']}: {t['qty']} @ ₹{t['price']:.2f} ({t['gain_pct']*100:.1f}%)")
+
+    if result["cuts"]:
+        print(f"\n🔴 Cuts ({len(result['cuts'])}):")
+        for c in result["cuts"]:
+            print(f"   {c['ticker']}: {c['qty']} @ ₹{c['price']:.2f} ({c['loss_pct']*100:.1f}%)")
+
+    if result["dead_money"]:
+        print(f"\n⏳ Dead Money ({len(result['dead_money'])}):")
+        for d in result["dead_money"]:
+            print(f"   {d['ticker']}: {d['qty']} @ ₹{d['price']:.2f} ({d['days_held']}d)")
+
+    if result.get("rebalances"):
+        print(f"\n🔄 Rebalances ({len(result['rebalances'])}):")
+        for r in result["rebalances"]:
+            print(f"   {r['ticker']} → {r['replacement']} ({r['score']:.1f} vs {r['replacement_score']:.1f})")
+
+    if result["push_analysis"]:
+        p = result["push_analysis"]
+        print(f"\n⚡ Push Analysis:")
+        print(f"   {p['note']}")
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# SECTION 5: MAIN ORCHESTRATOR (UPDATED)
 # ═════════════════════════════════════════════════════════════════════════════
 
 class QuarterlyManager:
@@ -261,10 +331,10 @@ class QuarterlyManager:
     def run(self) -> None:
         print("\n" + "=" * 70)
         print("🚀 T_RAIDER QUARTERLY COMPOUNDING ENGINE")
-        print(f"   Mode: {self.mode}")
+        print(f" Mode: {self.mode}")
         print("=" * 70)
 
-        # Harvest check
+        # ── Harvest check ───────────────────────────────────────
         engine = HarvestEngine(self.state, self.adapter)
         should_harv, message = engine.check_trigger()
         print(f"\n{message}")
@@ -276,7 +346,11 @@ class QuarterlyManager:
             print("\n⏸️  Harvest complete. Run again to start new quarter.")
             return
 
-        # Daily cycle
+        # ── ACTIVE PROFIT ENGINE (NEW v4) ──────────────────────
+        active_result = _run_active_engine(self.state)
+        _print_active_results(active_result)
+
+        # ── Daily cycle ─────────────────────────────────────────
         self.state.inject_capital()
         print(f"\n🤖 Running daily autopilot cycle...")
         run_autopilot_cycle(mode=self.mode)

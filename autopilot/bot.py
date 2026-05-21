@@ -3,8 +3,9 @@ import sys
 import argparse
 import pandas as pd
 import numpy as np
-import json                          # ADD
-from pathlib import Path 
+import json
+from pathlib import Path
+from datetime import datetime, date
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -16,12 +17,46 @@ from autopilot.logger import (
 from utils import get_config_tickers
 from ingestion.data_ingestion import fetch_historical_data, get_stock_data
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ACTIVE CONFIG — EDIT THESE FOR YOUR RISK APPETITE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+ACTIVE_CONFIG = {
+    "profit_target_pct": None,           # None = read from quarterly_config.json
+    "target_from_expected_return": True, # Use optimal_params expected_return * 0.5
+    "target_cap_min": 0.10,              # Minimum per-stock target +10%
+    "target_cap_max": 0.50,              # Maximum per-stock target +50%
+
+    "trailing_stop_pct": 0.15,           # Baseline trailing stop from peak
+    "tighten_threshold_1": 0.50,         # At 50% of target, tighten to...
+    "tightened_stop_1": 0.10,            # ...10%
+    "tighten_threshold_2": 0.80,         # At 80% of target, tighten to...
+    "tightened_stop_2": 0.05,            # ...5%
+
+    "dead_money_max_days": 60,           # Max hold without meaningful progress
+    "dead_money_min_gain": 0.02,         # Must be +2% after dead_money_max_days
+
+    "rotation_threshold": 20,              # New signal must score holding_score + 20
+    "rotation_max_positions": 10,         # Target max open positions
+    "rotation_min_cash_buffer": 5000,    # Always keep ₹5,000 cash
+
+    "partial_exit_threshold": 0.20,        # +20% partial book (legacy)
+    "partial_exit_fraction": 0.50,       # Sell 50% at partial
+}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# HELPERS
+# ═══════════════════════════════════════════════════════════════════════════════
+
 def get_active_capital():
     override = Path("config/capital_override.json")
     if override.exists():
         with open(override) as f:
             return json.load(f).get("total_baseline_wealth", 100000.0)
     return 100000.0
+
 
 def calculate_atr(df, window=14):
     high_low = df['High'] - df['Low']
@@ -31,33 +66,338 @@ def calculate_atr(df, window=14):
     return tr.rolling(window=window).mean().iloc[-1]
 
 
-def check_partial_exits(tickers, full_market_data, partial_exit_threshold=0.20,
-                        partial_exit_fraction=0.50):
-    print(f"\n--- PHASE 0: PARTIAL EXITS (Profit Lock-In at +{partial_exit_threshold*100:.0f}%) ---")
+def _load_quarterly_config() -> dict:
+    path = Path("config/quarterly_config.json")
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return {}
 
+
+def _load_optimal_params() -> dict:
+    path = Path("config/optimal_params.json")
+    if path.exists():
+        with open(path) as f:
+            return json.load(f)
+    return {}
+
+
+def _load_stocks_universe() -> list:
+    path = Path("config/stocks.json")
+    if not path.exists():
+        return []
+    with open(path) as f:
+        data = json.load(f)
+    return data.get("nifty_50", [])
+
+
+def _get_target_pct(ticker: str, expected_return: float = 0.0) -> float:
+    """Determine per-stock profit target from optimal_params or quarterly config."""
+    cfg = ACTIVE_CONFIG
+    qcfg = _load_quarterly_config()
+    optimal = _load_optimal_params()
+
+    # Priority 1: quarterly_config profit_target_pct as default
+    default_target = qcfg.get("profit_target_pct")
+    if default_target is not None:
+        default_target = float(default_target)
+    else:
+        default_target = 0.30
+
+    # Priority 2: per-ticker override from optimal_params expected_return
+    plan = optimal.get(ticker, {})
+    expected = plan.get("expected_return", expected_return)
+
+    if expected > 0 and cfg["target_from_expected_return"]:
+        target = expected / 100 * 0.5  # Use 50% of expected return as target
+    else:
+        target = default_target
+
+    return float(np.clip(target, cfg["target_cap_min"], cfg["target_cap_max"]))
+
+
+def _days_held(entry_date_str: str) -> int:
+    if entry_date_str in (None, "", "unknown"):
+        return 999
+    try:
+        entry = datetime.strptime(entry_date_str, "%Y-%m-%d").date()
+        return (date.today() - entry).days
+    except Exception:
+        return 999
+
+
+def _get_live_trailing_stop_pct(gain_pct: float, target_pct: float) -> float:
+    cfg = ACTIVE_CONFIG
+    if target_pct <= 0:
+        return cfg["trailing_stop_pct"]
+
+    progress = gain_pct / target_pct
+    if progress >= cfg["tighten_threshold_2"]:
+        return cfg["tightened_stop_2"]
+    elif progress >= cfg["tighten_threshold_1"]:
+        return cfg["tightened_stop_1"]
+    return cfg["trailing_stop_pct"]
+
+
+def _read_active_risk_mult() -> float:
+    path = Path("config/.active_risk_mult.json")
+    if path.exists():
+        with open(path) as f:
+            return json.load(f).get("risk_multiplier", 1.0)
+    return 1.0
+
+
+def _clear_active_risk_mult():
+    path = Path("config/.active_risk_mult.json")
+    if path.exists():
+        path.unlink()
+
+
+def _score_opportunity(ticker: str, optimal_params: dict) -> float:
+    """Score a potential buy from full universe. Higher = more attractive."""
+    plan = optimal_params.get(ticker, {})
+    expected = plan.get("expected_return", 0)
+    stability = plan.get("stability_score", 0)
+    sharpe = plan.get("sharpe_ratio", 0)
+    composite = plan.get("composite_score", 0)
+    max_dd = plan.get("max_drawdown", 100)
+    strategy = plan.get("strategy", "NONE")
+
+    if strategy == "NONE" or expected <= 0:
+        return -999
+
+    return (
+        expected * 0.35 +
+        stability * 0.25 +
+        sharpe * 5 * 0.20 +
+        composite * 100 * 0.15 +
+        (100 - max_dd) * 0.05
+    )
+
+
+def _score_holding(ticker: str, holding: dict, live_price: float,
+                   optimal_params: dict, days_held: int) -> float:
+    """Score existing holding for rotation. Lower = weaker candidate for sale."""
+    entry_price = holding.get("entry_price", 0)
+    if entry_price <= 0:
+        return -999
+
+    gain_pct = (live_price - entry_price) / entry_price
+    plan = optimal_params.get(ticker, {})
+    expected = plan.get("expected_return", 0)
+    stability = plan.get("stability_score", 0)
+
+    score = (
+        stability * 0.25 +
+        expected * 0.25 +
+        gain_pct * 100 * 0.30
+    )
+
+    cfg = ACTIVE_CONFIG
+    if days_held > cfg["dead_money_max_days"] and gain_pct < cfg["dead_money_min_gain"]:
+        score -= 25
+    if gain_pct < -0.05:
+        score -= 15
+    if gain_pct < -0.08:
+        score -= 25
+    if days_held > 30 and gain_pct < 0:
+        score -= 10
+
+    return score
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0: LIVE TRAILING STOPS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def check_trailing_stops(tickers, full_market_data):
+    print(f"\n--- PHASE 0: LIVE TRAILING STOPS ---")
     portfolio = load_portfolio()
-    holdings = portfolio.get('holdings', {})
-
+    holdings = portfolio.get("holdings", {})
     if not holdings:
-        print(" No open positions to check.")
+        print(" No open positions.")
         return 0
 
-    exits_executed = 0
-
+    stops_triggered = 0
     for ticker, holding_data in list(holdings.items()):
         holding = _normalise_holding(holding_data)
-        qty = holding['qty']
-        entry_price = holding['entry_price']
+        qty = holding["qty"]
+        entry_price = holding.get("entry_price", 0)
+        peak_price = holding.get("peak_price", entry_price)
 
-        if entry_price <= 0:
-            print(f" ⚠️ {ticker} — entry price unknown (pre-update position). "
-                  f"Skipping partial exit check.")
+        if entry_price <= 0 or qty <= 0:
             continue
 
         df = get_stock_data(full_market_data, ticker)
         if df.empty:
             continue
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
 
+        price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
+        current_price = float(df[price_col].iloc[-1])
+
+        new_peak = max(peak_price, current_price) if peak_price > 0 else current_price
+        if new_peak != peak_price:
+            holding["peak_price"] = round(new_peak, 4)
+            portfolio["holdings"][ticker] = holding
+
+        gain_pct = (current_price - entry_price) / entry_price
+        target_pct = _get_target_pct(ticker)
+        trail_pct = _get_live_trailing_stop_pct(gain_pct, target_pct)
+
+        trailing_stop_price = new_peak * (1 - trail_pct)
+        effective_stop = max(entry_price * 0.90, trailing_stop_price)
+
+        print(f" {ticker:18} | Entry: ₹{entry_price:.2f} | "
+              f"Peak: ₹{new_peak:.2f} | Now: ₹{current_price:.2f} | "
+              f"Gain: {gain_pct*100:+.1f}% | Trail: {trail_pct*100:.0f}% | "
+              f"Stop: ₹{effective_stop:.2f}", end="")
+
+        if current_price <= effective_stop:
+            print(f" → 🔴 TRAILING STOP: Selling {qty} shares")
+            record_transaction(ticker, "sell", qty, current_price,
+                               f"Trailing Stop ({gain_pct*100:.1f}%, trail={trail_pct*100:.0f}%)")
+            stops_triggered += 1
+        else:
+            print()
+
+    if stops_triggered == 0:
+        print(" No positions hit trailing stop.")
+    return stops_triggered
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0.1: PROFIT TARGETS (Active Full Exit per stock)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def check_profit_targets(tickers, full_market_data, optimized_params: dict):
+    print(f"\n--- PHASE 0.1: PROFIT TARGETS (Active Push per Stock) ---")
+    portfolio = load_portfolio()
+    holdings = portfolio.get("holdings", {})
+    if not holdings:
+        print(" No open positions.")
+        return 0
+
+    targets_hit = 0
+    for ticker, holding_data in list(holdings.items()):
+        holding = _normalise_holding(holding_data)
+        qty = holding["qty"]
+        entry_price = holding.get("entry_price", 0)
+        if entry_price <= 0 or qty <= 0:
+            continue
+
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty:
+            continue
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
+        current_price = float(df[price_col].iloc[-1])
+        gain_pct = (current_price - entry_price) / entry_price
+
+        plan = optimized_params.get(ticker, {})
+        expected_return = plan.get("expected_return", 0)
+        target_pct = _get_target_pct(ticker, expected_return)
+
+        print(f" {ticker:18} | Entry: ₹{entry_price:.2f} | "
+              f"Now: ₹{current_price:.2f} | Gain: {gain_pct*100:+.1f}% | "
+              f"Target: {target_pct*100:.1f}%", end="")
+
+        if gain_pct >= target_pct:
+            print(f" → 🎯 TARGET HIT! Selling {qty} shares")
+            record_transaction(ticker, "sell", qty, current_price,
+                               f"Profit Target ({gain_pct*100:.1f}% >= {target_pct*100:.1f}%)")
+            targets_hit += 1
+        else:
+            print(f" → {(target_pct - gain_pct)*100:.1f}% to target")
+
+    if targets_hit == 0:
+        print(" No positions have reached their profit target yet.")
+    return targets_hit
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0.2: DEAD MONEY / TIMEFRAME EXITS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def check_dead_money_exits(tickers, full_market_data):
+    print(f"\n--- PHASE 0.2: DEAD MONEY / TIMEFRAME EXIT ---")
+    portfolio = load_portfolio()
+    holdings = portfolio.get("holdings", {})
+    if not holdings:
+        print(" No open positions.")
+        return 0
+
+    exits_triggered = 0
+    cfg = ACTIVE_CONFIG
+
+    for ticker, holding_data in list(holdings.items()):
+        holding = _normalise_holding(holding_data)
+        qty = holding["qty"]
+        entry_price = holding.get("entry_price", 0)
+        entry_date = holding.get("entry_date", "unknown")
+        if entry_price <= 0 or qty <= 0:
+            continue
+
+        days = _days_held(entry_date)
+        if days < cfg["dead_money_max_days"]:
+            continue
+
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty:
+            continue
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
+        current_price = float(df[price_col].iloc[-1])
+        gain_pct = (current_price - entry_price) / entry_price
+
+        print(f" {ticker:18} | Held: {days}d | Gain: {gain_pct*100:+.1f}%", end="")
+
+        if gain_pct < cfg["dead_money_min_gain"]:
+            print(f" → ⏳ DEAD MONEY: Held {days}d, only {gain_pct*100:+.1f}%. "
+                  f"Selling {qty} shares to free capital.")
+            record_transaction(ticker, "sell", qty, current_price,
+                               f"Dead Money Exit ({days}d, {gain_pct*100:.1f}%)")
+            exits_triggered += 1
+        else:
+            print(f" → ✅ Held {days}d but gain {gain_pct*100:+.1f}% — keeping.")
+
+    if exits_triggered == 0:
+        print(" No dead-money positions found.")
+    return exits_triggered
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0.3: PARTIAL EXITS (Legacy)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def check_partial_exits(tickers, full_market_data,
+                        partial_exit_threshold=0.20,
+                        partial_exit_fraction=0.50):
+    print(f"\n--- PHASE 0.3: PARTIAL EXITS (Profit Lock-In at +{partial_exit_threshold*100:.0f}%) ---")
+    portfolio = load_portfolio()
+    holdings = portfolio.get("holdings", {})
+    if not holdings:
+        print(" No open positions to check.")
+        return 0
+
+    exits_executed = 0
+    for ticker, holding_data in list(holdings.items()):
+        holding = _normalise_holding(holding_data)
+        qty = holding["qty"]
+        entry_price = holding["entry_price"]
+
+        if entry_price <= 0:
+            print(f" ⚠️ {ticker} — entry price unknown. Skipping partial exit check.")
+            continue
+
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty:
+            continue
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
 
@@ -92,135 +432,318 @@ def check_partial_exits(tickers, full_market_data, partial_exit_threshold=0.20,
 
     if exits_executed == 0:
         print(" No positions have reached the partial exit threshold yet.")
-
     return exits_executed
 
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0.5: HARD STOP LOSSES
+# ═══════════════════════════════════════════════════════════════════════════════
+
 def check_stop_losses(tickers, full_market_data, hard_stop_pct=0.10):
-    """
-    Daily stop-loss check for ALL open positions.
-    Triggers hard stop at -10% from entry_price.
-    """
     print("\n--- PHASE 0.5: STOP-LOSS CHECK ---")
-    
     portfolio = load_portfolio()
-    holdings = portfolio.get('holdings', {})
-    
+    holdings = portfolio.get("holdings", {})
     if not holdings:
         print(" No open positions.")
         return 0
-    
+
     stops_triggered = 0
-    
     for ticker, holding_data in list(holdings.items()):
         holding = _normalise_holding(holding_data)
-        qty = holding['qty']
-        entry_price = holding.get('entry_price', 0)
-        
+        qty = holding["qty"]
+        entry_price = holding.get("entry_price", 0)
         if entry_price <= 0 or qty <= 0:
             continue
-        
+
         df = get_stock_data(full_market_data, ticker)
         if df.empty:
             continue
-        
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
-        
+
         price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
         current_price = float(df[price_col].iloc[-1])
-        
         loss_pct = (current_price - entry_price) / entry_price
-        
+
         print(f" {ticker:18} | Entry: ₹{entry_price:.2f} | Now: ₹{current_price:.2f} "
               f"| Loss: {loss_pct*100:+.1f}%", end="")
-        
+
         if loss_pct <= -hard_stop_pct:
             print(f" → 🔴 STOP LOSS: Selling {qty} shares")
-            record_transaction(ticker, 'sell', qty, current_price, 
-                             f"Stop Loss ({loss_pct*100:.1f}%)")
+            record_transaction(ticker, 'sell', qty, current_price,
+                               f"Stop Loss ({loss_pct*100:.1f}%)")
             stops_triggered += 1
         else:
             print()
-    
+
     if stops_triggered == 0:
         print(" No positions hit stop loss.")
-    
     return stops_triggered
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 1.5: CAPITAL ROTATION (Enhanced v2)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def rotate_capital_for_buy(buy_signals, full_market_data,
+                           portfolio, total_baseline_wealth,
+                           optimized_params: dict):
+    """
+    Enhanced capital rotation:
+    1. If cash insufficient for buy signal → sell weakest holding
+    2. If too many positions → proactively sell weakest, buy best from universe
+    3. Uses full universe scoring from optimal_params
+    """
+    print("\n--- PHASE 1.5: CAPITAL ROTATION ---")
+    executed = []
+    cash = portfolio.get("cash", 0)
+    holdings = portfolio.get("holdings", {})
+    cfg = ACTIVE_CONFIG
+    universe = _load_stocks_universe()
+
+    if not buy_signals and len(holdings) < cfg["rotation_max_positions"]:
+        print(" No rotation needed — cash and position count OK.")
+        return portfolio, executed
+
+    # Score all buy signals
+    scored_signals = []
+    for sig in buy_signals:
+        ticker = sig["ticker"]
+        plan = optimized_params.get(ticker, {})
+        score = _score_opportunity(ticker, optimized_params)
+        scored_signals.append((score, sig, plan))
+    scored_signals.sort(key=lambda x: x[0], reverse=True)
+
+    # Score all current holdings
+    holding_scores = []
+    for hticker, hdata in list(holdings.items()):
+        holding = _normalise_holding(hdata)
+        if holding["qty"] <= 0:
+            continue
+
+        hdf = get_stock_data(full_market_data, hticker)
+        if hdf.empty:
+            continue
+        if isinstance(hdf.columns, pd.MultiIndex):
+            hdf.columns = hdf.columns.get_level_values(0)
+
+        hprice_col = 'Adj Close' if 'Adj Close' in hdf.columns else 'Close'
+        hprice = float(hdf[hprice_col].iloc[-1])
+        days = _days_held(holding.get("entry_date", "unknown"))
+        hscore = _score_holding(hticker, holding, hprice, optimized_params, days)
+        holding_scores.append((hscore, hticker, holding, hprice, days))
+
+    # Sort: weakest first
+    holding_scores.sort(key=lambda x: x[0])
+
+    # ── Case 1: Cash insufficient for buy signals ────────────
+    for score, sig, plan in scored_signals:
+        ticker = sig["ticker"]
+        price = sig["price"]
+        if ticker in holdings:
+            continue
+
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty or len(df) < 15:
+            continue
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+
+        atr = calculate_atr(df)
+        risk_mult = _read_active_risk_mult()
+        risk_per_trade = 0.01 * risk_mult
+        risk_per_share = atr * 2
+        rupee_risk_allowed = total_baseline_wealth * risk_per_trade
+        target_qty = int(rupee_risk_allowed // risk_per_share) if risk_per_share > 0 else 0
+        max_position_cost = total_baseline_wealth * 0.20
+        capped_qty = int(max_position_cost // price) if price > 0 else 0
+        final_qty = min(target_qty, capped_qty)
+        total_cost = final_qty * price
+
+        if total_cost <= cash and final_qty > 0:
+            continue  # Enough cash, no rotation needed
+
+        print(f"\n 💡 Rotation needed for {ticker}: need ₹{total_cost:,.0f}, have ₹{cash:,.0f}")
+
+        if not holding_scores:
+            print("   No holdings to rotate.")
+            continue
+
+        weakest_score, weakest_ticker, weakest_holding, weakest_price, weakest_days = holding_scores[0]
+
+        print(f"   Weakest holding: {weakest_ticker} (score={weakest_score:.1f}, held {weakest_days}d)")
+        print(f"   New signal score: {score:.1f}")
+
+        if score >= weakest_score + cfg["rotation_threshold"]:
+            wqty = weakest_holding["qty"]
+            proceeds = wqty * weakest_price
+            print(f"   ✅ ROTATING: Sell {wqty} {weakest_ticker} @ ₹{weakest_price:.2f} "
+                  f"(proceeds ₹{proceeds:,.0f}) → Buy {ticker}")
+            record_transaction(weakest_ticker, "sell", wqty, weakest_price,
+                               f"Capital Rotation → {ticker}")
+            executed.append({
+                "sold": weakest_ticker,
+                "sold_qty": wqty,
+                "sold_price": weakest_price,
+                "bought": ticker,
+                "bought_qty": final_qty,
+                "bought_price": price,
+                "reason": f"Score {score:.1f} vs {weakest_score:.1f}"
+            })
+
+            portfolio = load_portfolio()
+            cash = portfolio.get("cash", 0)
+            holdings = portfolio.get("holdings", {})
+
+            if total_cost <= cash and final_qty > 0:
+                print(f"   🚀 ROTATION BUY: {ticker} | ₹{price:.2f} | {final_qty} shares")
+                record_transaction(ticker, "buy", final_qty, price,
+                                   f"ATR Sized (Rotation from {weakest_ticker})")
+                portfolio = load_portfolio()
+                cash = portfolio.get("cash", 0)
+                holdings = portfolio.get("holdings", {})
+            else:
+                print(f"   ⚠️ Still insufficient cash after rotation (₹{cash:,.0f} < ₹{total_cost:,.0f})")
+        else:
+            print(f"   ❌ No rotation: score gap {score - weakest_score:.1f} < threshold {cfg['rotation_threshold']}")
+
+    # ── Case 2: Too many positions → proactive rebalancing ────
+    if len(holdings) >= cfg["rotation_max_positions"]:
+        print(f"\n 📊 Position limit reached ({len(holdings)}/{cfg['rotation_max_positions']}). "
+              f"Evaluating proactive rebalancing...")
+
+        # Score best opportunities from full universe (not held)
+        held_tickers = set(holdings.keys())
+        universe_scores = []
+        for uticker in universe:
+            if uticker in held_tickers:
+                continue
+            uscore = _score_opportunity(uticker, optimized_params)
+            if uscore > -500:
+                universe_scores.append((uscore, uticker))
+
+        universe_scores.sort(key=lambda x: x[0], reverse=True)
+
+        if universe_scores and holding_scores:
+            best_score, best_ticker = universe_scores[0]
+            weakest_score, weakest_ticker, weakest_holding, weakest_price, weakest_days = holding_scores[0]
+
+            if best_score >= weakest_score + cfg["rotation_threshold"]:
+                wqty = weakest_holding["qty"]
+                print(f"\n 🔄 PROACTIVE REBALANCE: {weakest_ticker} (score {weakest_score:.1f}) → "
+                      f"{best_ticker} (score {best_score:.1f})")
+                record_transaction(weakest_ticker, "sell", wqty, weakest_price,
+                                   f"Proactive Rebalance → {best_ticker}")
+                executed.append({
+                    "sold": weakest_ticker,
+                    "sold_qty": wqty,
+                    "sold_price": weakest_price,
+                    "bought": best_ticker,
+                    "bought_qty": 0,  # Will be sized in entry phase
+                    "bought_price": 0,
+                    "reason": f"Proactive: {best_score:.1f} vs {weakest_score:.1f}"
+                })
+
+    if not executed:
+        print(" No capital rotations executed today.")
+    return portfolio, executed
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAIN AUTOPILOT CYCLE
+# ═══════════════════════════════════════════════════════════════════════════════
+
 def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
     print("\n" + "=" * 60)
-    print(f"🤖 T_RAIDER AUTOPILOT — MODE: {mode}")
+    print(f"🤖 T_RAIDER AUTOPILOT v4 — MODE: {mode}")
+    print("   Active Profit Pushing + Capital Rotation")
     print("=" * 60)
 
     portfolio = load_portfolio()
     tickers = get_config_tickers()
-    # NEW:
     total_baseline_wealth = get_active_capital()
+
+    # Load optimized params for targets and rotation scoring
+    optimized_params = _load_optimal_params()
 
     print("\n📥 Fetching market data…")
     full_market_data = fetch_historical_data(tickers, period="1mo")
 
-    # ── PHASE 0: PARTIAL EXITS ────────────────────────────────────────────
-    check_partial_exits(tickers=tickers, full_market_data=full_market_data)
-    
-    # ── PHASE 0.5: STOP LOSSES ────────────────────────────────────────────
+    # ── PHASE 0: TRAILING STOPS ─────────────────────────────────────────
+    check_trailing_stops(tickers, full_market_data)
+
+    # ── PHASE 0.1: PROFIT TARGETS ───────────────────────────────────────
+    check_profit_targets(tickers, full_market_data, optimized_params)
+
+    # ── PHASE 0.2: DEAD MONEY EXITS ───────────────────────────────────
+    check_dead_money_exits(tickers, full_market_data)
+
+    # ── PHASE 0.3: PARTIAL EXITS ──────────────────────────────────────
+    check_partial_exits(tickers, full_market_data)
+
+    # ── PHASE 0.5: STOP LOSSES ──────────────────────────────────────────
     check_stop_losses(tickers, full_market_data)
 
     # ── Get signals (pass mode to screener) ───────────────────────────────
     buy_signals, sell_signals = run_screener(tickers, mode=mode)
 
-    # ── PHASE 1: FULL EXITS (strategy signal) ─────────────────────────────
-    print("\n--- PHASE 1: EXITS ---")
+    # ── PHASE 1: FULL EXITS (strategy signal) ─────────────────────────
+    print("\n--- PHASE 1: STRATEGY SIGNAL EXITS ---")
     portfolio = load_portfolio()
-    current_holdings = portfolio.get('holdings', {})
+    current_holdings = portfolio.get("holdings", {})
 
     for ticker, price in sell_signals:
         if ticker in current_holdings:
             holding = _normalise_holding(current_holdings[ticker])
-            qty = holding['qty']
+            qty = holding["qty"]
             print(f"🛑 EXIT: {ticker} — strategy signal flipped to SELL.")
-            record_transaction(ticker, 'sell', qty, price, "Signal Exit")
+            record_transaction(ticker, "sell", qty, price, "Signal Exit")
             portfolio = load_portfolio()
 
-    # ── PHASE 2: ENTRIES ──────────────────────────────────────────────────
+    # ── PHASE 1.5: CAPITAL ROTATION ───────────────────────────────────
+    portfolio, rotations = rotate_capital_for_buy(
+        buy_signals, full_market_data, portfolio,
+        total_baseline_wealth, optimized_params
+    )
+
+    # ── PHASE 2: ENTRIES ──────────────────────────────────────────────
     print("\n--- PHASE 2: VOLATILITY-ADJUSTED ENTRIES ---")
+
+    # Dynamic risk from ActiveProfitEngine
+    risk_mult = _read_active_risk_mult()
+    print(f"\n📐 Active Risk Multiplier: {risk_mult:.1f}x")
 
     for signal_data in buy_signals:
         portfolio = load_portfolio()
+        ticker = signal_data["ticker"]
+        price = signal_data["price"]
 
-        ticker = signal_data['ticker']
-        price = signal_data['price']
-
-        holdings = portfolio.get('holdings', {})
+        holdings = portfolio.get("holdings", {})
         if ticker in holdings:
             holding = _normalise_holding(holdings[ticker])
-            if holding['qty'] > 0:
+            if holding["qty"] > 0:
                 print(f" ⏭ {ticker} — already in portfolio ({holding['qty']} shares).")
                 continue
 
-        # ATR sizing
         df = get_stock_data(full_market_data, ticker)
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = df.columns.get_level_values(0)
-
         if df.empty or len(df) < 15:
             print(f"⚠️ SKIPPED: {ticker} (Insufficient data for ATR)")
             continue
 
         atr = calculate_atr(df)
-
-        risk_per_trade = 0.01
+        risk_per_trade = 0.01 * risk_mult
         risk_per_share = atr * 2
         rupee_risk_allowed = total_baseline_wealth * risk_per_trade
-        target_qty = int(rupee_risk_allowed // risk_per_share)
-
+        target_qty = int(rupee_risk_allowed // risk_per_share) if risk_per_share > 0 else 0
         max_position_cost = total_baseline_wealth * 0.20
-        capped_qty = int(max_position_cost // price)
-
+        capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price
 
-        if total_cost > portfolio['cash']:
-            final_qty = int(portfolio['cash'] // price)
+        if total_cost > portfolio["cash"]:
+            final_qty = int(portfolio["cash"] // price) if price > 0 else 0
             total_cost = final_qty * price
             if final_qty <= 0:
                 print(f"⚠️ SKIPPED: {ticker} (Insufficient cash: ₹{portfolio['cash']:.2f})")
@@ -230,23 +753,29 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
             print(f"🚀 BUY: {ticker} | ₹{price:.2f} | ATR: {atr:.2f} | "
                   f"{final_qty} shares | Cost: ₹{total_cost:,.2f}")
             record_transaction(
-                ticker, 'buy', final_qty, price,
+                ticker, "buy", final_qty, price,
                 f"ATR Sized (ATR:{atr:.1f}) [{mode}]"
             )
 
-    # ── Summary ───────────────────────────────────────────────────────────
+    # ── Summary ───────────────────────────────────────────────────────
     portfolio = load_portfolio()
     print("\n" + "=" * 60)
     print("✅ CYCLE COMPLETE")
     print(f" Mode: {mode}")
     print(f" Cash remaining: ₹{portfolio['cash']:,.2f}")
     print(f" Open positions: {len(portfolio.get('holdings', {}))}")
+    if rotations:
+        print(f" Capital rotations today: {len(rotations)}")
+        for r in rotations:
+            print(f"   {r['sold']} → {r['bought']} ({r['reason']})")
     print("=" * 60)
+
+    _clear_active_risk_mult()
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='T_Raider Configurable Bot')
+    parser = argparse.ArgumentParser(description='T_Raider Active Bot v4')
     parser.add_argument('--mode', choices=['CONSERVATIVE', 'BALANCED', 'AGGRESSIVE'],
-                       default='CONSERVATIVE', help='Risk profile mode')
+                        default='CONSERVATIVE', help='Risk profile mode')
     args = parser.parse_args()
     run_autopilot_cycle(mode=args.mode)
