@@ -1,14 +1,9 @@
 {
-    "cash": 1.9697189331054688,
+    "cash": 10733.439598083496,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
             "entry_price": 263.46,
-            "entry_date": "2026-04-30"
-        },
-        "GRASIM.NS": {
-            "qty": 7,
-            "entry_price": 2794.5,
             "entry_date": "2026-04-30"
         },
         "HDFCLIFE.NS": {
@@ -20,11 +15,6 @@
             "qty": 1,
             "entry_price": 4185.1001,
             "entry_date": "2026-04-30"
-        },
-        "VEDL.NS": {
-            "qty": 4,
-            "entry_price": 271.55,
-            "entry_date": "2026-05-01"
         },
         "TECHM.NS": {
             "qty": 3,
@@ -50,6 +40,11 @@
             "qty": 17,
             "entry_price": 77.29000091552734,
             "entry_date": "2026-05-18"
+        },
+        "CANBK.NS": {
+            "qty": 99,
+            "entry_price": 127.97000122070312,
+            "entry_date": "2026-05-21"
         }
     },
     "history": [
@@ -205,6 +200,51 @@
             "price": 77.29000091552734,
             "strategy": "ATR Sized (ATR:2.0) [AGGRESSIVE]",
             "total": 1313.93
+        },
+        {
+            "timestamp": "2026-05-21 10:10:58",
+            "ticker": "VEDL.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 329.75,
+            "strategy": "ActiveTrim (+21%, target 15%)",
+            "total": 659.5
+        },
+        {
+            "timestamp": "2026-05-21 10:10:58",
+            "ticker": "GRASIM.NS",
+            "side": "sell",
+            "qty": 3,
+            "price": 3154.5,
+            "strategy": "ActiveTrim (+13%, target 15%)",
+            "total": 9463.5
+        },
+        {
+            "timestamp": "2026-05-21 10:11:13",
+            "ticker": "GRASIM.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 3154.5,
+            "strategy": "Profit Target (12.9% >= 12.5%)",
+            "total": 12618.0
+        },
+        {
+            "timestamp": "2026-05-21 10:11:13",
+            "ticker": "VEDL.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 329.75,
+            "strategy": "Profit Target (21.4% >= 13.4%)",
+            "total": 659.5
+        },
+        {
+            "timestamp": "2026-05-21 10:11:31",
+            "ticker": "CANBK.NS",
+            "side": "buy",
+            "qty": 99,
+            "price": 127.97000122070312,
+            "strategy": "ATR Sized (ATR:4.0) [AGGRESSIVE]",
+            "total": 12669.03
         }
     ]
 }
