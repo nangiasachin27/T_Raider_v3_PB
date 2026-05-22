@@ -1,5 +1,5 @@
 {
-    "cash": 10733.439598083496,
+    "cash": 3704.538963317871,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
@@ -15,11 +15,6 @@
             "qty": 1,
             "entry_price": 4185.1001,
             "entry_date": "2026-04-30"
-        },
-        "TECHM.NS": {
-            "qty": 3,
-            "entry_price": 1466.7,
-            "entry_date": "2026-05-06"
         },
         "ASHOKLEY.NS": {
             "qty": 103,
@@ -45,6 +40,11 @@
             "qty": 99,
             "entry_price": 127.97000122070312,
             "entry_date": "2026-05-21"
+        },
+        "GLENMARK.NS": {
+            "qty": 5,
+            "entry_price": 2259.10009765625,
+            "entry_date": "2026-05-22"
         }
     },
     "history": [
@@ -245,6 +245,24 @@
             "price": 127.97000122070312,
             "strategy": "ATR Sized (ATR:4.0) [AGGRESSIVE]",
             "total": 12669.03
+        },
+        {
+            "timestamp": "2026-05-22 10:11:36",
+            "ticker": "TECHM.NS",
+            "side": "sell",
+            "qty": 3,
+            "price": 1422.199951171875,
+            "strategy": "Capital Rotation \u2192 GLENMARK.NS",
+            "total": 4266.6
+        },
+        {
+            "timestamp": "2026-05-22 10:11:36",
+            "ticker": "GLENMARK.NS",
+            "side": "buy",
+            "qty": 5,
+            "price": 2259.10009765625,
+            "strategy": "ATR Sized (Rotation from TECHM.NS)",
+            "total": 11295.5
         }
     ]
 }
