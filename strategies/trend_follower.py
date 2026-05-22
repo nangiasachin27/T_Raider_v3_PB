@@ -22,7 +22,7 @@ def apply_golden_cross_strategy(price_series):
     
     # 4. Identify the Exit (Sell Signal)
     # Condition: The price just crossed BELOW the 50 EMA today
-    sell_condition = (df['Price'] < df['EMA_50']) & (df['Price'].shift(1) >= df['EMA_50'].shift(1))
+    sell_condition = is_uptrend & (df['Price'] < df['EMA_50']) & (df['Price'].shift(1) >= df['EMA_50'].shift(1))
     
     df.loc[buy_condition, 'Signal'] = 1
     df.loc[sell_condition, 'Signal'] = -1

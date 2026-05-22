@@ -60,11 +60,14 @@ def run_monte_carlo_filter(trade_logs, num_sims=1000, block_size=None):
 def _compute_sharpe(trade_logs, risk_free_annual=0.065):
     if not trade_logs or len(trade_logs) < 2:
         return 0.0
-    rets   = np.array([(t['exit_price'] - t['entry_price']) / t['entry_price'] for t in trade_logs])
-    excess = rets - risk_free_annual / 252
+    rets = np.array([(t['exit_price'] - t['entry_price']) / t['entry_price'] for t in trade_logs])
+    # Trade-level Sharpe: no sqrt(252) because trades are not daily.
+    # Approximate per-trade risk-free as annual / number of trades (uniformity assumption)
+    rf_per_trade = risk_free_annual / max(1, len(trade_logs))
+    excess = rets - rf_per_trade
     if excess.std() == 0:
         return 0.0
-    return float((excess.mean() / excess.std()) * np.sqrt(252))
+    return float(excess.mean() / excess.std())
 
 
 def _compute_max_drawdown(trade_logs):
@@ -106,12 +109,17 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
     price = df[price_col].copy()
     price.index = pd.to_datetime(price.index)
 
-    train_days  = int(train_years * 252)
-    test_days   = int(test_years  * 252)
-    total_days  = len(price)
+    total_days = len(price)
+    # Adaptive windows: at least 6 months train, 3 months test
+    train_days = min(int(train_years * 252), int(total_days * 0.6))
+    test_days = min(int(test_years * 252), int(total_days * 0.2))
+
+    if train_days < 126 or test_days < 63:  # 6mo / 3mo minimum
+        return {'passed': False}
+
     oos_metrics = []
-    fold_count  = 0
-    start       = 0
+    fold_count = 0
+    start = 0
 
     while start + train_days + test_days <= total_days:
         # Training fold

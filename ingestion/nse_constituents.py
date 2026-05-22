@@ -95,7 +95,10 @@ def get_ticker_data_window(ticker: str,
         df.index = pd.to_datetime(df.index)
         return df.index[0].date(), df.index[-1].date(), len(df)
 
-    except (KeyError, Exception):
+    except KeyError:
+        return None, None, 0
+    except Exception as e:
+        warnings.warn(f"Unexpected error getting data window for {ticker}: {e}")
         return None, None, 0
 
 

@@ -48,7 +48,7 @@ class UpstoxExecutionAdapter(ExecutionAdapter):
         self.mapper = InstrumentMapper()
         self.api_version = "2.0"
     
-    def place_market_order(self, ticker: str, qty: int, side: str, tag: str = "T_Raider") -> OrderResult:
+    def place_market_order(self, ticker: str, qty: int, side: str, tag: str = "T_Raider", **kwargs) -> OrderResult:
         """
         Place a delivery (CNC) market order.
         """

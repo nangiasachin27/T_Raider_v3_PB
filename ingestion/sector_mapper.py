@@ -1,6 +1,12 @@
 import json
+import sys
+import os
 import yfinance as yf
 from pathlib import Path
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 from ingestion.nse_constituents import load_universe
 
 # We map Yahoo Finance's standard global sector names to NSE specific indices

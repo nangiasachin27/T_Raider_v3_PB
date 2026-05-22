@@ -7,11 +7,48 @@
   "compound_mode": true,
   "original_capital": 100000.0,
   "current_base_capital": 100000.0,
-  "highest_value": 107385.26917266846,
+  "highest_value": 107134.23,
   "quarter_start_date": "2026-05-01",
   "quarter_number": 1,
   "realized_pnl_history": [],
   "last_harvest_date": null,
   "paper_trading": true,
-  "broker": "paper"
+  "broker": "paper",
+  "chaser": {
+    "enabled": true,
+    "mode": "CONSERVATIVE",
+    "gap_trigger_pct": 0.4,
+    "weak_threshold": -0.05,
+    "strong_min_score": 0.7,
+    "max_rotation_pct": 0.3,
+    "mode_overrides": {
+      "CONSERVATIVE": {
+        "weak_threshold": -0.05,
+        "strong_min_score": 0.7,
+        "buy_in_downtrend": false
+      },
+      "BALANCED": {
+        "weak_threshold": -0.04,
+        "strong_min_score": 0.665,
+        "buy_in_downtrend": false,
+        "nifty_dip_pct_required": 0.05
+      },
+      "AGGRESSIVE": {
+        "weak_threshold": -0.03,
+        "strong_min_score": 0.63,
+        "buy_in_downtrend": true,
+        "nifty_dip_pct_required": 0.03
+      }
+    },
+    "urgency_scaling": {
+      "enabled": true,
+      "days_left_moderate": 45,
+      "days_left_aggressive": 20,
+      "multiplier_moderate": 1.5,
+      "multiplier_aggressive": 2.0
+    },
+    "run_frequency": "weekly",
+    "last_chaser_run": "2026-05-22T14:39:11.287017",
+    "dry_run": true
+  }
 }

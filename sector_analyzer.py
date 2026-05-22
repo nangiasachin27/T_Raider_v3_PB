@@ -3,6 +3,12 @@ import yfinance as yf
 import pandas as pd
 from pathlib import Path
 
+def _normalize_yf_download(data):
+    """Handle both old and new yfinance column formats."""
+    if isinstance(data.columns, pd.MultiIndex):
+        # New format: (Price, Ticker) MultiIndex
+        return data['Close'] if 'Close' in data.columns.get_level_values(0) else data
+    return data
 def get_sector_ranks(lookback_days=60, map_path="config/dynamic_sector_map.json"):
     """
     Ranks only the sectors that actually exist in your current stocks.json universe.
@@ -19,7 +25,8 @@ def get_sector_ranks(lookback_days=60, map_path="config/dynamic_sector_map.json"
     tickers_to_download = list(unique_indices) + ["^NSEI"] # Always include Nifty 50 for the baseline
     
     # Download data
-    data = yf.download(tickers_to_download, period="3mo", progress=False)['Close']
+    data = yf.download(tickers_to_download, period="3mo", progress=False)
+    data = _normalize_yf_download(data)
     
     if data.empty or "^NSEI" not in data.columns:
         return {}

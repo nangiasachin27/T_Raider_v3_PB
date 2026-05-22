@@ -5,6 +5,7 @@ Paper trading adapter — logs only, no real orders.
 This is the DEFAULT and SAFE mode.
 """
 
+from datetime import datetime
 from pathlib import Path
 from typing import Dict
 
@@ -72,6 +73,12 @@ class PaperExecutionAdapter(ExecutionAdapter):
                 continue
             price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
             price = float(df[price_col].iloc[-1])
+            last_date = df.index[-1]
+            if isinstance(last_date, pd.Timestamp):
+                last_date = last_date.date()
+            days_stale = (datetime.now().date() - last_date).days
+            if days_stale > 1:
+                print(f" ⚠️ {ticker}: price is {days_stale} days stale (last: {last_date})")
             market_value += qty * price
 
         return PortfolioSnapshot(

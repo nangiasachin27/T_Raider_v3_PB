@@ -11,7 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from daily_screener import run_screener
 from autopilot.logger import (
-    load_portfolio, record_transaction,
+    load_portfolio, record_transaction, save_portfolio,
     _normalise_holding, get_holding_entry_price
 )
 from utils import get_config_tickers
@@ -25,7 +25,7 @@ from ingestion.data_ingestion import fetch_historical_data, get_stock_data
 ACTIVE_CONFIG = {
     "profit_target_pct": None,           # None = read from quarterly_config.json
     "target_from_expected_return": True, # Use optimal_params expected_return * 0.5
-    "target_cap_min": 0.10,              # Minimum per-stock target +10%
+    "target_cap_min": 0.15,              # Minimum per-stock target +15%
     "target_cap_max": 0.50,              # Maximum per-stock target +50%
 
     "trailing_stop_pct": 0.15,           # Baseline trailing stop from peak
@@ -63,7 +63,8 @@ def calculate_atr(df, window=14):
     high_pc = np.abs(df['High'] - df['Close'].shift(1))
     low_pc = np.abs(df['Low'] - df['Close'].shift(1))
     tr = pd.concat([high_low, high_pc, low_pc], axis=1).max(axis=1)
-    return tr.rolling(window=window).mean().iloc[-1]
+    atr = tr.rolling(window=window).mean().iloc[-1]
+    return float(atr) if pd.notna(atr) else 0.0
 
 
 def _load_quarterly_config() -> dict:
@@ -219,6 +220,7 @@ def check_trailing_stops(tickers, full_market_data):
         return 0
 
     stops_triggered = 0
+    portfolio_changed = False 
     for ticker, holding_data in list(holdings.items()):
         holding = _normalise_holding(holding_data)
         qty = holding["qty"]
@@ -241,6 +243,7 @@ def check_trailing_stops(tickers, full_market_data):
         if new_peak != peak_price:
             holding["peak_price"] = round(new_peak, 4)
             portfolio["holdings"][ticker] = holding
+            portfolio_changed = True
 
         gain_pct = (current_price - entry_price) / entry_price
         target_pct = _get_target_pct(ticker)
@@ -261,7 +264,8 @@ def check_trailing_stops(tickers, full_market_data):
             stops_triggered += 1
         else:
             print()
-
+        if portfolio_changed:          # <-- ADD
+           save_portfolio(portfolio) 
     if stops_triggered == 0:
         print(" No positions hit trailing stop.")
     return stops_triggered

@@ -70,6 +70,15 @@ from typing import Optional
 import pandas as pd
 import yfinance as yf
 
+def _trading_days_between(start: datetime.date, end: datetime.date) -> int:
+    """Count weekdays between two dates (inclusive of end, exclusive of start)."""
+    count = 0
+    current = start + datetime.timedelta(days=1)
+    while current <= end:
+        if current.weekday() < 5:  # Monday = 0, Friday = 4
+            count += 1
+        current += datetime.timedelta(days=1)
+    return count
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 1. Market Configuration — add new markets here only
@@ -573,36 +582,25 @@ class MacroFilter:
 
     def _fetch_vix(self) -> tuple[Optional[float], str]:
         """Fetch VIX (or market-equivalent volatility index) via yfinance."""
-        try:
-            ticker = self.config.vix_ticker
-            data = yf.Ticker(ticker).history(period="2d", progress=False)
-            if data.empty:
-                return None, "UNAVAILABLE"
-            vix = float(data['Close'].iloc[-1])
-            c = self.config
-            status = ("EXTREME" if vix >= c.vix_extreme else
-                     "ELEVATED" if vix >= c.vix_elevated else
-                     "NORMAL")
-            return vix, status
-        except TypeError:
-            # Newer yfinance doesn't accept progress parameter
+        ticker = self.config.vix_ticker
+        for kwargs in [{"progress": False}, {}]:
             try:
-                data = yf.Ticker(ticker).history(period="2d")
+                data = yf.Ticker(ticker).history(period="2d", **kwargs)
                 if data.empty:
                     return None, "UNAVAILABLE"
                 vix = float(data['Close'].iloc[-1])
                 c = self.config
                 status = ("EXTREME" if vix >= c.vix_extreme else
-                         "ELEVATED" if vix >= c.vix_elevated else
-                         "NORMAL")
+                        "ELEVATED" if vix >= c.vix_elevated else
+                        "NORMAL")
                 return vix, status
-            except Exception as e2:
-                warnings.warn(f"VIX fetch failed ({self.config.vix_ticker}): {e2}")
+            except TypeError:
+                continue  # Try without progress param
+            except Exception as e:
+                warnings.warn(f"VIX fetch failed ({ticker}): {e}")
                 return None, "FETCH_ERROR"
-        except Exception as e:
-            warnings.warn(f"VIX fetch failed ({self.config.vix_ticker}): {e}")
-            return None, "FETCH_ERROR"
-
+        return None, "FETCH_ERROR"
+   
     def _fetch_institutional_flow(self) -> tuple[Optional[float], str]:
         """
         Fetch net institutional flow for the configured market.
@@ -790,7 +788,7 @@ class MacroFilter:
             if not future:
                 return None
             nearest = min(future)
-            return (nearest - today).days
+            return _trading_days_between(today, nearest)
 
         except Exception:
             return None

@@ -103,8 +103,12 @@ def _load_stocks_universe() -> List[str]:
 
 
 def _get_quarter_start(cfg: Dict) -> date:
-    if "current_base_capital_date" in cfg:
-        return datetime.strptime(cfg["current_base_capital_date"], "%Y-%m-%d").date()
+    if "quarter_start_date" in cfg:
+        dt_str = cfg["quarter_start_date"]
+        # Handle both ISO datetime and plain date strings
+        if "T" in dt_str:
+            return datetime.fromisoformat(dt_str).date()
+        return datetime.strptime(dt_str, "%Y-%m-%d").date()
     if "quarter_start" in cfg:
         return datetime.strptime(cfg["quarter_start"], "%Y-%m-%d").date()
     portfolio = load_portfolio()

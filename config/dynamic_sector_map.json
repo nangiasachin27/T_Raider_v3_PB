@@ -1,7 +1,19 @@
 {
+    "360ONE.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
     "ABB.NS": {
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
+    },
+    "APLAPOLLO.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
+    "AUBANK.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
     },
     "ADANIENSOL.NS": {
         "yf_sector": "Utilities",
@@ -27,6 +39,14 @@
         "yf_sector": "Utilities",
         "nse_index": "^CNXENERGY"
     },
+    "ABCAPITAL.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "ALKEM.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
     "AMBUJACEM.NS": {
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
@@ -35,11 +55,31 @@
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
     },
+    "ASHOKLEY.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
     "ASIANPAINT.NS": {
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
     },
+    "ASTRAL.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "AUROPHARMA.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "DMART.NS": {
+        "yf_sector": "Consumer Defensive",
+        "nse_index": "^CNXFMCG"
+    },
     "AXISBANK.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "BSE.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
@@ -63,9 +103,21 @@
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
+    "BANKINDIA.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "BDL.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
     "BEL.NS": {
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
+    },
+    "BHARATFORG.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
     },
     "BHEL.NS": {
         "yf_sector": "Industrials",
@@ -79,9 +131,17 @@
         "yf_sector": "Communication Services",
         "nse_index": "^CNXMEDIA"
     },
+    "GROWW.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
     "BIOCON.NS": {
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
+    },
+    "BLUESTARCO.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
     },
     "BOSCHLTD.NS": {
         "yf_sector": "Consumer Cyclical",
@@ -90,6 +150,10 @@
     "BRITANNIA.NS": {
         "yf_sector": "Consumer Defensive",
         "nse_index": "^CNXFMCG"
+    },
+    "CGPOWER.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
     },
     "CANBK.NS": {
         "yf_sector": "Financial Services",
@@ -107,9 +171,29 @@
         "yf_sector": "Energy",
         "nse_index": "^CNXENERGY"
     },
+    "COCHINSHIP.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "COFORGE.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
     "COLPAL.NS": {
         "yf_sector": "Consumer Defensive",
         "nse_index": "^CNXFMCG"
+    },
+    "CONCOR.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "COROMANDEL.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
+    "CUMMINSIND.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
     },
     "DLF.NS": {
         "yf_sector": "Real Estate",
@@ -123,6 +207,10 @@
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
     },
+    "DIXON.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
     "DRREDDY.NS": {
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
@@ -131,13 +219,53 @@
         "yf_sector": "Consumer Cyclical",
         "nse_index": "^CNXAUTO"
     },
+    "ETERNAL.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "EXIDEIND.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "NYKAA.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "FEDERALBNK.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "FORTIS.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
     "GAIL.NS": {
         "yf_sector": "Utilities",
         "nse_index": "^CNXENERGY"
     },
-    "GMRINFRA.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
+    "GVT&D.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "GMRAIRPORT.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "GLENMARK.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "GODFRYPHLP.NS": {
+        "yf_sector": "Consumer Defensive",
+        "nse_index": "^CNXFMCG"
+    },
+    "GODREJCP.NS": {
+        "yf_sector": "Consumer Defensive",
+        "nse_index": "^CNXFMCG"
+    },
+    "GODREJPROP.NS": {
+        "yf_sector": "Real Estate",
+        "nse_index": "^CNXREALTY"
     },
     "GRASIM.NS": {
         "yf_sector": "Basic Materials",
@@ -146,6 +274,10 @@
     "HCLTECH.NS": {
         "yf_sector": "Technology",
         "nse_index": "UNKNOWN"
+    },
+    "HDFCAMC.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
     },
     "HDFCBANK.NS": {
         "yf_sector": "Financial Services",
@@ -171,9 +303,29 @@
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
     },
+    "HINDPETRO.NS": {
+        "yf_sector": "Energy",
+        "nse_index": "^CNXENERGY"
+    },
     "HINDUNILVR.NS": {
         "yf_sector": "Consumer Defensive",
         "nse_index": "^CNXFMCG"
+    },
+    "HINDZINC.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
+    "POWERINDIA.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "HUDCO.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "HYUNDAI.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
     },
     "ICICIBANK.NS": {
         "yf_sector": "Financial Services",
@@ -183,13 +335,25 @@
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
-    "ICICIPRULI.NS": {
+    "ICICIAMC.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "IDFCFIRSTB.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
     "ITC.NS": {
         "yf_sector": "Consumer Defensive",
         "nse_index": "^CNXFMCG"
+    },
+    "INDIANB.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "INDHOTEL.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
     },
     "IOC.NS": {
         "yf_sector": "Energy",
@@ -203,9 +367,21 @@
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
+    "IREDA.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "INDUSTOWER.NS": {
+        "yf_sector": "Communication Services",
+        "nse_index": "^CNXMEDIA"
+    },
     "INDUSINDBK.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
+    },
+    "NAUKRI.NS": {
+        "yf_sector": "Communication Services",
+        "nse_index": "^CNXMEDIA"
     },
     "INFY.NS": {
         "yf_sector": "Technology",
@@ -214,6 +390,10 @@
     "INDIGO.NS": {
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
+    },
+    "JSWENERGY.NS": {
+        "yf_sector": "Utilities",
+        "nse_index": "^CNXENERGY"
     },
     "JSWSTEEL.NS": {
         "yf_sector": "Basic Materials",
@@ -227,25 +407,77 @@
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
+    "JUBLFOOD.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "KEI.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "KPITTECH.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "KALYANKJIL.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
     "KOTAKBANK.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
-    "LTIM.NS": {
-        "yf_sector": "Unknown",
+    "LTF.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "LGEINDIA.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "LICHSGFIN.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "LTM.NS": {
+        "yf_sector": "Technology",
         "nse_index": "UNKNOWN"
     },
     "LT.NS": {
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
     },
-    "LICI.NS": {
+    "LAURUSLABS.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "LENSKART.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "LODHA.NS": {
+        "yf_sector": "Real Estate",
+        "nse_index": "^CNXREALTY"
+    },
+    "LUPIN.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "MRF.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "M&MFIN.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
     "M&M.NS": {
         "yf_sector": "Consumer Cyclical",
         "nse_index": "^CNXAUTO"
+    },
+    "MANKIND.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
     },
     "MARICO.NS": {
         "yf_sector": "Consumer Defensive",
@@ -255,21 +487,105 @@
         "yf_sector": "Consumer Cyclical",
         "nse_index": "^CNXAUTO"
     },
+    "MFSL.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "MAXHEALTH.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
+    },
+    "MAZDOCK.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "MOTILALOFS.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "MPHASIS.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "MCX.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "MUTHOOTFIN.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "NHPC.NS": {
+        "yf_sector": "Utilities",
+        "nse_index": "^CNXENERGY"
+    },
+    "NMDC.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
     "NTPC.NS": {
         "yf_sector": "Utilities",
         "nse_index": "^CNXENERGY"
+    },
+    "NATIONALUM.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
     },
     "NESTLEIND.NS": {
         "yf_sector": "Consumer Defensive",
         "nse_index": "^CNXFMCG"
     },
+    "OBEROIRLTY.NS": {
+        "yf_sector": "Real Estate",
+        "nse_index": "^CNXREALTY"
+    },
     "ONGC.NS": {
         "yf_sector": "Energy",
         "nse_index": "^CNXENERGY"
     },
+    "OIL.NS": {
+        "yf_sector": "Energy",
+        "nse_index": "^CNXENERGY"
+    },
+    "PAYTM.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "OFSS.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "POLICYBZR.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "PIIND.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
+    "PAGEIND.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "PATANJALI.NS": {
+        "yf_sector": "Consumer Defensive",
+        "nse_index": "^CNXFMCG"
+    },
+    "PERSISTENT.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "PHOENIXLTD.NS": {
+        "yf_sector": "Real Estate",
+        "nse_index": "^CNXREALTY"
+    },
     "PIDILITIND.NS": {
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
+    },
+    "POLYCAB.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
     },
     "PFC.NS": {
         "yf_sector": "Financial Services",
@@ -279,6 +595,14 @@
         "yf_sector": "Utilities",
         "nse_index": "^CNXENERGY"
     },
+    "PREMIERENE.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "PRESTIGE.NS": {
+        "yf_sector": "Real Estate",
+        "nse_index": "^CNXREALTY"
+    },
     "PNB.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
@@ -286,6 +610,14 @@
     "RECLTD.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
+    },
+    "RADICO.NS": {
+        "yf_sector": "Consumer Defensive",
+        "nse_index": "^CNXFMCG"
+    },
+    "RVNL.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
     },
     "RELIANCE.NS": {
         "yf_sector": "Energy",
@@ -311,25 +643,61 @@
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
     },
+    "SHRIRAMFIN.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "ENRIN.NS": {
+        "yf_sector": "Utilities",
+        "nse_index": "^CNXENERGY"
+    },
     "SIEMENS.NS": {
         "yf_sector": "Industrials",
         "nse_index": "^CNXINFRA"
+    },
+    "SOLARINDS.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
     },
     "SBIN.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
+    "SAIL.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
     "SUNPHARMA.NS": {
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
     },
-    "TVTMOTOR.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
+    "SUPREMEIND.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "SUZLON.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "SWIGGY.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "TVSMOTOR.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "TATACAP.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
     },
     "TATACOMM.NS": {
         "yf_sector": "Communication Services",
         "nse_index": "^CNXMEDIA"
+    },
+    "TCS.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
     },
     "TATACONSUM.NS": {
         "yf_sector": "Consumer Defensive",
@@ -339,9 +707,17 @@
         "yf_sector": "Technology",
         "nse_index": "UNKNOWN"
     },
-    "TATAMOTORS.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
+    "TATAINVEST.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "TMCV.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "TMPV.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
     },
     "TATAPOWER.NS": {
         "yf_sector": "Utilities",
@@ -350,14 +726,6 @@
     "TATASTEEL.NS": {
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
-    },
-    "TCS.NS": {
-        "yf_sector": "Technology",
-        "nse_index": "UNKNOWN"
-    },
-    "TATATRENG.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
     },
     "TECHM.NS": {
         "yf_sector": "Technology",
@@ -375,9 +743,21 @@
         "yf_sector": "Consumer Cyclical",
         "nse_index": "^CNXAUTO"
     },
+    "TIINDIA.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "UPL.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
     "ULTRACEMCO.NS": {
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
+    },
+    "UNIONBANK.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
     },
     "UNITDSPR.NS": {
         "yf_sector": "Consumer Defensive",
@@ -391,12 +771,32 @@
         "yf_sector": "Basic Materials",
         "nse_index": "^CNXMETAL"
     },
+    "VMM.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "IDEA.NS": {
+        "yf_sector": "Communication Services",
+        "nse_index": "^CNXMEDIA"
+    },
+    "VOLTAS.NS": {
+        "yf_sector": "Consumer Cyclical",
+        "nse_index": "^CNXAUTO"
+    },
+    "WAAREEENER.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
     "WIPRO.NS": {
         "yf_sector": "Technology",
         "nse_index": "UNKNOWN"
     },
-    "ETERNAL.NS": {
-        "yf_sector": "Consumer Cyclical",
-        "nse_index": "^CNXAUTO"
+    "YESBANK.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "ZYDUSLIFE.NS": {
+        "yf_sector": "Healthcare",
+        "nse_index": "^CNXPHARMA"
     }
 }

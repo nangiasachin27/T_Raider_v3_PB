@@ -16,9 +16,18 @@ def apply_stretch_strategy(price_series, window=20, threshold=0.05):
     df['Deviation'] = (df['Price'] - df['MA']) / df['MA']
     
     df['Signal'] = 0
-    # Buy: Price is 5% (default) below the MA
-    df.loc[df['Deviation'] < -threshold, 'Signal'] = 1
-    # Sell: Price is 5% above the MA
-    df.loc[df['Deviation'] > threshold, 'Signal'] = -1
-    
+
+    # ── Crossover signals (FIX: only fire on the first bar of the breach) ──
+    dev_today = df['Deviation']
+    dev_prev = df['Deviation'].shift(1)
+
+    # BUY: Price was at or above the threshold yesterday, crossed below today
+    buy_condition = (dev_today < -threshold) & (dev_prev >= -threshold)
+
+    # SELL: Price was at or below the threshold yesterday, crossed above today
+    sell_condition = (dev_today > threshold) & (dev_prev <= threshold)
+
+    df.loc[buy_condition, 'Signal'] = 1
+    df.loc[sell_condition, 'Signal'] = -1
+
     return df

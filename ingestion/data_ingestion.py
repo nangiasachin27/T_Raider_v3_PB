@@ -171,6 +171,7 @@ def _fetch_via_bhavcopy(tickers: list, period: str = "2y") -> pd.DataFrame:
         raise ValueError("No matching symbols found in Bhav Copy data.")
 
     result = pd.concat(pieces, axis=1).sort_index()
+    result = result.dropna(how='all')
 
     # Swap MultiIndex levels to match yfinance: (field, ticker) not (ticker, field)
     result.columns = result.columns.swaplevel(0, 1)

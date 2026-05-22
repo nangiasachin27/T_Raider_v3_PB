@@ -16,10 +16,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Tuple
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from autopilot.logger import record_transaction
+
 # ── Paths ───────────────────────────────────────────────────────────────────
-CONFIG_PATH = Path("config/quarterly_config.json")
-BROKER_CONFIG_PATH = Path("config/broker_config.json")
-CAPITAL_OVERRIDE_PATH = Path("config/capital_override.json")
+BASE_DIR = Path(__file__).resolve().parent.parent
+CONFIG_PATH = BASE_DIR / "config" / "quarterly_config.json"
+CAPITAL_OVERRIDE_PATH = BASE_DIR / "config" / "capital_override.json"
+BROKER_CONFIG_PATH = BASE_DIR / "config" / "broker_config.json"
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -49,6 +53,7 @@ class QuarterState:
         self.last_harvest_date = kwargs.get('last_harvest_date', None)
         self.paper_trading = kwargs.get('paper_trading', True)
         self.broker = kwargs.get('broker', 'paper')
+        self.chaser = kwargs.get('chaser', {})
 
     @classmethod
     def from_file(cls, path: Path = CONFIG_PATH):
@@ -143,16 +148,19 @@ class HarvestEngine:
 
         # Rule 2: Profit target
         if current_return >= target:
+            self.state.save() 
             return True, f"🎯 Profit target hit! {current_return*100:+.2f}% >= +{target*100:.0f}%"
 
         # Rule 3: Trailing stop
         if current_value <= trailing_stop_level and current_value < peak:
+            self.state.save()
             return True, (f"🛑 Trailing stop hit! "
                           f"Down {drawdown_from_peak*100:.1f}% from peak ₹{peak:,.0f} "
                           f"(stop was ₹{trailing_stop_level:,.0f})")
 
         # Rule 4: Maximum time cap
         if elapsed >= max_days:
+            self.state.save()
             return True, f"⏰ Max time cap reached ({elapsed} days >= {max_days})"
 
         # No trigger
@@ -241,12 +249,12 @@ class HarvestEngine:
                 ticker=ticker,
                 qty=qty,
                 side="SELL",
-                tag="QuarterlyHarvest",
-                price=ltp
+                tag="QuarterlyHarvest"
             )
 
             if result.success:
                 print(f" ✅ Order {result.order_id} | Status: {result.status}")
+                record_transaction(ticker, "sell", qty, ltp, "QuarterlyHarvest")
             else:
                 print(f" ❌ FAILED: {result.message}")
 
