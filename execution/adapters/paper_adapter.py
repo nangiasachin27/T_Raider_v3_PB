@@ -9,6 +9,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict
 
+import pandas as pd
+
 from execution.adapters.base import ExecutionAdapter, OrderResult, PortfolioSnapshot
 from autopilot.logger import load_portfolio, record_transaction
 from ingestion.data_ingestion import fetch_historical_data, get_stock_data
