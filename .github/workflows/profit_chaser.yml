@@ -1,0 +1,128 @@
+name: T_Raider Profit Chaser
+
+on:
+  workflow_dispatch:          # manual trigger anytime from GitHub UI
+    inputs:
+      mode:
+        description: 'Trading mode'
+        required: true
+        default: 'AGGRESSIVE'
+        type: choice
+        options: [CONSERVATIVE, BALANCED, AGGRESSIVE]
+      execute:
+        description: 'Execute trades? (false = dry run)'
+        required: true
+        default: 'false'
+        type: choice
+        options: ['true', 'false']
+
+  schedule:
+    - cron: '30 4 * * 1'     # Every Monday 10:00 IST (4:30 UTC), after market open
+
+permissions:
+  contents: write
+
+jobs:
+  profit-chaser:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      # ── Determine mode & execute flag ────────────────────────────────────
+      # workflow_dispatch uses inputs; scheduled run uses defaults below
+      - name: Set Run Parameters
+        id: params
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          EXECUTE="${{ github.event.inputs.execute }}"
+          # Defaults for scheduled run
+          MODE=${MODE:-AGGRESSIVE}
+          EXECUTE=${EXECUTE:-false}
+          echo "mode=$MODE"    >> $GITHUB_OUTPUT
+          echo "execute=$EXECUTE" >> $GITHUB_OUTPUT
+          echo "▶️  Mode: $MODE | Execute: $EXECUTE"
+
+      # ── Run Profit Chaser ────────────────────────────────────────────────
+      - name: Run Profit Chaser
+        id: chaser_run
+        env:
+          UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
+        run: |
+          EXEC_FLAG=""
+          if [ "${{ steps.params.outputs.execute }}" == "true" ]; then
+            EXEC_FLAG="--execute"
+          fi
+          python -u autopilot/profit_chaser.py \
+            --mode ${{ steps.params.outputs.mode }} \
+            $EXEC_FLAG \
+            2>&1 | tee config/chaser_output.txt
+
+      # ── Run tracker for updated P&L snapshot ────────────────────────────
+      - name: Generate Post-Chaser Reports
+        if: success() || steps.chaser_run.outcome == 'success'
+        run: |
+          python autopilot/tracker.py     > config/tracker_output.txt
+          python autopilot/quarterly_report.py > config/quarterly_output.txt
+          python plot_performance.py
+
+      # ── Publish to GitHub Step Summary ───────────────────────────────────
+      - name: Publish to GitHub Summary
+        if: success() || steps.chaser_run.outcome == 'success'
+        run: |
+          echo "### 🎯 T_RAIDER PROFIT CHASER — ${{ steps.params.outputs.mode }} mode" >> $GITHUB_STEP_SUMMARY
+          echo "**Execute:** ${{ steps.params.outputs.execute }} | **Triggered:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "### 🔄 Chaser Output" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat config/chaser_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Updated Portfolio Snapshot" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat config/tracker_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Quarterly Report" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat config/quarterly_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          if [ -f config/performance_chart.png ]; then
+            IMG_BASE64=$(base64 -w 0 config/performance_chart.png)
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 📈 Performance Chart" >> $GITHUB_STEP_SUMMARY
+            echo "<img src=\"data:image/png;base64,${IMG_BASE64}\" width=\"700\" />" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # ── Commit & Push State ──────────────────────────────────────────────
+      - name: Commit & Push State Updates
+        if: always()
+        run: |
+          git config --global user.name  'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
+
+          echo "Chaser run at: $(date) | Mode: ${{ steps.params.outputs.mode }} | Execute: ${{ steps.params.outputs.execute }} | Status: ${{ steps.chaser_run.outcome }}" > config/last_chaser_log.txt
+
+          git add config/portfolio.json \
+                  config/quarterly_config.json \
+                  config/daily_equity.csv \
+                  config/performance_chart.png \
+                  config/last_chaser_log.txt \
+                  config/chaser_output.txt \
+                  config/manual_logs/chaser_log.json || true
+
+          git commit -m "ProfitChaser: $(date) [${{ steps.chaser_run.outcome }}] mode=${{ steps.params.outputs.mode }}" || true
+          git push
