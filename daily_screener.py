@@ -59,7 +59,7 @@ from strategies.stretch import apply_stretch_strategy
 from autopilot.logger import load_portfolio
 
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 from autopilot.correlation_filter import CorrelationFilter
 from autopilot.kelly_position_sizing import KellyPositionSizer
 
@@ -202,7 +202,7 @@ def get_portfolio_context(portfolio: Dict, ticker: str,
             # Since we don't have it here, use entry_price as conservative estimate
             # (The caller should ideally pass all prices, but this is a screener)
             entry = hdata.get('entry_price', 0) if isinstance(hdata, dict) else 0
-            total_market_value += qty * (entry if entry > 0 else latest_price)
+            total_market_value += qty * (entry if entry > 0 else 0)
     
     total_value = cash + total_market_value
     
@@ -215,21 +215,38 @@ def get_portfolio_context(portfolio: Dict, ticker: str,
     return current_qty, weight_pct, total_value, cash
 # ── Confidence classification ─────────────────────────────────────────────────
 
-def classify_buy_confidence(stability: float, weight_pct: float, current_qty: int,
-                            cash: float, estimated_cost: float,
-                            max_weight: float = 20.0) -> Tuple[str, str]:
+def classify_buy_confidence(stability, weight_pct, current_qty, cash, estimated_cost,
+                            total_value, latest_price,
+                            max_weight=20.0) -> Tuple[str, str]:
+    """
+    Returns confidence tier and reason for a BUY signal.
+    NOW CHECKS prospective weight AFTER the proposed purchase.
+    """
     if estimated_cost > cash * 1.05:
         return "SKIP", f"Insufficient cash (Need ₹{estimated_cost:.0f}, Have ₹{cash:.0f})"
+
+    # ── NEW: compute what weight this ticker would have AFTER buying ──
+    current_holdings_value = current_qty * latest_price
+    post_buy_value = current_holdings_value + estimated_cost
+    prospective_weight = (post_buy_value / total_value * 100) if total_value > 0 else 0
+
     if current_qty > 0:
-        if stability >= 70 and weight_pct < max_weight / 2:
-            return "MEDIUM", f"Already holding {current_qty} shares — small add possible"
-        return "SKIP", f"Already holding {current_qty} shares — avoid concentration"
-    if stability >= 70 and weight_pct < max_weight:
-        return "HIGH", "Strong MC validation + within concentration limits"
-    if stability >= 60 and weight_pct < max_weight:
-        return "MEDIUM", "Marginal stability score — review recommended"
-    if weight_pct >= max_weight:
-        return "SKIP", f"Concentration limit ({weight_pct:.1f}% >= {max_weight}%)"
+        # Adding to existing position — allowed only if we stay under the limit
+        if stability >= 70 and prospective_weight < max_weight:
+            return "MEDIUM", (f"Already holding {current_qty} shares — "
+                            f"add takes weight to {prospective_weight:.1f}%")
+        return "SKIP", (f"Already holding {current_qty} shares — "
+                       f"would reach {prospective_weight:.1f}% concentration")
+
+    # New position
+    if stability >= 70 and prospective_weight < max_weight:
+        return "HIGH", (f"Strong MC validation + within concentration limits "
+                       f"({prospective_weight:.1f}%)")
+    if stability >= 60 and prospective_weight < max_weight:
+        return "MEDIUM", (f"Marginal stability score — review recommended "
+                         f"({prospective_weight:.1f}%)")
+    if prospective_weight >= max_weight:
+        return "SKIP", f"Concentration limit ({prospective_weight:.1f}% >= {max_weight}%)"
     return "SKIP", f"Stability too low ({stability:.1f}% < 60%)"
 
 def classify_sell_confidence(current_qty: int) -> Tuple[str, str]:
@@ -594,7 +611,8 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
             risk_per_trade_inr = suggested_qty * atr * 2.0 if suggested_qty > 0 else 0.0
 
             confidence_tier, reason = classify_buy_confidence(
-                stability, weight_pct, current_qty, cash, estimated_cost
+                stability, weight_pct, current_qty, cash, estimated_cost,
+                portfolio_value, latest_price
             )
 
             # Append Kelly info to the reason string

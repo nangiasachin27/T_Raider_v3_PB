@@ -53,7 +53,10 @@ def record_transaction(ticker, side, qty, price, strategy_name):
             old_price = existing['entry_price']
             new_qty   = old_qty + qty
             # Weighted average entry price
-            avg_price = ((old_qty * old_price) + (qty * price)) / new_qty
+            if old_price <= 0:
+                avg_price = price   # treat the new buy as fresh cost basis
+            else:
+                avg_price = ((old_qty * old_price) + (qty * price)) / new_qty
             holdings[ticker] = {
                 'qty':         new_qty,
                 'entry_price': round(avg_price, 4),

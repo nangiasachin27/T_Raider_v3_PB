@@ -8,6 +8,7 @@ from pathlib import Path
 from datetime import datetime, date
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from autopilot.kelly_position_sizing import KellyPositionSizer
 
 from daily_screener import run_screener
 from autopilot.logger import (
@@ -554,11 +555,24 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
             df.columns = df.columns.get_level_values(0)
 
         atr = calculate_atr(df)
+
+            # Kelly sizing (matches daily_screener.py)
+        target_qty, sizing_reason = KellyPositionSizer.calculate(
+                ticker=ticker,
+                portfolio=portfolio,
+                optimal_params=optimized_params,
+                atr=atr,
+                current_price=price,
+                mode=mode,
+                capital=total_baseline_wealth
+            )
+
+            # Apply active risk multiplier if set by ActiveProfitEngine
         risk_mult = _read_active_risk_mult()
-        risk_per_trade = 0.01 * risk_mult
-        risk_per_share = atr * 2
-        rupee_risk_allowed = total_baseline_wealth * risk_per_trade
-        target_qty = int(rupee_risk_allowed // risk_per_share) if risk_per_share > 0 else 0
+        if risk_mult != 1.0:
+            target_qty = int(target_qty * risk_mult)
+
+            # 20% concentration cap (kept from original bot logic)
         max_position_cost = total_baseline_wealth * 0.20
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
@@ -737,10 +751,24 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
             continue
 
         atr = calculate_atr(df)
-        risk_per_trade = 0.01 * risk_mult
-        risk_per_share = atr * 2
-        rupee_risk_allowed = total_baseline_wealth * risk_per_trade
-        target_qty = int(rupee_risk_allowed // risk_per_share) if risk_per_share > 0 else 0
+
+        # Kelly sizing (matches daily_screener.py)
+        target_qty, sizing_reason = KellyPositionSizer.calculate(
+            ticker=ticker,
+            portfolio=portfolio,
+            optimal_params=optimized_params,
+            atr=atr,
+            current_price=price,
+            mode=mode,
+            capital=total_baseline_wealth
+        )
+
+        # Apply active risk multiplier if set by ActiveProfitEngine
+        risk_mult = _read_active_risk_mult()
+        if risk_mult != 1.0:
+            target_qty = int(target_qty * risk_mult)
+
+        # 20% concentration cap
         max_position_cost = total_baseline_wealth * 0.20
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
