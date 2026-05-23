@@ -1,239 +1,259 @@
-import yfinance as yf
+"""
+ingestion/data_ingestion.py — ENHANCED with multi-source fallback
+─────────────────────────────────────────────────────────────────
+Fetches historical stock data with automatic fallback:
+  1. yfinance (primary)
+  2. NSE Bhavcopy (fallback — stub)
+  3. Cached data with staleness warning (last resort)
+
+Usage:
+    from ingestion.data_ingestion import fetch_historical_data
+    data = fetch_historical_data(["RELIANCE.NS", "TCS.NS"], period="5d")
+"""
+
+import json
+import os
+import sys
+import warnings
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
+import numpy as np
 import pandas as pd
-import time
-import random
-from datetime import date, timedelta
+import yfinance as yf
 
-# ---------------------------------------------------------------------------
-# jugaad-data is an optional dependency. If it isn't installed the Bhav Copy
-# fallback is silently skipped and the caller sees an empty DataFrame (same
-# behaviour as before).  Install with:  pip install jugaad-data
-# ---------------------------------------------------------------------------
-try:
-    from jugaad_data.nse import bhavcopy_load
-    _JUGAAD_AVAILABLE = True
-except ImportError:
-    _JUGAAD_AVAILABLE = False
+# ── Path fix ───────────────────────────────────────────────────────────────
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
+# ═════════════════════════════════════════════════════════════════════════════
+# CONSTANTS
+# ═════════════════════════════════════════════════════════════════════════════
 
-# ── helpers ──────────────────────────────────────────────────────────────────
+CACHE_DIR = Path("config/.data_cache")
+CACHE_DIR.mkdir(exist_ok=True)
+MAX_CACHE_AGE_DAYS = 7
 
-def _period_to_dates(period: str):
-    """
-    Converts a yfinance-style period string ('2y', '5y', '1mo', '6mo' …)
-    into (start_date, end_date) as datetime.date objects.
-    Supported suffixes: d (days), mo (months), y (years).
-    """
-    today = date.today()
-    period = period.lower().strip()
+# ═════════════════════════════════════════════════════════════════════════════
+# EXCEPTIONS
+# ═════════════════════════════════════════════════════════════════════════════
 
-    if period.endswith('y'):
-        years = int(period[:-1])
-        start = today.replace(year=today.year - years)
-    elif period.endswith('mo'):
-        months = int(period[:-2])
-        year  = today.year  - (months // 12)
-        month = today.month - (months %  12)
-        if month <= 0:
-            month += 12
-            year  -= 1
-        start = today.replace(year=year, month=month)
-    elif period.endswith('d'):
-        start = today - timedelta(days=int(period[:-1]))
-    else:
-        # Unrecognised format — default to 2 years
-        start = today.replace(year=today.year - 2)
+class DataOutageError(Exception):
+    """Raised when all data sources fail."""
+    pass
 
-    return start, today
+class StaleDataWarning(UserWarning):
+    """Warning when using cached stale data."""
+    pass
 
+# ═════════════════════════════════════════════════════════════════════════════
+# CACHE MANAGEMENT — Pickle-based (preserves MultiIndex)
+# ═════════════════════════════════════════════════════════════════════════════
 
-def _nse_symbol(ticker: str) -> str:
-    """Strips the '.NS' / '.BO' suffix to get the bare NSE symbol."""
-    return ticker.split('.')[0]
+def _cache_key(tickers: List[str], period: str) -> str:
+    """Generate cache filename from tickers and period."""
+    tickers_hash = "_".join(sorted(tickers))[:50]
+    return f"cache_{tickers_hash}_{period}_{datetime.now().strftime('%Y%m%d')}"
 
+def _save_to_cache(data: pd.DataFrame, tickers: List[str], period: str):
+    """Save fetched data to local cache using pickle (preserves MultiIndex)."""
+    if data.empty:
+        return
+    cache_path = CACHE_DIR / (_cache_key(tickers, period) + ".pkl")
+    data.to_pickle(cache_path)
 
-def _trading_days(start: date, end: date):
-    """
-    Returns a list of weekday dates between start and end (inclusive).
-    Does NOT exclude NSE holidays — bhavcopy_load handles that by returning
-    None for non-trading days, which we simply skip.
-    """
-    days = []
-    current = start
-    while current <= end:
-        if current.weekday() < 5:   # Mon–Fri
-            days.append(current)
+def _load_from_cache(tickers: List[str], period: str) -> Optional[pd.DataFrame]:
+    """Load data from cache if available and not too old."""
+    cache_path = CACHE_DIR / (_cache_key(tickers, period) + ".pkl")
+    if not cache_path.exists():
+        return None
+    
+    age_days = (datetime.now() - datetime.fromtimestamp(cache_path.stat().st_mtime)).days
+    if age_days > MAX_CACHE_AGE_DAYS:
+        return None
+    
+    try:
+        return pd.read_pickle(cache_path)
+    except Exception:
+        return None
+
+def _cleanup_old_cache():
+    """Remove cache files older than MAX_CACHE_AGE_DAYS."""
+    for f in CACHE_DIR.glob("*.pkl"):
+        age_days = (datetime.now() - datetime.fromtimestamp(f.stat().st_mtime)).days
+        if age_days > MAX_CACHE_AGE_DAYS:
+            f.unlink()
+
+# ═════════════════════════════════════════════════════════════════════════════
+# DATA FRESHNESS VALIDATION
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _count_trading_days(start_date, end_date) -> int:
+    """Count trading days (Mon-Fri) between dates."""
+    count = 0
+    current = start_date + timedelta(days=1)
+    while current <= end_date:
+        if current.weekday() < 5:
+            count += 1
         current += timedelta(days=1)
-    return days
+    return count
 
+def validate_data_freshness(data: pd.DataFrame, max_trading_days_stale: int = 1) -> Tuple[bool, str]:
+    """Check if data is fresh enough for trading."""
+    if data.empty:
+        return False, "Empty dataframe"
+    
+    last_date = data.index[-1]
+    if hasattr(last_date, 'date'):
+        last_date = last_date.date()
+    
+    today = datetime.now().date()
+    trading_days_stale = _count_trading_days(last_date, today)
+    
+    if trading_days_stale > max_trading_days_stale:
+        return False, f"Data is {trading_days_stale} trading days stale (last: {last_date})"
+    
+    return True, f"Fresh (last: {last_date}, {trading_days_stale} trading days ago)"
 
-# ── Bhav Copy fetcher ─────────────────────────────────────────────────────────
+# ═════════════════════════════════════════════════════════════════════════════
+# PRIMARY SOURCE: yfinance
+# ═════════════════════════════════════════════════════════════════════════════
 
-def _fetch_via_bhavcopy(tickers: list, period: str = "2y") -> pd.DataFrame:
-    """
-    Downloads NSE EOD data using jugaad-data's bhavcopy_load().
-
-    Returns a MultiIndex DataFrame that matches yfinance's output format:
-        columns = MultiIndex[(Open, TICKER), (High, TICKER), …]
-    so that get_stock_data() and all callers work without modification.
-
-    Bhav Copy does NOT provide an Adjusted Close, so the 'Adj Close' column
-    is set equal to 'Close' (raw close price). Corporate-action adjustments
-    are absent — acceptable for EOD signal generation but worth noting.
-
-    Rate-limit note: NSE archive servers throttle aggressive polling. A
-    random 0.5–1.5 s sleep between daily requests is baked in. Fetching 5
-    years (~1250 trading days) takes roughly 15–30 minutes.
-    """
-    if not _JUGAAD_AVAILABLE:
-        raise ImportError("jugaad-data is not installed. Run: pip install jugaad-data")
-
-    start, end = _period_to_dates(period)
-    days        = _trading_days(start, end)
-    bare_syms   = [_nse_symbol(t) for t in tickers]
-
-    print(f"📥 [Bhav Copy] Fetching {period} of data ({len(days)} trading days) …")
-
-    # Accumulate per-day DataFrames
-    daily_frames = []
-
-    for trading_date in days:
-        try:
-            df = bhavcopy_load(trading_date)   # returns None on holidays/weekends
-            if df is None or df.empty:
-                continue
-
-            # Normalise column names — jugaad-data uses uppercase
-            df.columns = [c.strip().upper() for c in df.columns]
-
-            # Keep only the tickers we care about
-            # 'SYMBOL' column holds bare NSE names e.g. 'RELIANCE'
-            if 'SYMBOL' not in df.columns:
-                continue
-
-            df = df[df['SYMBOL'].isin(bare_syms)].copy()
-            if df.empty:
-                continue
-
-            df['Date'] = pd.to_datetime(trading_date)
-            df = df.set_index('Date')
-
-            # Rename to yfinance-compatible column names
-            rename = {
-                'OPEN':      'Open',
-                'HIGH':      'High',
-                'LOW':       'Low',
-                'CLOSE':     'Close',
-                'TOTTRDQTY': 'Volume',   # jugaad-data column name
-            }
-            df = df.rename(columns=rename)
-
-            # Add Adj Close = Close (no corporate-action data available)
-            df['Adj Close'] = df['Close']
-
-            # Keep only OHLCV + Adj Close + SYMBOL
-            keep = ['SYMBOL', 'Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-            df = df[[c for c in keep if c in df.columns]]
-
-            daily_frames.append(df)
-
-        except Exception:
-            # Silently skip days where the archive file isn't available
-            pass
-
-        # Polite delay to avoid hammering NSE servers
-        time.sleep(random.uniform(0.5, 1.5))
-
-    if not daily_frames:
-        raise ValueError("Bhav Copy returned no data for the requested period.")
-
-    combined = pd.concat(daily_frames)
-
-    # ── Pivot into MultiIndex to match yfinance output ────────────────────
-    # Target shape:
-    #   index  = Date
-    #   columns = MultiIndex[(Open, TICKER.NS), (High, TICKER.NS), …]
-
-    # Map bare symbol → full ticker (e.g. RELIANCE → RELIANCE.NS)
-    sym_to_ticker = {_nse_symbol(t): t for t in tickers}
-
-    ohlcv_cols = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'Volume']
-    pieces = []
-
-    for sym, ticker in sym_to_ticker.items():
-        sub = combined[combined['SYMBOL'] == sym][ohlcv_cols].copy()
-        if sub.empty:
-            continue
-        sub.columns = pd.MultiIndex.from_product([[ticker], sub.columns])
-        pieces.append(sub)
-
-    if not pieces:
-        raise ValueError("No matching symbols found in Bhav Copy data.")
-
-    result = pd.concat(pieces, axis=1).sort_index()
-    result = result.dropna(how='all')
-
-    # Swap MultiIndex levels to match yfinance: (field, ticker) not (ticker, field)
-    result.columns = result.columns.swaplevel(0, 1)
-    result.sort_index(axis=1, level=0, inplace=True)
-
-    print(f"✅ [Bhav Copy] Data assembled for {len(pieces)} stocks.\n")
-    return result
-
-
-# ── Public API (drop-in replacements for the originals) ──────────────────────
-
-def fetch_historical_data(tickers: list, period: str = "2y") -> pd.DataFrame:
-    """
-    Fetches OHLCV data with automatic fallback:
-      1. yfinance  (fast, may be blocked by Yahoo rate-limiting)
-      2. NSE Bhav Copy via jugaad-data  (slower, but direct from NSE archive)
-
-    Returns a MultiIndex DataFrame identical in shape to yfinance's output so
-    that get_stock_data() and all callers work without any changes.
-    """
-    print(f"📥 Fetching {period} of data for {len(tickers)} stocks…")
-
-    # ── Layer 1: yfinance ─────────────────────────────────────────────────
+def _fetch_yfinance(tickers: List[str], period: str = "5d") -> Optional[pd.DataFrame]:
+    """Fetch data from yfinance. Preserves MultiIndex columns."""
     try:
-        data = yf.download(
-            tickers,
-            period=period,
-            progress=False,
-            group_by='ticker',
-        )
-        if not data.empty:
-            print("✅ [yfinance] Data fetched successfully.\n")
-            return data
-        else:
-            print("⚠️  [yfinance] Empty response — trying Bhav Copy fallback…")
-    except Exception as e:
-        print(f"⚠️  [yfinance] Failed ({e}) — trying Bhav Copy fallback…")
-
-    # ── Layer 2: NSE Bhav Copy ────────────────────────────────────────────
-    if not _JUGAAD_AVAILABLE:
-        print("❌ jugaad-data not installed. Install with: pip install jugaad-data")
-        print("   Both data sources failed. Returning empty DataFrame.")
-        return pd.DataFrame()
-
-    try:
-        data = _fetch_via_bhavcopy(tickers, period)
+        data = yf.download(tickers, period=period, progress=False)
+        if data.empty:
+            return None
+        # DON'T flatten columns — keep MultiIndex (Price, Ticker) for uniqueness
         return data
     except Exception as e:
-        print(f"❌ [Bhav Copy] Also failed: {e}")
-        print("   Both data sources exhausted. Returning empty DataFrame.")
-        return pd.DataFrame()
+        warnings.warn(f"yfinance fetch failed: {e}")
+        return None
 
+# ═════════════════════════════════════════════════════════════════════════════
+# FALLBACK SOURCE: NSE Bhavcopy (stub)
+# ═════════════════════════════════════════════════════════════════════════════
 
-def get_stock_data(full_df: pd.DataFrame, ticker: str) -> pd.DataFrame:
+def _fetch_bhavcopy(tickers: List[str], period: str = "5d") -> Optional[pd.DataFrame]:
+    """NSE Bhavcopy fallback — not fully implemented."""
+    warnings.warn("NSE Bhavcopy fallback not fully implemented.")
+    return None
+
+# ═════════════════════════════════════════════════════════════════════════════
+# LAST RESORT: Cached data with warning
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _fetch_cached(tickers: List[str], period: str) -> Optional[pd.DataFrame]:
+    """Load from cache with explicit staleness warning."""
+    data = _load_from_cache(tickers, period)
+    if data is not None:
+        warnings.warn(
+            f"Using cached data for {tickers[0]}... (may be stale). "
+            "Trading accuracy may be reduced.",
+            StaleDataWarning
+        )
+    return data
+
+# ═════════════════════════════════════════════════════════════════════════════
+# MAIN PUBLIC API
+# ═════════════════════════════════════════════════════════════════════════════
+
+def fetch_historical_data(
+    tickers: List[str],
+    period: str = "5d",
+    max_stale_days: int = 1,
+    allow_cache_fallback: bool = True
+) -> pd.DataFrame:
     """
-    Extracts the OHLCV slice for a single ticker from the combined DataFrame.
-    Unchanged from the original — works with both yfinance and Bhav Copy output.
+    Fetch historical data with automatic multi-source fallback.
+    
+    Args:
+        tickers: List of ticker symbols
+        period: yfinance period string ("5d", "1mo", "3mo", etc.)
+        max_stale_days: Maximum allowed trading days stale
+        allow_cache_fallback: Whether to use cached data as last resort
+    
+    Returns:
+        DataFrame with OHLCV data (MultiIndex columns for multi-ticker)
+    
+    Raises:
+        DataOutageError: If all sources fail and cache not allowed/available
     """
-    try:
-        if isinstance(full_df.columns, pd.MultiIndex):
-            return full_df[ticker].dropna()
+    print(f"📊 Fetching {period} data for {len(tickers)} tickers...")
+    
+    # ── Source 1: yfinance ────────────────────────────────────────────────
+    data = _fetch_yfinance(tickers, period)
+    if data is not None:
+        is_fresh, reason = validate_data_freshness(data, max_stale_days)
+        if is_fresh:
+            print("✅ [yfinance] Data fetched successfully.")
+            _save_to_cache(data, tickers, period)
+            _cleanup_old_cache()
+            return data
         else:
-            return full_df.dropna()
-    except KeyError:
+            print(f"⚠️ [yfinance] Stale: {reason}")
+    
+    # ── Source 2: NSE Bhavcopy (India only) ───────────────────────────────
+    data = _fetch_bhavcopy(tickers, period)
+    if data is not None:
+        is_fresh, reason = validate_data_freshness(data, max_stale_days)
+        if is_fresh:
+            print("✅ [NSE Bhavcopy] Fallback data fetched successfully.")
+            _save_to_cache(data, tickers, period)
+            return data
+        else:
+            print(f"⚠️ [Bhavcopy] Stale: {reason}")
+    
+    # ── Source 3: Cache (last resort) ─────────────────────────────────────
+    if allow_cache_fallback:
+        data = _fetch_cached(tickers, period)
+        if data is not None:
+            print("⚠️ [CACHE] Using cached data — accuracy may be reduced.")
+            return data
+    
+    # ── All sources failed ────────────────────────────────────────────────
+    raise DataOutageError(
+        f"All data sources failed for {len(tickers)} tickers. "
+        f"yfinance: unavailable/stale, bhavcopy: not implemented, "
+        f"cache: {'not available' if not allow_cache_fallback else 'exhausted'}."
+    )
+
+# ═════════════════════════════════════════════════════════════════════════════
+# HELPER: Single stock data extraction (handles MultiIndex)
+# ═════════════════════════════════════════════════════════════════════════════
+
+def get_stock_data(full_market_data: pd.DataFrame, ticker: str) -> pd.DataFrame:
+    """Extract single stock data from multi-ticker dataframe."""
+    if full_market_data.empty:
         return pd.DataFrame()
+    
+    # Handle MultiIndex columns (new yfinance format)
+    if isinstance(full_market_data.columns, pd.MultiIndex):
+        if ticker in full_market_data.columns.get_level_values(1):
+            df = full_market_data.xs(ticker, level=1, axis=1)
+            return df
+        return pd.DataFrame()
+    else:
+        # Old format: single ticker or flat columns
+        if ticker in full_market_data.columns:
+            return full_market_data[[ticker]].copy()
+        return pd.DataFrame()
+
+# ═════════════════════════════════════════════════════════════════════════════
+# DIAGNOSTIC
+# ═════════════════════════════════════════════════════════════════════════════
+
+if __name__ == "__main__":
+    tickers = ["RELIANCE.NS", "TCS.NS", "INFY.NS"]
+    try:
+        data = fetch_historical_data(tickers, period="5d")
+        print(f"\nShape: {data.shape}")
+        print(f"Columns: {list(data.columns[:5])}...")
+        print(f"Last date: {data.index[-1]}")
+        print(f"\nSample (last 2 rows):")
+        print(data.tail(2))
+    except DataOutageError as e:
+        print(f"FAILED: {e}")

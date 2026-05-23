@@ -40,6 +40,7 @@ Changes from v3.3 (medium bug fixes):
 import pandas as pd
 import json
 import os
+import sys
 import datetime
 import warnings
 from dataclasses import dataclass, asdict
@@ -58,6 +59,9 @@ from strategies.stretch import apply_stretch_strategy
 from autopilot.logger import load_portfolio
 
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from autopilot.correlation_filter import CorrelationFilter
+from autopilot.kelly_position_sizing import KellyPositionSizer
 
 
 # ── ATR + position sizing ─────────────────────────────────────────────────────
@@ -485,6 +489,15 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         # Gate 3   → ATR sizing + confidence classification
         # ══════════════════════════════════════════════════════════════════
         if latest_signal == 1:
+            
+            corr_ok, corr_reason = CorrelationFilter.check(
+                ticker=ticker,
+                portfolio=portfolio,
+                full_market_data=full_market_data
+            )
+            if not corr_ok:
+                print(f"  {ticker}: SKIP — {corr_reason}")
+                continue
 
             # ── Gate 1: Regime ────────────────────────────────────────────
             if not is_uptrend:
@@ -564,13 +577,28 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 today_vol, avg_vol = 0.0, 0.0
 
             # ── Gate 3: ATR sizing + confidence classification ─────────────
-            atr            = calculate_atr(df)
-            suggested_qty  = calculate_position_size(effective_capital, atr)
+                       # ── Gate 3: Kelly + ATR sizing + confidence classification ────
+            atr = calculate_atr(df)
+
+            suggested_qty, sizing_reason = KellyPositionSizer.calculate(
+                ticker=ticker,
+                portfolio=portfolio,
+                optimal_params=optimized_params,   # satisfies signature; unused internally today
+                atr=atr,
+                current_price=latest_price,
+                mode=mode,
+                capital=effective_capital          # uses your override / portfolio value
+            )
             estimated_cost = suggested_qty * latest_price
+            # Actual rupee risk at risk-per-share = ATR × 2
+            risk_per_trade_inr = suggested_qty * atr * 2.0 if suggested_qty > 0 else 0.0
 
             confidence_tier, reason = classify_buy_confidence(
                 stability, weight_pct, current_qty, cash, estimated_cost
             )
+
+            # Append Kelly info to the reason string
+            reason = f"{reason} | {sizing_reason}"
 
             # Apply macro downgrade: HIGH → MEDIUM if any macro flag fired
             if macro_downgrade_reason and confidence_tier == "HIGH":
@@ -599,7 +627,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 ticker=ticker, signal_type="BUY", price=latest_price,
                 strategy=strat_type, expected_return=plan.get('expected_return', 0),
                 stability_score=stability, confidence_tier=confidence_tier,
-                suggested_qty=suggested_qty, risk_per_trade_inr=effective_capital * 0.01,
+                suggested_qty=suggested_qty, risk_per_trade_inr=risk_per_trade_inr,
                 current_holdings=current_qty, portfolio_weight_pct=weight_pct,
                 reason=aug_reason, atr_14d=atr, cash_required=estimated_cost,
             ))
