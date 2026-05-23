@@ -12,7 +12,7 @@ Usage:
 import json
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 
 class KellyPositionSizer:
     """
@@ -37,7 +37,8 @@ class KellyPositionSizer:
         optimal_params: Dict,
         atr: float,
         current_price: float,
-        mode: str = "CONSERVATIVE"
+        mode: str = "CONSERVATIVE",
+        capital: Optional[float] = None
     ) -> Tuple[int, str]:
         """
         Calculate position size using Kelly Criterion.
@@ -45,7 +46,7 @@ class KellyPositionSizer:
         Returns:
             (quantity: int, reason: str)
         """
-        capital = portfolio.get("cash", 100000.0)
+        capital = capital if capital is not None else portfolio.get("cash", 100000.0)
 
         # Validate inputs
         if atr <= 0 or current_price <= 0:

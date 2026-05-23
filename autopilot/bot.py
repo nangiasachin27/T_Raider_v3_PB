@@ -492,7 +492,8 @@ def check_stop_losses(tickers, full_market_data, hard_stop_pct=0.10):
 
 def rotate_capital_for_buy(buy_signals, full_market_data,
                            portfolio, total_baseline_wealth,
-                           optimized_params: dict):
+                           optimized_params: dict,
+                           mode: str = "CONSERVATIVE"):
     """
     Enhanced capital rotation:
     1. If cash insufficient for buy signal → sell weakest holding
@@ -721,7 +722,8 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
     # ── PHASE 1.5: CAPITAL ROTATION ───────────────────────────────────
     portfolio, rotations = rotate_capital_for_buy(
         buy_signals, full_market_data, portfolio,
-        total_baseline_wealth, optimized_params
+        total_baseline_wealth, optimized_params,
+        mode=mode
     )
 
     # ── PHASE 2: ENTRIES ──────────────────────────────────────────────

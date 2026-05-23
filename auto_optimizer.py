@@ -1,17 +1,33 @@
 """
-auto_optimizer.py  (v3 — Data-Driven Survivorship Bias Fix)
+auto_optimizer.py (v3.1 — Walk-Forward + Sharpe Fixes)
 ─────────────────────────────────────────────────────────────
-Changes from v2:
-  • Works with ANY universe in stocks.json — not just Nifty 50.
-  • Survivorship bias fix is data-driven: each ticker's backtest window is
-    clipped to the actual date range where price data exists, so a stock
-    listed in 2021 is never tested on 2019 data.
-  • Universe validation runs upfront and prints a clear report of which
-    tickers have enough history to optimize.
-  • optimal_params.json now stores data_start, data_end, optimized_on.
-  • walk_forward_validate() no longer needs ticker/all_tickers args —
-    the PIT clipping happens at the data level before it's called.
-  • Everything else (block-MC, composite scoring) unchanged from v2.
+
+BUG FIX 3 — walk_forward_validate() stepped by test_days only, causing
+massive overlap between training windows of consecutive folds.
+
+Example (train=756d, test=252d):
+  BEFORE: Fold 1 trains on days 0-756. Fold 2 trains on days 252-1008.
+          504 days of training data SHARED between folds.
+          Stability scores were inflated — strategies appeared validated
+          on more independent data than they actually were.
+
+  AFTER:  Fold 1 trains on days 0-756, tests 756-1008.
+          Fold 2 trains on days 1008-1764, tests 1764-2016.
+          Zero overlap. True walk-forward.
+
+FIX: start += train_days + test_days  (was: start += test_days)
+
+BUG FIX 4 — _compute_sharpe() used trade count as risk-free rate proxy.
+A strategy with 50 trades got rf=0.13%/trade; one with 5 trades got
+rf=1.3%/trade — 10x penalty on low-frequency strategies regardless of
+actual holding period or real returns. This systematically biased the
+composite_score against Trend Follower and toward RSI/Breakout.
+
+FIX: Use average holding period in days to compute per-trade rf rate.
+  rf_per_trade = risk_free_annual * (avg_hold_days / 365)
+Requires trade dicts to carry entry_date / exit_date, which SimpleBacktester
+already records. If dates are missing, falls back gracefully to the old
+count-based method with a warning.
 """
 
 import itertools
@@ -34,7 +50,7 @@ from strategies.stretch import apply_stretch_strategy
 from engine.backtester import SimpleBacktester
 
 
-# ── Monte Carlo — Block Resampling (unchanged from v2) ───────────────────────
+# ── Monte Carlo — Block Resampling (unchanged) ────────────────────────────────
 
 def run_monte_carlo_filter(trade_logs, num_sims=1000, block_size=None):
     if not trade_logs or len(trade_logs) < 5:
@@ -47,23 +63,61 @@ def run_monte_carlo_filter(trade_logs, num_sims=1000, block_size=None):
         block_size = max(2, int(np.floor(np.sqrt(n))))
     profitable_sims = 0
     for _ in range(num_sims):
-        num_blocks    = int(np.ceil(n / block_size))
+        num_blocks   = int(np.ceil(n / block_size))
         start_indices = np.random.randint(0, n - block_size + 1, size=num_blocks)
-        sim_path      = np.concatenate([returns[i: i + block_size] for i in start_indices])[:n]
+        sim_path     = np.concatenate([returns[i: i + block_size] for i in start_indices])[:n]
         if np.prod(1 + sim_path) > 1.0:
             profitable_sims += 1
     return (profitable_sims / num_sims) * 100
 
 
-# ── Metrics helpers (unchanged from v2) ──────────────────────────────────────
+# ── Metrics helpers ───────────────────────────────────────────────────────────
 
 def _compute_sharpe(trade_logs, risk_free_annual=0.065):
+    """
+    BUG FIX 4: Compute Sharpe using actual average holding period,
+    not trade count, for the per-trade risk-free rate.
+
+    Old code:
+        rf_per_trade = risk_free_annual / max(1, len(trade_logs))
+        Problem: 50 trades → rf=0.13%/trade; 5 trades → rf=1.3%/trade.
+        Low-frequency strategies (Trend, Breakout) penalised 10x more.
+
+    New code:
+        avg_hold_days = mean(exit_date - entry_date) across all trades
+        rf_per_trade  = risk_free_annual * (avg_hold_days / 365)
+        Fallback to count-based if dates not in trade dicts.
+    """
     if not trade_logs or len(trade_logs) < 2:
         return 0.0
-    rets = np.array([(t['exit_price'] - t['entry_price']) / t['entry_price'] for t in trade_logs])
-    # Trade-level Sharpe: no sqrt(252) because trades are not daily.
-    # Approximate per-trade risk-free as annual / number of trades (uniformity assumption)
-    rf_per_trade = risk_free_annual / max(1, len(trade_logs))
+
+    rets = np.array(
+        [(t['exit_price'] - t['entry_price']) / t['entry_price'] for t in trade_logs]
+    )
+
+    # FIX 4: use average holding period for risk-free rate
+    hold_days_list = []
+    for t in trade_logs:
+        try:
+            entry_dt = pd.to_datetime(t['entry_date'])
+            exit_dt  = pd.to_datetime(t['exit_date'])
+            hold_days_list.append((exit_dt - entry_dt).days)
+        except (KeyError, TypeError, ValueError):
+            pass  # date fields missing — will fall back
+
+    if hold_days_list:
+        avg_hold_days = float(np.mean(hold_days_list))
+        rf_per_trade  = risk_free_annual * (avg_hold_days / 365.0)
+    else:
+        # Fallback: old count-based method (with a warning)
+        import warnings
+        warnings.warn(
+            "_compute_sharpe: trade dicts missing entry_date/exit_date — "
+            "falling back to count-based risk-free rate. "
+            "Update SimpleBacktester to record dates for accurate Sharpe."
+        )
+        rf_per_trade = risk_free_annual / max(1, len(trade_logs))
+
     excess = rets - rf_per_trade
     if excess.std() == 0:
         return 0.0
@@ -83,9 +137,9 @@ def _compute_max_drawdown(trade_logs):
 
 
 def _composite_score(ann_return, sharpe, max_dd):
-    norm_sharpe = np.clip((sharpe + 5) / 10, 0, 1)
-    norm_return = np.clip((ann_return + 100) / 200, 0, 1)
-    norm_inv_dd = np.clip(1 - max_dd / 100, 0, 1)
+    norm_sharpe  = np.clip((sharpe + 5) / 10, 0, 1)
+    norm_return  = np.clip((ann_return + 100) / 200, 0, 1)
+    norm_inv_dd  = np.clip(1 - max_dd / 100, 0, 1)
     return 0.5 * norm_sharpe + 0.3 * norm_return + 0.2 * norm_inv_dd
 
 
@@ -95,40 +149,53 @@ def _run_strategy(name, func, params, price):
     return func(price, **params)
 
 
-# ── Walk-Forward Validation (unchanged from v2 — PIT clipping is now upstream) ─
+# ── Walk-Forward Validation ───────────────────────────────────────────────────
 
 def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
-                          train_years=3, test_years=1, mc_threshold=60.0):
+                           train_years=3, test_years=1, mc_threshold=60.0):
     """
-    Rolling walk-forward validation.
+    BUG FIX 3: Non-overlapping walk-forward folds.
 
-    Survivorship bias is handled UPSTREAM — df is already clipped to the
-    period where this stock has real data before this function is called.
-    This function no longer needs to know about index membership.
+    BEFORE (broken):
+        start += test_days
+        → Fold 2 training overlapped 75% with Fold 1 training.
+        → Stability scores were inflated across ALL strategies.
+        → optimal_params.json stability figures were overconfident.
+
+    AFTER (fixed):
+        start += train_days + test_days
+        → Each fold is completely independent of the previous.
+        → Fewer folds per stock (honest), but each fold is truly OOS.
+        → Stability scores now reflect genuine out-of-sample performance.
+
+    NOTE: After applying this fix, re-run auto_optimizer.py to rebuild
+    optimal_params.json. Existing stability scores are overstated.
     """
-    price = df[price_col].copy()
+    price       = df[price_col].copy()
     price.index = pd.to_datetime(price.index)
+    total_days  = len(price)
 
-    total_days = len(price)
-    # Adaptive windows: at least 6 months train, 3 months test
     train_days = min(int(train_years * 252), int(total_days * 0.6))
-    test_days = min(int(test_years * 252), int(total_days * 0.2))
+    test_days  = min(int(test_years  * 252), int(total_days * 0.2))
 
-    if train_days < 126 or test_days < 63:  # 6mo / 3mo minimum
+    if train_days < 126 or test_days < 63:
         return {'passed': False}
 
     oos_metrics = []
-    fold_count = 0
-    start = 0
+    fold_count  = 0
+    start       = 0
 
     while start + train_days + test_days <= total_days:
+
         # Training fold
         train_price = price.iloc[start: start + train_days]
         train_sig   = _run_strategy(strategy_name, strategy_func, params, train_price)
         bt_train    = SimpleBacktester(stop_loss_pct=0.10)
         bt_train.run(train_sig)
+
         if run_monte_carlo_filter(bt_train.trades) < mc_threshold:
-            start += test_days
+            # Training fold failed MC — skip to next non-overlapping window
+            start += train_days + test_days   # FIX 3
             continue
 
         # Out-of-sample fold
@@ -136,31 +203,33 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
         test_sig   = _run_strategy(strategy_name, strategy_func, params, test_price)
         bt_test    = SimpleBacktester(stop_loss_pct=0.10)
         bt_test.run(test_sig)
-        test_mc    = run_monte_carlo_filter(bt_test.trades)
 
+        test_mc = run_monte_carlo_filter(bt_test.trades)
         if test_mc < mc_threshold:
-            start += test_days
+            start += train_days + test_days   # FIX 3
             continue
 
         metrics = bt_test.get_metrics(test_sig)
         oos_metrics.append({
             'oos_return': float(metrics['Post-Tax Annualized'].replace('%', '')),
-            'oos_sharpe': _compute_sharpe(bt_test.trades),
+            'oos_sharpe': _compute_sharpe(bt_test.trades),    # FIX 4 applied here
             'oos_max_dd': _compute_max_drawdown(bt_test.trades),
             'oos_mc':     test_mc,
         })
         fold_count += 1
-        start      += test_days
+
+        # FIX 3: advance by full window so next fold is non-overlapping
+        start += train_days + test_days
 
     if not oos_metrics:
         return {'passed': False}
 
     return {
-        'passed':       True,
-        'oos_return':   float(np.mean([m['oos_return'] for m in oos_metrics])),
-        'oos_sharpe':   float(np.mean([m['oos_sharpe'] for m in oos_metrics])),
-        'oos_max_dd':   float(np.mean([m['oos_max_dd'] for m in oos_metrics])),
-        'oos_mc':       float(np.mean([m['oos_mc']     for m in oos_metrics])),
+        'passed':      True,
+        'oos_return':  float(np.mean([m['oos_return'] for m in oos_metrics])),
+        'oos_sharpe':  float(np.mean([m['oos_sharpe'] for m in oos_metrics])),
+        'oos_max_dd':  float(np.mean([m['oos_max_dd'] for m in oos_metrics])),
+        'oos_mc':      float(np.mean([m['oos_mc']     for m in oos_metrics])),
         'folds_passed': fold_count,
     }
 
@@ -168,46 +237,34 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
 # ── Main optimizer ────────────────────────────────────────────────────────────
 
 def optimize_hybrid_universe(tickers=None):
-    """
-    Optimizes the full universe defined in config/stocks.json.
-
-    Args:
-        tickers : Optional list override. If None, reads from stocks.json.
-                  Passing tickers explicitly (e.g. from main.py) is still
-                  supported for backward compatibility.
-    """
-    print("🧬 T_RAIDER HYBRID OPTIMIZER v3 — Data-Driven Universe + Walk-Forward + Sharpe Scoring")
+    print("🧬 T_RAIDER HYBRID OPTIMIZER v3.1 — Walk-Forward + Sharpe Fix")
     print("=" * 80)
 
-    # ── Step 1: Load universe from stocks.json ────────────────────────────
     if tickers is None:
         tickers = load_universe()
     print(f"📋 Universe: {len(tickers)} tickers loaded from config/stocks.json")
 
-    # ── Step 2: Fetch full price history ─────────────────────────────────
     print("\n📥 Fetching 5-year price history for full universe…")
     full_data = fetch_historical_data(tickers, period="5y")
 
-    # ── Step 3: Validate universe — data-driven survivorship bias check ───
     print("\n🔍 Validating universe against actual price data…")
     universe_report = validate_universe(tickers, full_data, min_days=500)
     print_universe_report(universe_report)
     save_universe_report(universe_report)
 
-    # Only optimize tickers with sufficient data
     eligible = [t for t, v in universe_report.items() if v['status'] == 'ok']
     print(f"✅ {len(eligible)} tickers eligible for optimization.\n")
 
     strategies = [
-        ("TREND",      apply_golden_cross_strategy, [{}]),
-        ("MACD",       apply_macd_strategy,         [{"fast": 12, "slow": 26, "signal": 9}]),
+        ("TREND",     apply_golden_cross_strategy, [{}]),
+        ("MACD",      apply_macd_strategy,          [{"fast": 12, "slow": 26, "signal": 9}]),
         ("VOLATILITY", apply_bollinger_strategy,    [{}]),
-        ("RSI",        apply_rsi_strategy,          [
+        ("RSI",       apply_rsi_strategy, [
             {"window": w, "buy": b, "sell": s}
             for w, b, s in itertools.product([14, 21], [30, 35], [70, 80])
         ]),
-        ("BREAKOUT",   apply_breakout_strategy,     [{"window": w} for w in [20, 50]]),
-        ("STRETCH",    apply_stretch_strategy,       [
+        ("BREAKOUT",  apply_breakout_strategy,  [{"window": w} for w in [20, 50]]),
+        ("STRETCH",   apply_stretch_strategy,   [
             {"window": 20, "threshold": d} for d in [0.03, 0.05, 0.07]
         ]),
     ]
@@ -217,29 +274,24 @@ def optimize_hybrid_universe(tickers=None):
 
     for ticker in eligible:
         print(f"\nOptimising {ticker}…")
-
-        meta = universe_report[ticker]
-        df   = get_stock_data(full_data, ticker)
-
+        meta     = universe_report[ticker]
+        df       = get_stock_data(full_data, ticker)
         price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
 
-        # ── SURVIVORSHIP BIAS FIX: clip to actual data window ─────────────
-        # This is the key fix. By clipping to data_start, a stock that was
-        # listed in 2021 can never be backtested on 2019–2020 data.
-        # No hardcoded index membership needed — the data itself is the truth.
+        # Survivorship bias fix: clip to actual data window
         df = df.loc[str(meta['data_start']): str(meta['data_end'])]
-
         if len(df) < 500:
-            print(f"  ⚠️  Skipping after clip — only {len(df)} rows.")
+            print(f"  ⚠️ Skipping after clip — only {len(df)} rows.")
             continue
 
-        best_score     = -999
-        winning_strat  = "NONE"
+        best_score    = -999
+        winning_strat = "NONE"
         winning_params = {}
-        winning_wf     = {}
+        winning_wf    = {}
 
         for name, func, param_grid in strategies:
             for p in param_grid:
+                # FIX 3 + FIX 4 applied inside walk_forward_validate
                 wf = walk_forward_validate(df, price_col, name, func, p)
                 if not wf['passed']:
                     continue
@@ -253,13 +305,12 @@ def optimize_hybrid_universe(tickers=None):
         master_plan[ticker] = {
             "strategy":        winning_strat,
             "params":          winning_params,
-            "expected_return": round(winning_wf.get('oos_return', 0), 2),
-            "sharpe_ratio":    round(winning_wf.get('oos_sharpe', 0), 3),
+            "expected_return": round(winning_wf.get('oos_return', 0),  2),
+            "sharpe_ratio":    round(winning_wf.get('oos_sharpe', 0),  3),
             "max_drawdown":    round(winning_wf.get('oos_max_dd', 100), 2),
-            "stability_score": round(winning_wf.get('oos_mc', 0), 1),
+            "stability_score": round(winning_wf.get('oos_mc', 0),      1),
             "folds_passed":    winning_wf.get('folds_passed', 0),
             "composite_score": round(best_score, 4),
-            # Traceability — when was this stock's data window?
             "data_start":      str(meta['data_start']),
             "data_end":        str(meta['data_end']),
             "data_rows":       meta['num_rows'],
@@ -277,18 +328,16 @@ def optimize_hybrid_universe(tickers=None):
             f"Data: {meta['data_start']} → {meta['data_end']}"
         )
 
-    # ── Save results ──────────────────────────────────────────────────────
     os.makedirs('config', exist_ok=True)
     with open('config/optimal_params.json', 'w') as f:
         json.dump(master_plan, f, indent=4)
 
-    accepted  = sum(1 for v in master_plan.values() if v['strategy'] != 'NONE')
+    accepted = sum(1 for v in master_plan.values() if v['strategy'] != 'NONE')
     print(f"\n✅ Done. {accepted}/{len(eligible)} eligible stocks passed all filters.")
     print(f"📄 Saved to config/optimal_params.json")
-    print(f"📄 Universe report at config/universe_report.json")
-    print(f"\n📉 NOTE: OOS returns are honest (PIT-clipped data).")
-    print(f"   Stocks with shorter history have fewer WF folds — stability scores")
-    print(f"   for recently-listed stocks should be treated with more caution.")
+    print(f"\n⚠️  NOTE: Walk-forward folds are now non-overlapping (v3.1 fix).")
+    print(f"    Stability scores will be LOWER than v3.0 — this is correct.")
+    print(f"    Previous optimal_params.json scores were overstated.")
 
 
 if __name__ == "__main__":

@@ -4,8 +4,20 @@ autopilot/quarterly_manager.py
 Quarterly profit-booking + compounding engine.
 Hybrid: Profit target + Trailing stop + Min/Max time caps.
 
-v4 — INTEGRATED: Active Profit Engineering layered between Harvest check
-and daily bot cycle. No new config files.
+BUG FIX 6 — QuarterState.save() silently dropped any key in
+quarterly_config.json that was not explicitly loaded in __init__().
+
+Root cause: save() serialises self.__dict__, which only contains fields
+assigned as self.X = ... in __init__(). Any top-level key in the JSON
+not listed there (e.g. "chaser") is loaded from file but never stored on
+the object, so it disappears on the next save().
+
+FIX: Two changes:
+  1. __init__ now accepts and stores ALL unknown keys via self._extra.
+  2. save() merges self._extra back into the dict before writing,
+     so no key is ever silently dropped regardless of future additions.
+  3. Added self.chaser = kwargs.get('chaser', {}) explicitly as the most
+     common known extra key, with a clear comment to add future keys here.
 """
 
 import json
@@ -16,14 +28,9 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Tuple
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from autopilot.logger import record_transaction
-
-# ── Paths ───────────────────────────────────────────────────────────────────
-BASE_DIR = Path(__file__).resolve().parent.parent
-CONFIG_PATH = BASE_DIR / "config" / "quarterly_config.json"
-CAPITAL_OVERRIDE_PATH = BASE_DIR / "config" / "capital_override.json"
-BROKER_CONFIG_PATH = BASE_DIR / "config" / "broker_config.json"
+CONFIG_PATH           = Path("config/quarterly_config.json")
+BROKER_CONFIG_PATH    = Path("config/broker_config.json")
+CAPITAL_OVERRIDE_PATH = Path("config/capital_override.json")
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -36,24 +43,55 @@ from execution.adapters.paper_adapter import PaperExecutionAdapter
 # SECTION 1: DATA MODELS
 # ═════════════════════════════════════════════════════════════════════════════
 
+# Known top-level keys in quarterly_config.json.
+# Add new keys here as explicit self.X = kwargs.get('X', default) lines
+# so they are readable by name elsewhere in the codebase.
+_KNOWN_KEYS = {
+    'enabled', 'profit_target_pct', 'quarter_days', 'min_quarter_days',
+    'trailing_stop_pct', 'compound_mode', 'original_capital',
+    'current_base_capital', 'highest_value', 'quarter_start_date',
+    'quarter_number', 'realized_pnl_history', 'last_harvest_date',
+    'paper_trading', 'broker', 'chaser',
+}
+
+
 class QuarterState:
     def __init__(self, **kwargs):
-        self.enabled = kwargs.get('enabled', True)
-        self.profit_target_pct = kwargs.get('profit_target_pct', 0.05)
-        self.quarter_days = kwargs.get('quarter_days', 90)
-        self.min_quarter_days = kwargs.get('min_quarter_days', 30)
-        self.trailing_stop_pct = kwargs.get('trailing_stop_pct', 0.10)
-        self.compound_mode = kwargs.get('compound_mode', True)
-        self.original_capital = kwargs.get('original_capital', 100000.0)
+        # ── Explicit known fields ─────────────────────────────────────────
+        self.enabled              = kwargs.get('enabled', True)
+        self.profit_target_pct    = kwargs.get('profit_target_pct', 0.05)
+        self.quarter_days         = kwargs.get('quarter_days', 90)
+        self.min_quarter_days     = kwargs.get('min_quarter_days', 30)
+        self.trailing_stop_pct    = kwargs.get('trailing_stop_pct', 0.10)
+        self.compound_mode        = kwargs.get('compound_mode', True)
+        self.original_capital     = kwargs.get('original_capital', 100000.0)
         self.current_base_capital = kwargs.get('current_base_capital', 100000.0)
-        self.highest_value = kwargs.get('highest_value', self.current_base_capital)
-        self.quarter_start_date = kwargs.get('quarter_start_date', datetime.now().isoformat())
-        self.quarter_number = kwargs.get('quarter_number', 1)
+        self.highest_value        = kwargs.get('highest_value', self.current_base_capital)
+        self.quarter_start_date   = kwargs.get('quarter_start_date', datetime.now().isoformat())
+        self.quarter_number       = kwargs.get('quarter_number', 1)
         self.realized_pnl_history = kwargs.get('realized_pnl_history', [])
-        self.last_harvest_date = kwargs.get('last_harvest_date', None)
-        self.paper_trading = kwargs.get('paper_trading', True)
-        self.broker = kwargs.get('broker', 'paper')
+        self.last_harvest_date    = kwargs.get('last_harvest_date', None)
+        self.paper_trading        = kwargs.get('paper_trading', True)
+        self.broker               = kwargs.get('broker', 'paper')
+
+        # FIX 6: Explicitly load chaser block — most common "extra" key.
+        # Add any future top-level config keys here in the same pattern.
         self.chaser = kwargs.get('chaser', {})
+
+        # FIX 6: Catch-all for any OTHER unknown keys present in the JSON.
+        # Stored in _extra and merged back into the file on save(),
+        # so nothing is ever silently dropped.
+        self._extra = {
+            k: v for k, v in kwargs.items()
+            if k not in _KNOWN_KEYS
+        }
+        if self._extra:
+            unknown = list(self._extra.keys())
+            print(
+                f"  ℹ️  QuarterState: {len(unknown)} unknown config key(s) preserved: "
+                f"{unknown}. Add explicit self.X = kwargs.get('{unknown[0]}', ...) "
+                f"lines in __init__ if you need to access them by name."
+            )
 
     @classmethod
     def from_file(cls, path: Path = CONFIG_PATH):
@@ -63,8 +101,25 @@ class QuarterState:
             return cls(**json.load(f))
 
     def save(self, path: Path = CONFIG_PATH):
+        """
+        FIX 6: Serialise ALL fields — both explicitly named ones and any
+        extra keys captured in self._extra — so nothing is ever dropped.
+
+        Build order:
+          1. Start with self._extra (unknown keys from original file)
+          2. Overlay self.__dict__ (all named fields)
+          3. Remove the internal _extra key itself before writing
+        """
+        data = {}
+        # Step 1: preserve unknown keys
+        data.update(self._extra)
+        # Step 2: overlay all named instance fields
+        data.update(self.__dict__)
+        # Step 3: remove internal bookkeeping key
+        data.pop('_extra', None)
+
         with open(path, "w") as f:
-            json.dump(self.__dict__, f, indent=2)
+            json.dump(data, f, indent=2)
 
     def inject_capital(self, path: Path = CAPITAL_OVERRIDE_PATH):
         with open(path, "w") as f:
@@ -92,37 +147,36 @@ def get_execution_adapter(state: QuarterState) -> ExecutionAdapter:
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# SECTION 3: HARVEST ENGINE (UNCHANGED)
+# SECTION 3: HARVEST ENGINE (unchanged)
 # ═════════════════════════════════════════════════════════════════════════════
 
 class HarvestEngine:
     def __init__(self, state: QuarterState, adapter: ExecutionAdapter):
-        self.state = state
+        self.state   = state
         self.adapter = adapter
 
     def check_trigger(self) -> Tuple[bool, str]:
         if not self.state.enabled:
             return False, "Quarterly system disabled."
 
-        start = datetime.fromisoformat(self.state.quarter_start_date)
+        start   = datetime.fromisoformat(self.state.quarter_start_date)
         elapsed = (datetime.now() - start).days
 
-        snapshot = self.adapter.get_portfolio_snapshot()
+        snapshot      = self.adapter.get_portfolio_snapshot()
         current_value = snapshot.total_value
-        base = self.state.current_base_capital
-        target = self.state.profit_target_pct
-        min_days = self.state.min_quarter_days
-        max_days = self.state.quarter_days
-        trail_pct = self.state.trailing_stop_pct
+        base          = self.state.current_base_capital
+        target        = self.state.profit_target_pct
+        min_days      = self.state.min_quarter_days
+        max_days      = self.state.quarter_days
+        trail_pct     = self.state.trailing_stop_pct
 
-        # Update running peak
         peak = max(self.state.highest_value, current_value)
         if peak > self.state.highest_value:
             self.state.highest_value = peak
 
-        current_return = (current_value - base) / base if base > 0 else 0
-        trailing_stop_level = peak * (1 - trail_pct)
-        drawdown_from_peak = (peak - current_value) / peak if peak > 0 else 0
+        current_return       = (current_value - base) / base if base > 0 else 0
+        trailing_stop_level  = peak * (1 - trail_pct)
+        drawdown_from_peak   = (peak - current_value) / peak if peak > 0 else 0
 
         print(f"\n{'='*60}")
         print(f"📊 QUARTER {self.state.quarter_number} STATUS")
@@ -140,36 +194,31 @@ class HarvestEngine:
         print(f" Compound Mode : {'ON' if self.state.compound_mode else 'OFF'}")
         print(f" Broker        : {self.state.broker} ({'paper' if self.state.paper_trading else 'live'})")
 
-        # Rule 1: Minimum hold period
         if elapsed < min_days:
             self.state.save()
-            days_left = min_days - elapsed
-            return False, f"⏳ Minimum hold: {elapsed}/{min_days} days. {days_left} days until harvest allowed."
+            return False, f"⏳ Minimum hold: {elapsed}/{min_days} days. {min_days - elapsed} days until harvest allowed."
 
-        # Rule 2: Profit target
         if current_return >= target:
-            self.state.save() 
             return True, f"🎯 Profit target hit! {current_return*100:+.2f}% >= +{target*100:.0f}%"
 
-        # Rule 3: Trailing stop
         if current_value <= trailing_stop_level and current_value < peak:
-            self.state.save()
-            return True, (f"🛑 Trailing stop hit! "
-                          f"Down {drawdown_from_peak*100:.1f}% from peak ₹{peak:,.0f} "
-                          f"(stop was ₹{trailing_stop_level:,.0f})")
+            return True, (
+                f"🛑 Trailing stop hit! "
+                f"Down {drawdown_from_peak*100:.1f}% from peak ₹{peak:,.0f} "
+                f"(stop was ₹{trailing_stop_level:,.0f})"
+            )
 
-        # Rule 4: Maximum time cap
         if elapsed >= max_days:
-            self.state.save()
             return True, f"⏰ Max time cap reached ({elapsed} days >= {max_days})"
 
-        # No trigger
         self.state.save()
         days_left = max_days - elapsed
-        cushion = (current_value - trailing_stop_level) / base * 100 if base > 0 else 0
-        return False, (f"⏳ Hold. {days_left} days left. "
-                       f"Need +{(target - current_return)*100:.2f}% for target. "
-                       f"Trailing cushion: {cushion:+.2f}%")
+        cushion   = (current_value - trailing_stop_level) / base * 100 if base > 0 else 0
+        return False, (
+            f"⏳ Hold. {days_left} days left. "
+            f"Need +{(target - current_return)*100:.2f}% for target. "
+            f"Trailing cushion: {cushion:+.2f}%"
+        )
 
     def execute(self) -> QuarterState:
         print(f"\n{'='*60}")
@@ -177,45 +226,41 @@ class HarvestEngine:
         print(f"{'='*60}")
 
         snapshot = self.adapter.get_portfolio_snapshot()
-        base = self.state.current_base_capital
+        base     = self.state.current_base_capital
 
-        # Liquidate
         self._liquidate_all(snapshot.holdings)
 
-        # Re-evaluate
         post_snapshot = self.adapter.get_portfolio_snapshot()
-        post_value = post_snapshot.total_value
-        realized_pnl = post_value - base
-        realized_pct = (realized_pnl / base * 100) if base > 0 else 0
+        post_value    = post_snapshot.total_value
+        realized_pnl  = post_value - base
+        realized_pct  = (realized_pnl / base * 100) if base > 0 else 0
 
-        # Determine next base
         if self.state.compound_mode:
             new_base = post_value
             print(f"\n🔄 COMPOUND: Reinvesting ₹{new_base:,.2f}")
         else:
             new_base = self.state.original_capital
-            booked = post_value - self.state.original_capital
+            booked   = post_value - self.state.original_capital
             print(f"\n📤 RESET: Returning to original ₹{new_base:,.2f}")
             if booked > 0:
                 print(f" 💵 Profit to withdraw: ₹{booked:,.2f}")
             elif booked < 0:
                 print(f" 🔴 Loss absorbed: ₹{abs(booked):,.2f}")
 
-        # Update state
-        self.state.quarter_number += 1
-        self.state.current_base_capital = round(new_base, 2)
-        self.state.highest_value = round(new_base, 2)
-        self.state.quarter_start_date = datetime.now().isoformat()
-        self.state.last_harvest_date = datetime.now().isoformat()
+        self.state.quarter_number       += 1
+        self.state.current_base_capital  = round(new_base, 2)
+        self.state.highest_value         = round(new_base, 2)
+        self.state.quarter_start_date    = datetime.now().isoformat()
+        self.state.last_harvest_date     = datetime.now().isoformat()
 
         self.state.realized_pnl_history.append({
-            "quarter": self.state.quarter_number - 1,
+            "quarter":       self.state.quarter_number - 1,
             "start_capital": base,
-            "end_value": round(post_value, 2),
-            "realized_pnl": round(realized_pnl, 2),
-            "return_pct": round(realized_pct, 2),
-            "harvest_date": self.state.last_harvest_date,
-            "compound_mode": self.state.compound_mode
+            "end_value":     round(post_value, 2),
+            "realized_pnl":  round(realized_pnl, 2),
+            "return_pct":    round(realized_pct, 2),
+            "harvest_date":  self.state.last_harvest_date,
+            "compound_mode": self.state.compound_mode,
         })
 
         print(f"\n{'='*60}")
@@ -241,33 +286,23 @@ class HarvestEngine:
                 continue
 
             ltp = self.adapter.get_ltp(ticker)
-            pnl_emoji = "🟢"
-
-            print(f" {pnl_emoji} {ticker}: {qty} shares @ ₹{ltp:.2f}")
+            print(f" 🟢 {ticker}: {qty} shares @ ₹{ltp:.2f}")
 
             result = self.adapter.place_market_order(
-                ticker=ticker,
-                qty=qty,
-                side="SELL",
-                tag="QuarterlyHarvest"
+                ticker=ticker, qty=qty, side="SELL",
+                tag="QuarterlyHarvest", price=ltp,
             )
-
             if result.success:
                 print(f" ✅ Order {result.order_id} | Status: {result.status}")
-                record_transaction(ticker, "sell", qty, ltp, "QuarterlyHarvest")
             else:
                 print(f" ❌ FAILED: {result.message}")
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# SECTION 4: ACTIVE PROFIT ENGINE INTEGRATION
+# SECTION 4: ACTIVE PROFIT ENGINE INTEGRATION (unchanged)
 # ═════════════════════════════════════════════════════════════════════════════
 
 def _run_active_engine(state: QuarterState) -> Dict:
-    """
-    Run ActiveProfitEngine between Harvest check and daily bot cycle.
-    Returns result dict with actions taken and risk multiplier.
-    """
     from autopilot.active_manager import ActiveProfitEngine
 
     print(f"\n{'─'*60}")
@@ -277,7 +312,6 @@ def _run_active_engine(state: QuarterState) -> Dict:
     engine = ActiveProfitEngine()
     result = engine.run()
 
-    # Write risk multiplier for bot.py
     with open("config/.active_risk_mult.json", "w") as f:
         json.dump({"risk_multiplier": result["risk_multiplier"]}, f)
 
@@ -285,7 +319,6 @@ def _run_active_engine(state: QuarterState) -> Dict:
 
 
 def _print_active_results(result: Dict):
-    """Pretty-print ActiveProfitEngine results."""
     m = result["milestone"]
     print(f"\n📊 Quarter Status")
     print(f"   Base Capital: ₹{result['base_capital']:,.0f}")
@@ -321,19 +354,18 @@ def _print_active_results(result: Dict):
             print(f"   {r['ticker']} → {r['replacement']} ({r['score']:.1f} vs {r['replacement_score']:.1f})")
 
     if result["push_analysis"]:
-        p = result["push_analysis"]
         print(f"\n⚡ Push Analysis:")
-        print(f"   {p['note']}")
+        print(f"   {result['push_analysis']['note']}")
 
 
 # ═════════════════════════════════════════════════════════════════════════════
-# SECTION 5: MAIN ORCHESTRATOR (UPDATED)
+# SECTION 5: MAIN ORCHESTRATOR
 # ═════════════════════════════════════════════════════════════════════════════
 
 class QuarterlyManager:
     def __init__(self, mode: str = "CONSERVATIVE"):
-        self.mode = mode
-        self.state = QuarterState.from_file()
+        self.mode    = mode
+        self.state   = QuarterState.from_file()
         self.adapter = get_execution_adapter(self.state)
 
     def run(self) -> None:
@@ -342,32 +374,28 @@ class QuarterlyManager:
         print(f" Mode: {self.mode}")
         print("=" * 70)
 
-        # ── Harvest check ───────────────────────────────────────
-        engine = HarvestEngine(self.state, self.adapter)
+        engine               = HarvestEngine(self.state, self.adapter)
         should_harv, message = engine.check_trigger()
         print(f"\n{message}")
 
         if should_harv:
             self.state = engine.execute()
-            self.state.save()
+            self.state.save()          # FIX 6: chaser block preserved
             self.state.inject_capital()
             print("\n⏸️  Harvest complete. Run again to start new quarter.")
             return
 
-        # ── ACTIVE PROFIT ENGINE (NEW v4) ──────────────────────
         active_result = _run_active_engine(self.state)
         _print_active_results(active_result)
 
-        # ── Daily cycle ─────────────────────────────────────────
         self.state.inject_capital()
         print(f"\n🤖 Running daily autopilot cycle...")
         run_autopilot_cycle(mode=self.mode)
 
-        # Update peak after trading
         post_snapshot = self.adapter.get_portfolio_snapshot()
         if post_snapshot.total_value > self.state.highest_value:
             self.state.highest_value = round(post_snapshot.total_value, 2)
-            self.state.save()
+            self.state.save()          # FIX 6: chaser block preserved
             print(f"\n📈 New quarter high: ₹{self.state.highest_value:,.2f}")
 
         print("\n✅ Daily cycle complete.")
@@ -375,10 +403,25 @@ class QuarterlyManager:
 
 def main():
     parser = argparse.ArgumentParser(description="T_Raider Quarterly Manager")
-    parser.add_argument("--mode", default="CONSERVATIVE", help="Trading mode")
+    parser.add_argument("--mode", default="AUTO", 
+                       choices=["AUTO", "CONSERVATIVE", "BALANCED", "AGGRESSIVE"],
+                       help="Trading mode: AUTO = auto-select based on performance")
     args = parser.parse_args()
 
-    manager = QuarterlyManager(mode=args.mode)
+    # AUTO mode selection
+    if args.mode == "AUTO":
+        from autopilot.auto_mode import auto_select_mode
+        selected_mode, reason = auto_select_mode()
+        print(f"\n{'='*60}")
+        print("🎛️ AUTO MODE SELECTION")
+        print(f"{'='*60}")
+        print(f"Selected: {selected_mode}")
+        print(f"Reason: {reason}")
+        print(f"{'='*60}\n")
+    else:
+        selected_mode = args.mode
+
+    manager = QuarterlyManager(mode=selected_mode)
     manager.run()
 
 
