@@ -28,7 +28,7 @@ jobs:
         id: bot_run
         env:
           UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
-        run: python -u autopilot/quarterly_manager.py --mode AGGRESSIVE
+        run: python -u autopilot/quarterly_manager.py --mode AUTO
 
       # ── Generate Reports ────────────────────────────────────────
       - name: Generate Reports
