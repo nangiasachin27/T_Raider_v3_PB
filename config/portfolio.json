@@ -31,12 +31,6 @@
             "entry_date": "2026-05-13",
             "peak_price": 840.15
         },
-        "PNB.NS": {
-            "qty": 56,
-            "entry_price": 102.7699966430664,
-            "entry_date": "2026-05-13",
-            "peak_price": 106.26
-        },
         "CANBK.NS": {
             "qty": 99,
             "entry_price": 127.97000122070312,
@@ -52,6 +46,11 @@
         "LTF.NS": {
             "qty": 18,
             "entry_price": 279.3500061035156,
+            "entry_date": "2026-05-25"
+        },
+        "PNB.NS": {
+            "qty": 56,
+            "entry_price": 106.26000213623047,
             "entry_date": "2026-05-25"
         }
     },
@@ -289,6 +288,24 @@
             "price": 279.3500061035156,
             "strategy": "ATR Sized (ATR:9.5) [AGGRESSIVE]",
             "total": 5028.3
+        },
+        {
+            "timestamp": "2026-05-25 13:38:47",
+            "ticker": "PNB.NS",
+            "side": "sell",
+            "qty": 56,
+            "price": 106.26000213623047,
+            "strategy": "Capital Rotation \u2192 VBL.NS",
+            "total": 5950.56
+        },
+        {
+            "timestamp": "2026-05-25 13:38:47",
+            "ticker": "PNB.NS",
+            "side": "buy",
+            "qty": 56,
+            "price": 106.26000213623047,
+            "strategy": "ATR Sized (ATR:2.6) [BALANCED]",
+            "total": 5950.56
         }
     ]
 }
