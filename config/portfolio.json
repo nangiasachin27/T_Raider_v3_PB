@@ -41,12 +41,13 @@
             "qty": 5,
             "entry_price": 2259.10009765625,
             "entry_date": "2026-05-22",
-            "peak_price": 2337.0
+            "peak_price": 2351.3999
         },
         "LTF.NS": {
             "qty": 18,
             "entry_price": 279.3500061035156,
-            "entry_date": "2026-05-25"
+            "entry_date": "2026-05-25",
+            "peak_price": 282.7
         },
         "PNB.NS": {
             "qty": 56,
