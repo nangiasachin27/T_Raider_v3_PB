@@ -183,7 +183,6 @@ def fetch_historical_data(
         DataOutageError: If all sources fail and cache not allowed/available
     """
     print(f"📊 Fetching {period} data for {len(tickers)} tickers...")
-    
     # ── Source 1: yfinance ────────────────────────────────────────────────
     data = _fetch_yfinance(tickers, period)
     if data is not None:
