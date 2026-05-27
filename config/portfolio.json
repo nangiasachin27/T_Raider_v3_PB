@@ -35,13 +35,13 @@
             "qty": 99,
             "entry_price": 127.97000122070312,
             "entry_date": "2026-05-21",
-            "peak_price": 133.7
+            "peak_price": 134.16
         },
         "GLENMARK.NS": {
             "qty": 5,
             "entry_price": 2259.10009765625,
             "entry_date": "2026-05-22",
-            "peak_price": 2351.3999
+            "peak_price": 2384.8999
         },
         "LTF.NS": {
             "qty": 18,
@@ -52,7 +52,8 @@
         "PNB.NS": {
             "qty": 56,
             "entry_price": 106.26000213623047,
-            "entry_date": "2026-05-25"
+            "entry_date": "2026-05-25",
+            "peak_price": 106.67
         }
     },
     "history": [
