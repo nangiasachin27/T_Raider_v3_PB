@@ -672,11 +672,16 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
 # MAIN AUTOPILOT CYCLE
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def run_autopilot_cycle(mode: str = "CONSERVATIVE"):
+def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA"):
     print("\n" + "=" * 60)
     print(f"🤖 T_RAIDER AUTOPILOT v4 — MODE: {mode}")
     print("   Active Profit Pushing + Capital Rotation")
     print("=" * 60)
+
+    # ── Market hours gate ─────────────────────────────────────────────
+    
+    from market_hours import guard_or_exit
+    guard_or_exit(market, exit_on_closed=True)
 
     portfolio = load_portfolio()
     tickers = get_config_tickers()

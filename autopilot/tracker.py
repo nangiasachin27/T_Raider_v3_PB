@@ -117,11 +117,36 @@ def generate_report():
                   f"₹{current_price:>10.2f} | ₹{value:>10.2f}")
 
     # ── 1. Gross Wealth ───────────────────────────────────────────────────────
-    net_worth         = cash + total_market_value
-    gross_profit_loss = net_worth - 100000
-    gross_pl_pct      = (gross_profit_loss / 100000) * 100
-
-    # ── 2. Tax — applied to REALISED gains only ───────────────────────────────
+    net_worth = cash + total_market_value
+ 
+    # Read base capitals from quarterly_config.json.
+    # original_capital     — starting capital at inception (e.g. ₹1,00,000)
+    #                        never changes across quarters
+    # current_base_capital — capital at start of current quarter
+    #                        grows in compound mode after each harvest
+    # This gives two P&L views:
+    #   TOTAL P&L   = return since day 1 (vs original_capital)
+    #   QUARTER P&L = return this quarter only (vs current_base_capital)
+    try:
+        import json as _json
+        from pathlib import Path as _Path
+        _cfg = _json.loads(_Path("config/quarterly_config.json").read_text())
+        original_capital     = float(_cfg.get("original_capital", 100000.0))
+        current_base_capital = float(_cfg.get("current_base_capital", original_capital))
+    except Exception:
+        original_capital     = 100000.0
+        current_base_capital = 100000.0
+ 
+    # Total return since inception
+    gross_profit_loss = net_worth - original_capital
+    gross_pl_pct      = (gross_profit_loss / original_capital * 100) if original_capital > 0 else 0
+ 
+    # Current quarter return
+    quarter_profit_loss = net_worth - current_base_capital
+    quarter_pl_pct      = (quarter_profit_loss / current_base_capital * 100) if current_base_capital > 0 else 0
+    
+ 
+     # ── 2. Tax — applied to REALISED gains only ───────────────────────────────
     # FIX 5: Replaced `gross_profit_loss * 0.20` with realised P&L calculation.
     # The old code taxed unrealised gains too — if you're up 30% on paper but
     # haven't sold anything, you owe ₹0 in STCG today.
@@ -176,16 +201,19 @@ def generate_report():
         print(f"📊 Equity snapshot saved for {today_str}")
 
     print("═" * 50)
-
-    color = "🟢" if gross_profit_loss >= 0 else "🔴"
-
-    print(f"GROSS P/L          : {color} ₹{gross_profit_loss:,.2f} ({gross_pl_pct:.2f}%)")
-    print(f"  (Unrealised)     : ₹{gross_profit_loss - realised_pnl:,.2f}  "
+    color_total = "🟢" if gross_profit_loss   >= 0 else "🔴"
+    color_qtr   = "🟢" if quarter_profit_loss >= 0 else "🔴"
+ 
+    print(f"TOTAL P/L (inception): {color_total} ₹{gross_profit_loss:,.2f} ({gross_pl_pct:.2f}%)")
+    print(f"  vs original capital: ₹{original_capital:,.2f}")
+    print(f"QUARTER P/L          : {color_qtr} ₹{quarter_profit_loss:,.2f} ({quarter_pl_pct:.2f}%)")
+    print(f"  vs quarter base    : ₹{current_base_capital:,.2f}")
+    print(f"  (Unrealised)       : ₹{gross_profit_loss - realised_pnl:,.2f}  "
           f"← paper gain/loss, no tax owed yet")
-    print(f"  (Realised)       : ₹{realised_pnl:,.2f}  ← closed trades only")
-    print(f"EST. TAX (20% STCG): 🏛️  ₹{estimated_stcg_tax:,.2f}  "
+    print(f"  (Realised)         : ₹{realised_pnl:,.2f}  ← closed trades only")
+    print(f"EST. TAX (20% STCG)  : 🏛️  ₹{estimated_stcg_tax:,.2f}  "
           f"← on realised gains only")
-    print(f"NET TAKE-HOME P/L  : 💰 ₹{net_take_home_profit:,.2f} ({net_take_home_pct:.2f}%)")
+    print(f"NET TAKE-HOME P/L    : 💰 ₹{net_take_home_profit:,.2f} ({net_take_home_pct:.2f}%)")
     print("═" * 50 + "\n")
 
 

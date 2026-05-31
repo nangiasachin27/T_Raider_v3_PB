@@ -27,6 +27,8 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Tuple
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from market_hours import guard_or_exit
 
 CONFIG_PATH           = Path("config/quarterly_config.json")
 BROKER_CONFIG_PATH    = Path("config/broker_config.json")
@@ -47,11 +49,11 @@ from execution.adapters.paper_adapter import PaperExecutionAdapter
 # Add new keys here as explicit self.X = kwargs.get('X', default) lines
 # so they are readable by name elsewhere in the codebase.
 _KNOWN_KEYS = {
-    'enabled', 'profit_target_pct', 'quarter_days', 'min_quarter_days',
+    'enabled', 'profit_target_pct','super_target_pct', 'quarter_days', 'min_quarter_days',
     'trailing_stop_pct', 'compound_mode', 'original_capital',
     'current_base_capital', 'highest_value', 'quarter_start_date',
     'quarter_number', 'realized_pnl_history', 'last_harvest_date',
-    'paper_trading', 'broker', 'chaser',
+    'paper_trading', 'broker', 'chaser','market'
 }
 
 
@@ -60,6 +62,7 @@ class QuarterState:
         # ── Explicit known fields ─────────────────────────────────────────
         self.enabled              = kwargs.get('enabled', True)
         self.profit_target_pct    = kwargs.get('profit_target_pct', 0.05)
+        self.super_target_pct     = kwargs.get('super_target_pct', None)
         self.quarter_days         = kwargs.get('quarter_days', 90)
         self.min_quarter_days     = kwargs.get('min_quarter_days', 30)
         self.trailing_stop_pct    = kwargs.get('trailing_stop_pct', 0.10)
@@ -73,6 +76,7 @@ class QuarterState:
         self.last_harvest_date    = kwargs.get('last_harvest_date', None)
         self.paper_trading        = kwargs.get('paper_trading', True)
         self.broker               = kwargs.get('broker', 'paper')
+        self.market               = kwargs.get('market', 'INDIA')
 
         # FIX 6: Explicitly load chaser block — most common "extra" key.
         # Add any future top-level config keys here in the same pattern.
@@ -166,6 +170,7 @@ class HarvestEngine:
         current_value = snapshot.total_value
         base          = self.state.current_base_capital
         target        = self.state.profit_target_pct
+        super_target  = self.state.super_target_pct  
         min_days      = self.state.min_quarter_days
         max_days      = self.state.quarter_days
         trail_pct     = self.state.trailing_stop_pct
@@ -175,8 +180,14 @@ class HarvestEngine:
             self.state.highest_value = peak
 
         current_return       = (current_value - base) / base if base > 0 else 0
-        trailing_stop_level  = peak * (1 - trail_pct)
+        trailing_stop_level = max(
+                    peak * (1 - trail_pct),   # normal trailing stop
+                    base,                      # floor: never stop out below starting capital
+        )
         drawdown_from_peak   = (peak - current_value) / peak if peak > 0 else 0
+        floor_active = (base > peak * (1 - trail_pct))
+        stop_label   = f"₹{trailing_stop_level:,.2f} ({trail_pct*100:.0f}% below peak)" \
+                    + (" ← FLOOR ACTIVE (base capital protected)" if floor_active else "")
 
         print(f"\n{'='*60}")
         print(f"📊 QUARTER {self.state.quarter_number} STATUS")
@@ -188,12 +199,27 @@ class HarvestEngine:
         print(f" Market Value  : ₹{snapshot.market_value:,.2f}")
         print(f" Total Value   : ₹{current_value:,.2f}")
         print(f" Quarter High  : ₹{peak:,.2f}")
-        print(f" Trailing Stop : ₹{trailing_stop_level:,.2f} ({trail_pct*100:.0f}% below peak)")
+        print(f" Trailing Stop : {stop_label}")
         print(f" Current Return: {current_return*100:+.2f}%")
         print(f" Target Return : +{target*100:.0f}%")
         print(f" Compound Mode : {'ON' if self.state.compound_mode else 'OFF'}")
         print(f" Broker        : {self.state.broker} ({'paper' if self.state.paper_trading else 'live'})")
 
+        # ── Rule 0 (NEW): Super Target ────────────────────────────────────────
+        # If super_target_pct is configured AND current return has met or
+        # exceeded it, harvest IMMEDIATELY — no minimum hold period gate.
+        #
+        # Use case: an exceptional short-term run (+10% in 7 days) that is
+        # worth booking now rather than risking a reversal over 30 days.
+        #
+        # super_target_pct must be GREATER than profit_target_pct.
+        # If not set (None), this rule is simply skipped.
+        if super_target is not None and current_return >= super_target:
+            return True, (
+                f"🚀 SUPER TARGET hit! {current_return*100:+.2f}% >= "
+                f"+{super_target*100:.0f}% — harvesting immediately "
+                f"(bypassing {min_days}d minimum hold, only {elapsed}d elapsed)"
+            )
         if elapsed < min_days:
             self.state.save()
             return False, f"⏳ Minimum hold: {elapsed}/{min_days} days. {min_days - elapsed} days until harvest allowed."
@@ -373,6 +399,12 @@ class QuarterlyManager:
         print("🚀 T_RAIDER QUARTERLY COMPOUNDING ENGINE")
         print(f" Mode: {self.mode}")
         print("=" * 70)
+        # ── Market hours gate ─────────────────────────────────────────────
+        # Reads market from quarterly_config.json broker field.
+        # sys.exit(0) if closed so GitHub Actions does not report failure.
+        market = getattr(self.state, 'market', 'INDIA')
+        from market_hours import guard_or_exit
+        guard_or_exit(market, exit_on_closed=True)
 
         engine               = HarvestEngine(self.state, self.adapter)
         should_harv, message = engine.check_trigger()
@@ -390,7 +422,7 @@ class QuarterlyManager:
 
         self.state.inject_capital()
         print(f"\n🤖 Running daily autopilot cycle...")
-        run_autopilot_cycle(mode=self.mode)
+        run_autopilot_cycle(mode=self.mode,market=market)
 
         post_snapshot = self.adapter.get_portfolio_snapshot()
         if post_snapshot.total_value > self.state.highest_value:

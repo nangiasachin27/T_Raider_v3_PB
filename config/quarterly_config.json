@@ -1,6 +1,8 @@
 {
+  "market": "INDIA",
   "enabled": true,
   "profit_target_pct": 0.07,
+  "super_target_pct": 0.1,
   "quarter_days": 90,
   "min_quarter_days": 30,
   "trailing_stop_pct": 0.1,
