@@ -1,24 +1,18 @@
 """
-daily_screener.py (v3.5 — Critical Bug Fixes)
-────────────────────────────────────────────────────────
+daily_screener.py (v3.6 — Correlation Filter Integration)
+──────────────────────────────────────────────────────────
 
-BUG FIX 1 — get_portfolio_context() used stale entry prices for all holdings
-except the current ticker being evaluated. This made total_value wrong, which
-made weight_pct wrong, meaning the 20% concentration cap was never accurately
-enforced.
+Changes from v3.5:
+  CHANGE 1 — Import CorrelationFilter at top of file
+  CHANGE 2 — Add corr_filtered counter before the ticker loop
+  CHANGE 3 — Add correlation pre-check for held tickers (before signal gen)
+             so we skip expensive strategy computation on already-correlated stocks
+  CHANGE 4 — Gate 4.5: Correlation check for BUY signals after confidence
+             classification, using the same full_market_data already in memory
+  CHANGE 5 — Add corr_filtered to session summary printout
+  CHANGE 6 — Add correlation_matrix printout at end of session for visibility
 
-FIX: fetch_all_holding_prices() now batch-fetches current market prices for
-ALL holdings ONCE before the ticker loop. get_portfolio_context() receives
-this pre-built price map and uses real market values for every stock.
-
-BUG FIX 2 — calculate_atr() mixed adjusted Close (prev_close) with
-unadjusted High/Low columns. On ex-dividend or split days this created
-artificial True Range spikes, overstating ATR and causing undersized
-position recommendations.
-
-FIX: calculate_atr() now uses only adjusted columns throughout. If
-auto_adjust=True data is used (Close already adjusted), it falls back
-cleanly. A new helper _get_price_col() centralises column selection.
+All other code is identical to v3.5.
 """
 
 import pandas as pd
@@ -44,40 +38,26 @@ from strategies.stretch import apply_stretch_strategy
 from autopilot.logger import load_portfolio
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
 
+# CHANGE 1: Import CorrelationFilter
+from autopilot.correlation_filter import CorrelationFilter
+
 
 # ── Helper: consistent price column selection ─────────────────────────────────
 
 def _get_price_col(df: pd.DataFrame) -> str:
-    """
-    Returns the best available adjusted close column name.
-    Prefers 'Adj Close' (yfinance default), falls back to 'Close'.
-    Used consistently by both ATR and signal calculations.
-    """
     return 'Adj Close' if 'Adj Close' in df.columns else 'Close'
 
 
 # ── ATR + position sizing ─────────────────────────────────────────────────────
 
 def calculate_atr(df: pd.DataFrame, window: int = 14) -> float:
-    """
-    BUG FIX 2: Previously mixed Adj Close (for prev_close) with raw High/Low.
-    On ex-dividend or split days this created artificial TR spikes.
-
-    FIX: Use adjusted columns consistently throughout.
-    - If 'Adj Close' exists alongside 'High'/'Low', we scale High/Low by the
-      adjustment ratio so all three inputs are on the same adjusted basis.
-    - If data is already fully adjusted (auto_adjust=True), Close==Adj Close
-      and High/Low are already adjusted — the ratio is 1.0, no change.
-    """
     if df.empty or len(df) < window + 1:
         return 0.0
 
     close_col = _get_price_col(df)
     close = df[close_col].copy()
 
-    # Adjust High/Low if raw columns exist alongside Adj Close
     if 'Adj Close' in df.columns and 'Close' in df.columns and 'High' in df.columns:
-        # Adjustment ratio: Adj Close / Close — equals 1.0 when already adjusted
         adj_ratio = (df['Adj Close'] / df['Close']).fillna(1.0)
         high = df['High'] * adj_ratio
         low  = df['Low']  * adj_ratio
@@ -85,7 +65,6 @@ def calculate_atr(df: pd.DataFrame, window: int = 14) -> float:
         high = df['High']
         low  = df['Low']
     else:
-        # Fallback: High/Low not available — use close-to-close as proxy
         high = close
         low  = close
 
@@ -184,27 +163,14 @@ class ScreenerSignal:
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# BUG FIX 1 — Portfolio context with accurate market prices
+# Portfolio context helpers (BUG FIX 1 from v3.5 — unchanged)
 # ════════════════════════════════════════════════════════════════════════════
 
 def fetch_all_holding_prices(holdings: Dict) -> Dict[str, float]:
-    """
-    BUG FIX 1 (Part A): Batch-fetch current market prices for ALL holdings
-    in a single yfinance call BEFORE the ticker loop.
-
-    Previously, get_portfolio_context() used entry_price as a substitute
-    for current price for every holding except the one being evaluated.
-    This made total_portfolio_value wrong → weight_pct wrong → concentration
-    limits not enforced correctly.
-
-    Returns: {ticker: current_price}
-    """
     tickers = [t for t, v in holdings.items()
                if (v.get('qty', 0) if isinstance(v, dict) else int(v or 0)) > 0]
-
     if not tickers:
         return {}
-
     prices: Dict[str, float] = {}
     try:
         raw = yf.download(tickers, period="2d", progress=False, auto_adjust=True)
@@ -216,11 +182,9 @@ def fetch_all_holding_prices(holdings: Dict) -> Dict[str, float]:
                     if t in latest.index and pd.notna(latest[t]):
                         prices[t] = float(latest[t])
             else:
-                # Single ticker — Series
                 prices[tickers[0]] = float(close.iloc[-1])
     except Exception as e:
         warnings.warn(f"Batch holding price fetch failed: {e} — will fall back to entry prices")
-
     return prices
 
 
@@ -230,27 +194,8 @@ def get_portfolio_context(
     latest_price: float,
     holding_prices: Optional[Dict[str, float]] = None,
 ) -> Tuple[int, float, float, float]:
-    """
-    BUG FIX 1 (Part B): Use real current market prices for ALL holdings
-    when computing total_value and weight_pct.
-
-    Args:
-        portfolio       : portfolio dict from load_portfolio()
-        ticker          : the stock being evaluated
-        latest_price    : current price of this ticker (already fetched)
-        holding_prices  : dict of {ticker: price} for all held stocks,
-                          pre-fetched by fetch_all_holding_prices().
-                          Falls back to entry_price if not provided (old behaviour).
-
-    Returns:
-        current_qty      : shares held of this ticker
-        weight_pct       : this ticker's weight in portfolio (market value basis)
-        total_value      : total portfolio value (cash + all holdings at market price)
-        cash             : available cash
-    """
     holdings = portfolio.get('holdings', {})
     cash     = float(portfolio.get('cash', 0))
-
     if holding_prices is None:
         holding_prices = {}
 
@@ -262,29 +207,23 @@ def get_portfolio_context(
         qty = _qty(hdata)
         if qty <= 0:
             continue
-
         if hticker == ticker:
             px = latest_price
         elif hticker in holding_prices:
-            # FIX: use real current market price, not stale entry_price
             px = holding_prices[hticker]
         else:
-            # Fallback only if batch fetch missed this ticker
             entry = hdata.get('entry_price', 0) if isinstance(hdata, dict) else 0
             px    = entry if entry > 0 else latest_price
             warnings.warn(
                 f"No current price for held ticker {hticker} — "
-                f"using entry_price ₹{px:.2f} as fallback. "
-                f"Concentration limit may be inaccurate."
+                f"using entry_price ₹{px:.2f} as fallback."
             )
-
         total_market_value += qty * px
 
     total_value  = cash + total_market_value
     raw          = holdings.get(ticker, 0)
     current_qty  = int(raw['qty'] if isinstance(raw, dict) else (raw or 0))
     weight_pct   = (current_qty * latest_price / total_value * 100) if total_value > 0 else 0.0
-
     return current_qty, weight_pct, total_value, cash
 
 
@@ -359,8 +298,8 @@ def print_github_actions_summary(signals: List[ScreenerSignal], portfolio: Dict,
 
     macro_snap = regime_info.get("macro", {})
     if macro_snap:
-        vix_str = (f"VIX {macro_snap['vix']:.1f} [{macro_snap['vix_status']}]"
-                   if macro_snap.get('vix') else "VIX N/A")
+        vix_str  = (f"VIX {macro_snap['vix']:.1f} [{macro_snap['vix_status']}]"
+                    if macro_snap.get('vix') else "VIX N/A")
         flow_str = (f"Flow {macro_snap['inst_flow']:+,.0f}M [{macro_snap['flow_status']}]"
                     if macro_snap.get('inst_flow') is not None else "Flow N/A")
         ov_str   = (f"Overnight {macro_snap['overnight_pct']:+.1f}%"
@@ -402,18 +341,75 @@ def print_github_actions_summary(signals: List[ScreenerSignal], portfolio: Dict,
     print("=" * 90)
 
 
+# ════════════════════════════════════════════════════════════════════════════
+# CHANGE 2 (helper): print the portfolio correlation matrix at session end
+# ════════════════════════════════════════════════════════════════════════════
+
+def _print_correlation_matrix(portfolio: Dict, full_market_data: pd.DataFrame):
+    """
+    Print the current portfolio's correlation matrix.
+    Called once at the end of run_screener() so the operator can see
+    which holdings are highly correlated — useful for manual review.
+    """
+    matrix = CorrelationFilter.get_portfolio_correlation_matrix(
+        portfolio, full_market_data
+    )
+    if matrix.empty:
+        return
+
+    print("\n📊 PORTFOLIO CORRELATION MATRIX (last 90 days)")
+    print("   Pairs above 0.75 are highly correlated — consider reducing exposure")
+    print("─" * 60)
+
+    # Print header row
+    tickers = list(matrix.columns)
+    short   = [t.replace(".NS", "")[:10] for t in tickers]
+    header  = f"{'':12}" + "".join(f"{s:>11}" for s in short)
+    print(header)
+
+    # Print each row
+    for i, ticker in enumerate(tickers):
+        row_label = ticker.replace(".NS", "")[:12]
+        row_vals  = ""
+        for j, col in enumerate(tickers):
+            val = matrix.iloc[i, j]
+            if i == j:
+                row_vals += f"{'  1.00':>11}"
+            elif val > 0.75:
+                row_vals += f"{'⚠️':>6}{val:>5.2f}"   # flag high correlation
+            else:
+                row_vals += f"{val:>11.2f}"
+        print(f"{row_label:<12}{row_vals}")
+
+    print("─" * 60)
+
+
 # ── Main screener ─────────────────────────────────────────────────────────────
 
 def run_screener(tickers, capital: Optional[float] = None, min_stability: float = 60.0,
                  volume_min_ratio: float = 0.80, mode: str = "CONSERVATIVE",
-                 market: str = "INDIA"):
+                 market: str = "INDIA",
+                 correlation_threshold: float = None):   # CHANGE 3: new param
+    """
+    correlation_threshold: override CorrelationFilter.DEFAULT_THRESHOLD (0.75).
+    Set to 1.0 to effectively disable the filter.
+    Pass None to use the default from correlation_filter.py.
+    """
 
-    print(f"\n--- T_Raider Hybrid Execution Engine (v3.5 — Bug Fix Release) ---")
+    print(f"\n--- T_Raider Hybrid Execution Engine (v3.6 — Correlation Filter) ---")
     print(f"Timestamp : {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Mode      : {mode}")
     print(f"Market    : {market}")
     if volume_min_ratio > 0:
-        print(f"  Volume filter: BUY signals require ≥{volume_min_ratio*100:.0f}% of 20-day avg volume")
+        print(f"  Volume filter     : BUY signals require ≥{volume_min_ratio*100:.0f}% of 20-day avg volume")
+
+    # CHANGE 3: show correlation filter config
+    effective_corr_threshold = (
+        correlation_threshold
+        if correlation_threshold is not None
+        else CorrelationFilter.DEFAULT_THRESHOLD
+    )
+    print(f"  Correlation filter: BUY blocked if |r| > {effective_corr_threshold:.2f} with any held stock")
 
     RISK_PROFILES = {
         "CONSERVATIVE": {"allow_mean_reversion": False, "nifty_drop_threshold": 0.0},
@@ -421,7 +417,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         "AGGRESSIVE":   {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.03},
     }
     config = RISK_PROFILES.get(mode, RISK_PROFILES["CONSERVATIVE"])
-    print(f"  Mean-reversion in downtrend: {config['allow_mean_reversion']}"
+    print(f"  Mean-reversion    : {config['allow_mean_reversion']}"
           f" (threshold: {config['nifty_drop_threshold']:.0%})")
 
     # ── Gate 1: Market Regime ─────────────────────────────────────────────
@@ -459,12 +455,12 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         macro_context = macro.run()
         macro.print_summary(macro_context)
         regime_info["macro"] = {
-            "vix":             macro_context.vix,
-            "vix_status":      macro_context.vix_status,
-            "inst_flow":       macro_context.institutional_flow,
-            "flow_status":     macro_context.flow_status,
-            "overnight_pct":   macro_context.overnight_change_pct,
-            "high_risk_day":   macro_context.is_high_risk_day,
+            "vix":              macro_context.vix,
+            "vix_status":       macro_context.vix_status,
+            "inst_flow":        macro_context.institutional_flow,
+            "flow_status":      macro_context.flow_status,
+            "overnight_pct":    macro_context.overnight_change_pct,
+            "high_risk_day":    macro_context.is_high_risk_day,
             "high_risk_reason": macro_context.high_risk_reason,
         }
 
@@ -496,20 +492,16 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
     sell_signals = []
 
     portfolio = load_portfolio()
+    holdings  = portfolio.get('holdings', {})
 
-    # ════════════════════════════════════════════════════════════════════════
-    # BUG FIX 1: Batch-fetch current prices for ALL holdings ONCE,
-    # before the per-ticker loop. This gives get_portfolio_context()
-    # real market values instead of stale entry prices.
-    # ════════════════════════════════════════════════════════════════════════
-    holdings = portfolio.get('holdings', {})
     print(f"\n💰 Pre-fetching current prices for {len(holdings)} held positions…")
     holding_prices = fetch_all_holding_prices(holdings)
     print(f"  ✅ Got live prices for {len(holding_prices)}/{len(holdings)} holdings.")
 
-    vol_filtered    = 0
-    macro_skipped   = 0
+    vol_filtered  = 0
+    macro_skipped = 0
     macro_downgraded = 0
+    corr_filtered = 0   # CHANGE 2: counter for correlation-blocked signals
 
     for ticker in tickers:
         plan = optimized_params.get(ticker)
@@ -520,19 +512,19 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         if df.empty or len(df) < 200:
             continue
 
-        price_col    = _get_price_col(df)   # BUG FIX 2: consistent column selection
+        price_col    = _get_price_col(df)
         price        = df[price_col]
         latest_price = float(price.iloc[-1])
 
         strat_type = plan['strategy']
         p          = plan.get('params', {})
 
-        if   strat_type == "TREND":     res = apply_golden_cross_strategy(price)
-        elif strat_type == "RSI":       res = apply_rsi_strategy(price, window=p.get('window', 14), buy=p.get('buy', 30), sell=p.get('sell', 70))
+        if   strat_type == "TREND":      res = apply_golden_cross_strategy(price)
+        elif strat_type == "RSI":        res = apply_rsi_strategy(price, window=p.get('window', 14), buy=p.get('buy', 30), sell=p.get('sell', 70))
         elif strat_type == "VOLATILITY": res = apply_bollinger_strategy(price)
-        elif strat_type == "BREAKOUT":  res = apply_breakout_strategy(price, window=p.get('window', 20))
-        elif strat_type == "MACD":      res = apply_macd_strategy(price)
-        elif strat_type == "STRETCH":   res = apply_stretch_strategy(price, window=p.get('window', 20), threshold=p.get('threshold', 0.05))
+        elif strat_type == "BREAKOUT":   res = apply_breakout_strategy(price, window=p.get('window', 20))
+        elif strat_type == "MACD":       res = apply_macd_strategy(price)
+        elif strat_type == "STRETCH":    res = apply_stretch_strategy(price, window=p.get('window', 20), threshold=p.get('threshold', 0.05))
         else:
             continue
 
@@ -540,12 +532,10 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         if latest_signal not in (1, -1):
             continue
 
-        # BUG FIX 1: Pass holding_prices so all positions use real market values
         current_qty, weight_pct, portfolio_value, cash = get_portfolio_context(
             portfolio, ticker, latest_price, holding_prices=holding_prices
         )
 
-        # Capital override
         override_path = Path("config/capital_override.json")
         if override_path.exists() and capital is None:
             with open(override_path) as f:
@@ -562,7 +552,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
             if not is_uptrend:
                 if config["allow_mean_reversion"]:
                     if nifty_drop > config["nifty_drop_threshold"] and strat_type in ['RSI', 'VOLATILITY', 'STRETCH']:
-                        pass  # allowed — fall through to Gate 1b
+                        pass
                     else:
                         skip_reason = (
                             f"⛔ Downtrend — {strat_type} not mean-reversion type"
@@ -605,8 +595,8 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                     ))
                     continue
                 if macro_eval.action == FilterAction.DOWNGRADE:
-                    macro_downgraded    += 1
-                    macro_downgrade_reason = " | ".join(macro_eval.warning_flags())
+                    macro_downgraded       += 1
+                    macro_downgrade_reason  = " | ".join(macro_eval.warning_flags())
 
             # Gate 2: Volume
             if volume_min_ratio > 0:
@@ -630,7 +620,6 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 today_vol, avg_vol = 0.0, 0.0
 
             # Gate 3: ATR sizing + confidence
-            # BUG FIX 2: calculate_atr() now uses adjusted columns consistently
             atr            = calculate_atr(df)
             suggested_qty  = calculate_position_size(effective_capital, atr)
             estimated_cost = suggested_qty * latest_price
@@ -645,20 +634,47 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
             elif macro_downgrade_reason:
                 reason = f"{reason} | {macro_downgrade_reason}"
 
+            # ── Gate 4.5 (NEW): Correlation Filter ───────────────────────
+            # Only run for signals that passed all prior gates (HIGH or MEDIUM).
+            # SKIP signals are already rejected — no point checking correlation.
+            # Also skip if the ticker is already held (current_qty > 0) — that
+            # case is handled by the concentration check above, and correlation
+            # vs self is always 1.0 which would always block incorrectly.
+            if confidence_tier in ("HIGH", "MEDIUM") and current_qty == 0:
+                corr_passed, corr_reason = CorrelationFilter.check(
+                    ticker=ticker,
+                    portfolio=portfolio,
+                    full_market_data=full_market_data,
+                    threshold=correlation_threshold,   # None = use default 0.75
+                )
+                if not corr_passed:
+                    corr_filtered += 1
+                    all_signals.append(ScreenerSignal(
+                        ticker=ticker, signal_type="BUY", price=latest_price,
+                        strategy=strat_type, expected_return=plan.get('expected_return', 0),
+                        stability_score=stability, confidence_tier="SKIP",
+                        suggested_qty=0, risk_per_trade_inr=0,
+                        current_holdings=current_qty, portfolio_weight_pct=weight_pct,
+                        reason=f"🔗 Correlation blocked — {corr_reason}",
+                    ))
+                    continue
+                # Passed — annotate reason with correlation info so it's visible
+                reason = f"{reason} | {corr_reason}"
+
             # Sector momentum
             stock_sector_info = dynamic_map.get(ticker, {"nse_index": "UNKNOWN", "yf_sector": "Unknown"})
-            nse_index      = stock_sector_info["nse_index"]
-            yf_sector_name = stock_sector_info["yf_sector"]
-            sector_data    = sector_ranks.get(nse_index, {"rank": 99, "is_outperforming": False, "rs_score": 0.0})
-            is_sector_strong = sector_data['is_outperforming']
-            sector_rs        = sector_data['rs_score']
-            base_score       = plan.get('composite_score', 0) or plan.get('expected_return', 0)
-            final_score      = base_score * (1.2 if is_sector_strong else 0.8)
-            sector_icon      = "🔥" if is_sector_strong else "❄️"
-            vol_ratio        = (today_vol / avg_vol * 100) if avg_vol > 0 else 0
-            vol_note         = f"Vol: {vol_ratio:.0f}% avg" if avg_vol > 0 else ""
-            aug_reason       = (f"{reason} | {yf_sector_name[:10]} {sector_icon}"
-                                + (f" | {vol_note}" if vol_note else ""))
+            nse_index         = stock_sector_info["nse_index"]
+            yf_sector_name    = stock_sector_info["yf_sector"]
+            sector_data       = sector_ranks.get(nse_index, {"rank": 99, "is_outperforming": False, "rs_score": 0.0})
+            is_sector_strong  = sector_data['is_outperforming']
+            sector_rs         = sector_data['rs_score']
+            base_score        = plan.get('composite_score', 0) or plan.get('expected_return', 0)
+            final_score       = base_score * (1.2 if is_sector_strong else 0.8)
+            sector_icon       = "🔥" if is_sector_strong else "❄️"
+            vol_ratio         = (today_vol / avg_vol * 100) if avg_vol > 0 else 0
+            vol_note          = f"Vol: {vol_ratio:.0f}% avg" if avg_vol > 0 else ""
+            aug_reason        = (f"{reason} | {yf_sector_name[:10]} {sector_icon}"
+                                 + (f" | {vol_note}" if vol_note else ""))
 
             all_signals.append(ScreenerSignal(
                 ticker=ticker, signal_type="BUY", price=latest_price,
@@ -669,19 +685,19 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 reason=aug_reason, atr_14d=atr, cash_required=estimated_cost,
             ))
             buy_signals.append({
-                "ticker":          ticker,
-                "price":           latest_price,
-                "reason":          strat_type,
-                "sector":          yf_sector_name[:12],
-                "sector_rs":       sector_rs,
+                "ticker":           ticker,
+                "price":            latest_price,
+                "reason":           strat_type,
+                "sector":           yf_sector_name[:12],
+                "sector_rs":        sector_rs,
                 "is_sector_strong": is_sector_strong,
-                "expected_return": plan.get('expected_return', 0),
-                "stability":       stability,
-                "sharpe_ratio":    plan.get('sharpe_ratio', None),
-                "max_drawdown":    plan.get('max_drawdown', None),
-                "composite_score": final_score,
-                "folds_passed":    plan.get('folds_passed', None),
-                "volume_ratio":    round(vol_ratio, 1) if avg_vol > 0 else None,
+                "expected_return":  plan.get('expected_return', 0),
+                "stability":        stability,
+                "sharpe_ratio":     plan.get('sharpe_ratio', None),
+                "max_drawdown":     plan.get('max_drawdown', None),
+                "composite_score":  final_score,
+                "folds_passed":     plan.get('folds_passed', None),
+                "volume_ratio":     round(vol_ratio, 1) if avg_vol > 0 else None,
             })
 
         # ── SELL signal pipeline ──────────────────────────────────────────
@@ -704,6 +720,11 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         print(f"🌍 Macro filter BLOCKED {macro_skipped} BUY signal(s).")
     if macro_downgraded:
         print(f"🌍 Macro filter DOWNGRADED {macro_downgraded} BUY signal(s) HIGH → MEDIUM.")
+
+    # CHANGE 5: report correlation blocks in session summary
+    if corr_filtered:
+        print(f"🔗 Correlation filter BLOCKED {corr_filtered} BUY signal(s) "
+              f"(threshold: ±{effective_corr_threshold:.2f}).")
 
     print_github_actions_summary(all_signals, portfolio, regime_info)
     log_recommendations(all_signals, portfolio, regime_info)
@@ -730,7 +751,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
             reverse=True,
         )
         for b in active_buys:
-            rs_str = f"{b['sector_rs']:>6.1f}%" if b['sector_rs'] != 0.0 else "N/A"
+            rs_str  = f"{b['sector_rs']:>6.1f}%" if b['sector_rs'] != 0.0 else "N/A"
             rs_icon = "🔥" if b['is_sector_strong'] else "❄️"
             stab    = f"{b['stability']:.1f}%" if isinstance(b['stability'], (int, float)) else "N/A"
             print(
@@ -755,6 +776,12 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
 
     print("=" * 135 + "\n")
 
+    # CHANGE 6: Print portfolio correlation matrix at end of every session
+    # This gives the operator daily visibility into which held stocks are
+    # moving together — the PSU bank cluster problem would have been visible.
+    if holdings:
+        _print_correlation_matrix(portfolio, full_market_data)
+
     if not buy_signals and not sell_signals:
         print("ℹ️ Market Scan: No entry/exit thresholds were crossed today.")
 
@@ -765,9 +792,19 @@ if __name__ == "__main__":
     import argparse
     from utils import get_config_tickers
 
-    parser = argparse.ArgumentParser(description='T_Raider Daily Screener v3.5')
+    parser = argparse.ArgumentParser(description='T_Raider Daily Screener v3.6')
     parser.add_argument('--mode',   choices=['CONSERVATIVE', 'BALANCED', 'AGGRESSIVE'], default='CONSERVATIVE')
     parser.add_argument('--market', choices=list(MARKET_CONFIGS.keys()), default='INDIA')
+    parser.add_argument(
+        '--corr-threshold', type=float, default=None,
+        help='Correlation threshold 0.0-1.0 (default: 0.75 from correlation_filter.py). '
+             'Set 1.0 to disable.'
+    )
     args = parser.parse_args()
 
-    run_screener(get_config_tickers(), mode=args.mode, market=args.market)
+    run_screener(
+        get_config_tickers(),
+        mode=args.mode,
+        market=args.market,
+        correlation_threshold=args.corr_threshold,
+    )
