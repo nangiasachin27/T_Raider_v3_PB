@@ -1,5 +1,4 @@
 {
-  "market": "INDIA",
   "enabled": true,
   "profit_target_pct": 0.07,
   "super_target_pct": 0.1,
@@ -16,6 +15,7 @@
   "last_harvest_date": null,
   "paper_trading": true,
   "broker": "paper",
+  "market": "INDIA",
   "chaser": {
     "enabled": true,
     "mode": "CONSERVATIVE",
