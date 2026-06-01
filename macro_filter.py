@@ -126,6 +126,7 @@ class MarketConfig:
 
 
 MARKET_CONFIGS: dict[str, MarketConfig] = {
+    
 
     "INDIA": MarketConfig(
         name                   = "India (NSE/BSE)",

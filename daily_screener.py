@@ -412,10 +412,14 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
     print(f"  Correlation filter: BUY blocked if |r| > {effective_corr_threshold:.2f} with any held stock")
 
     RISK_PROFILES = {
-        "CONSERVATIVE": {"allow_mean_reversion": False, "nifty_drop_threshold": 0.0},
-        "BALANCED":     {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.05},
-        "AGGRESSIVE":   {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.03},
-    }
+    # CONSERVATIVE now allows mean-reversion strategies in a downtrend,
+    # but only when Nifty has dropped ≥3% from its 50-day high.
+    # Trend/Breakout/MACD (momentum strategies) remain fully suppressed.
+    # This mirrors V1 behaviour while keeping the directional guard intact.
+    "CONSERVATIVE": {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.03},
+    "BALANCED":     {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.05},
+    "AGGRESSIVE":   {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.02},
+}
     config = RISK_PROFILES.get(mode, RISK_PROFILES["CONSERVATIVE"])
     print(f"  Mean-reversion    : {config['allow_mean_reversion']}"
           f" (threshold: {config['nifty_drop_threshold']:.0%})")
