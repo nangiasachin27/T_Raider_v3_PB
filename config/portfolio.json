@@ -1,5 +1,5 @@
 {
-    "cash": 19.57879638671875,
+    "cash": 4905.679016113281,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
@@ -42,12 +42,6 @@
             "entry_price": 2259.10009765625,
             "entry_date": "2026-05-22",
             "peak_price": 2384.8999
-        },
-        "LTF.NS": {
-            "qty": 18,
-            "entry_price": 279.3500061035156,
-            "entry_date": "2026-05-25",
-            "peak_price": 286.6
         },
         "PNB.NS": {
             "qty": 56,
@@ -308,6 +302,15 @@
             "price": 106.26000213623047,
             "strategy": "ATR Sized (ATR:2.6) [BALANCED]",
             "total": 5950.56
+        },
+        {
+            "timestamp": "2026-06-01 09:51:24",
+            "ticker": "LTF.NS",
+            "side": "sell",
+            "qty": 18,
+            "price": 271.45001220703125,
+            "strategy": "Signal Exit",
+            "total": 4886.1
         }
     ]
 }
