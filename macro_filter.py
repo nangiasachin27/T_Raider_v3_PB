@@ -130,8 +130,8 @@ MARKET_CONFIGS: dict[str, MarketConfig] = {
     "INDIA": MarketConfig(
         name                   = "India (NSE/BSE)",
         vix_ticker             = "^INDIAVIX",
-        vix_elevated           = 16.0,
-        vix_extreme            = 22.0,
+        vix_elevated           = 18.0,
+        vix_extreme            = 25.0,
         benchmark_ticker       = "^NSEI",
         overnight_ref_ticker   = "^GSPC",       # S&P 500
         flow_source            = "NSE_WEB",
