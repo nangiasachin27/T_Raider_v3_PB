@@ -35,7 +35,7 @@
             "qty": 99,
             "entry_price": 127.97000122070312,
             "entry_date": "2026-05-21",
-            "peak_price": 134.16
+            "peak_price": 135.64
         },
         "GLENMARK.NS": {
             "qty": 5,
@@ -47,7 +47,7 @@
             "qty": 56,
             "entry_price": 106.26000213623047,
             "entry_date": "2026-05-25",
-            "peak_price": 106.67
+            "peak_price": 106.85
         }
     },
     "history": [
