@@ -1,5 +1,5 @@
 {
-    "cash": 4905.679016113281,
+    "cash": 48810.38832092285,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
@@ -7,35 +7,17 @@
             "entry_date": "2026-04-30",
             "peak_price": 272.8
         },
-        "HDFCLIFE.NS": {
-            "qty": 29,
-            "entry_price": 586.9,
-            "entry_date": "2026-04-30",
-            "peak_price": 620.0
-        },
         "TORNTPHARM.NS": {
             "qty": 1,
             "entry_price": 4185.1001,
             "entry_date": "2026-04-30",
             "peak_price": 4572.6001
         },
-        "ASHOKLEY.NS": {
-            "qty": 103,
-            "entry_price": 153.2100067138672,
-            "entry_date": "2026-05-13",
-            "peak_price": 164.08
-        },
         "INDIANB.NS": {
             "qty": 17,
             "entry_price": 813.9500122070312,
             "entry_date": "2026-05-13",
             "peak_price": 849.6
-        },
-        "CANBK.NS": {
-            "qty": 99,
-            "entry_price": 127.97000122070312,
-            "entry_date": "2026-05-21",
-            "peak_price": 135.64
         },
         "GLENMARK.NS": {
             "qty": 5,
@@ -311,6 +293,33 @@
             "price": 271.45001220703125,
             "strategy": "Signal Exit",
             "total": 4886.1
+        },
+        {
+            "timestamp": "2026-06-08 09:51:20",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 103,
+            "price": 141.00999450683594,
+            "strategy": "ActiveCut (-8.0%)",
+            "total": 14524.03
+        },
+        {
+            "timestamp": "2026-06-08 09:51:20",
+            "ticker": "HDFCLIFE.NS",
+            "side": "sell",
+            "qty": 29,
+            "price": 562.9500122070312,
+            "strategy": "ActiveCut (-4.1%)",
+            "total": 16325.55
+        },
+        {
+            "timestamp": "2026-06-08 09:51:50",
+            "ticker": "CANBK.NS",
+            "side": "sell",
+            "qty": 99,
+            "price": 131.8699951171875,
+            "strategy": "Signal Exit",
+            "total": 13055.13
         }
     ]
 }
