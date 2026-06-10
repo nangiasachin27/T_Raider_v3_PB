@@ -1,5 +1,5 @@
 {
-    "cash": 48810.38832092285,
+    "cash": 36441.98762512207,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
@@ -13,23 +13,21 @@
             "entry_date": "2026-04-30",
             "peak_price": 4572.6001
         },
-        "INDIANB.NS": {
-            "qty": 17,
-            "entry_price": 813.9500122070312,
-            "entry_date": "2026-05-13",
-            "peak_price": 874.0
-        },
-        "GLENMARK.NS": {
-            "qty": 5,
-            "entry_price": 2259.10009765625,
-            "entry_date": "2026-05-22",
-            "peak_price": 2384.8999
-        },
         "PNB.NS": {
             "qty": 56,
             "entry_price": 106.26000213623047,
             "entry_date": "2026-05-25",
             "peak_price": 109.7
+        },
+        "BHEL.NS": {
+            "qty": 47,
+            "entry_price": 376.5,
+            "entry_date": "2026-06-10"
+        },
+        "UPL.NS": {
+            "qty": 32,
+            "entry_price": 610.75,
+            "entry_date": "2026-06-10"
         }
     },
     "history": [
@@ -320,6 +318,42 @@
             "price": 131.8699951171875,
             "strategy": "Signal Exit",
             "total": 13055.13
+        },
+        {
+            "timestamp": "2026-06-10 09:51:13",
+            "ticker": "GLENMARK.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 2144.39990234375,
+            "strategy": "ActiveCut (-5.1%)",
+            "total": 10722.0
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "INDIANB.NS",
+            "side": "sell",
+            "qty": 17,
+            "price": 832.2999877929688,
+            "strategy": "Signal Exit",
+            "total": 14149.1
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "BHEL.NS",
+            "side": "buy",
+            "qty": 47,
+            "price": 376.5,
+            "strategy": "ATR Sized (ATR:12.7) [BALANCED]",
+            "total": 17695.5
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "UPL.NS",
+            "side": "buy",
+            "qty": 32,
+            "price": 610.75,
+            "strategy": "ATR Sized (ATR:12.7) [BALANCED]",
+            "total": 19544.0
         }
     ]
 }
