@@ -798,5 +798,57 @@
     "ZYDUSLIFE.NS": {
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
+    },
+    "ZOMATO.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "TATAMOTORS.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "ANGELONE.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "CDSL.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "CAMS.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "KAYNES.NS": {
+        "yf_sector": "Technology",
+        "nse_index": "UNKNOWN"
+    },
+    "DATAPATTNS.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "OLECTRA.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "APARINDS.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "TATACHEM.NS": {
+        "yf_sector": "Basic Materials",
+        "nse_index": "^CNXMETAL"
+    },
+    "ACE.NS": {
+        "yf_sector": "Industrials",
+        "nse_index": "^CNXINFRA"
+    },
+    "POONAWALLA.NS": {
+        "yf_sector": "Financial Services",
+        "nse_index": "^CNXFIN"
+    },
+    "LTIM.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
     }
 }

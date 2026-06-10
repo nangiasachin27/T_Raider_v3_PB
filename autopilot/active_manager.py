@@ -40,13 +40,13 @@ class ActiveConfig:
     BEHIND_MULTIPLIER = 0.5     # actual < expected * 0.5 → PUSH (aggressive)
 
     # --- Trim winners ---
-    TRIM_GAIN_THRESHOLD = 0.10   # trim if unrealized gain >= +15%
+    TRIM_GAIN_THRESHOLD = 0.25   # trim if unrealized gain >= +15%
     TRIM_FRACTION = 0.50         # sell 30% of position
     TRIM_MAX_PER_RUN = 2         # trim max 2 winners per run
 
     # --- Cut losers ---
-    CUT_LOSS_THRESHOLD = -0.03   # consider cutting if unrealized loss <= -5%
-    CUT_AGGRESSIVE_THRESHOLD = -0.03  # cut deeper when behind target
+    CUT_LOSS_THRESHOLD = -0.08   # consider cutting if unrealized loss <= -5%
+    CUT_AGGRESSIVE_THRESHOLD = -0.10  # cut deeper when behind target
     CUT_MAX_PER_RUN = 2          # max losers to cut per run
     CUT_MAX_AGGRESSIVE = 3       # max losers when behind target
 
@@ -307,7 +307,7 @@ def get_dynamic_risk_multiplier(current_return_pct: float, target_pct: float) ->
     if current_return_pct >= target_pct * 0.6:
         return ActiveConfig.RISK_DEFENSIVE
     elif current_return_pct <= -0.05:
-        return 0.5
+        return 1.0
     else:
         return ActiveConfig.RISK_NORMAL
 

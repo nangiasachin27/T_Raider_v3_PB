@@ -28,6 +28,7 @@ class SimpleBacktester:
         self.capital           = initial_capital
         self.shares_owned      = 0
         self.buy_price         = 0.0
+        self.entry_date        = None
         self.peak_price        = 0.0          # tracks highest price since entry
         self.stop_loss_pct     = stop_loss_pct
         self.trailing_stop_pct = trailing_stop_pct
@@ -54,6 +55,7 @@ class SimpleBacktester:
         self.shares_owned    = 0
         self.buy_price       = 0.0
         self.peak_price      = 0.0
+        self.entry_date      = None
         self.portfolio_history = []
         self.trade_log         = []
         self.trades            = []
@@ -87,6 +89,8 @@ class SimpleBacktester:
                     self.trades.append({
                         'entry_price': self.buy_price,
                         'exit_price':  price * (1 - self.friction_pct),
+                        'entry_date':  self.entry_date,  # <-- ADD THIS
+                        'exit_date':   date              # <-- ADD THIS
                     })
 
                     self.capital += revenue
@@ -123,7 +127,8 @@ class SimpleBacktester:
                 effective_capital = self.capital * (1 - self.friction_pct)
                 self.shares_owned = int(effective_capital // price)
                 self.buy_price    = price
-                self.peak_price   = price          # initialise peak at entry
+                self.peak_price   = price   
+                self.entry_date   = date       # initialise peak at entry
                 self.capital     -= (self.shares_owned * price)
                 self.trade_log.append({
                     'Date':  date,
@@ -138,6 +143,8 @@ class SimpleBacktester:
                 self.trades.append({
                     'entry_price': self.buy_price,
                     'exit_price':  price * (1 - self.friction_pct),
+                    'entry_date':  self.entry_date,  # <-- ADD THIS
+                    'exit_date':   date
                 })
 
                 self.capital += revenue

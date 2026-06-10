@@ -8,10 +8,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ABB.NS": {
         "strategy": "NONE",
@@ -22,10 +22,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "APLAPOLLO.NS": {
         "strategy": "NONE",
@@ -36,28 +36,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "AUBANK.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 38.56,
-        "sharpe_ratio": 0.426,
-        "max_drawdown": 9.5,
-        "stability_score": 81.6,
-        "folds_passed": 2,
-        "composite_score": 0.6602,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ADANIENSOL.NS": {
         "strategy": "NONE",
@@ -68,10 +64,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2023-08-16",
-        "data_end": "2026-05-22",
-        "data_rows": 677,
-        "optimized_on": "2026-05-22"
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "ADANIENT.NS": {
         "strategy": "STRETCH",
@@ -80,15 +76,15 @@
             "threshold": 0.03
         },
         "expected_return": 21.93,
-        "sharpe_ratio": 0.252,
+        "sharpe_ratio": 0.312,
         "max_drawdown": 10.46,
-        "stability_score": 82.6,
+        "stability_score": 83.1,
         "folds_passed": 1,
-        "composite_score": 0.6246,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6276,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ADANIGREEN.NS": {
         "strategy": "NONE",
@@ -99,10 +95,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ADANIPORTS.NS": {
         "strategy": "NONE",
@@ -113,10 +109,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ADANIPOWER.NS": {
         "strategy": "NONE",
@@ -127,10 +123,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ATGL.NS": {
         "strategy": "STRETCH",
@@ -139,15 +135,15 @@
             "threshold": 0.07
         },
         "expected_return": 14.4,
-        "sharpe_ratio": 0.16,
+        "sharpe_ratio": 0.2,
         "max_drawdown": 14.64,
-        "stability_score": 65.1,
+        "stability_score": 65.4,
         "folds_passed": 1,
-        "composite_score": 0.6003,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6023,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ABCAPITAL.NS": {
         "strategy": "NONE",
@@ -158,10 +154,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ALKEM.NS": {
         "strategy": "NONE",
@@ -172,10 +168,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "AMBUJACEM.NS": {
         "strategy": "NONE",
@@ -186,24 +182,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "APOLLOHOSP.NS": {
-        "strategy": "VOLATILITY",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 34.16,
-        "sharpe_ratio": 1.078,
-        "max_drawdown": 2.61,
-        "stability_score": 100.0,
-        "folds_passed": 1,
-        "composite_score": 0.6999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ASHOKLEY.NS": {
         "strategy": "STRETCH",
@@ -211,16 +207,16 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 18.1,
-        "sharpe_ratio": 0.271,
+        "expected_return": 19.77,
+        "sharpe_ratio": 0.387,
         "max_drawdown": 10.88,
-        "stability_score": 75.2,
+        "stability_score": 78.9,
         "folds_passed": 1,
-        "composite_score": 0.6189,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6273,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ASIANPAINT.NS": {
         "strategy": "NONE",
@@ -231,28 +227,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ASTRAL.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": -3.93,
-        "sharpe_ratio": -0.173,
-        "max_drawdown": 11.19,
-        "stability_score": 79.9,
-        "folds_passed": 1,
-        "composite_score": 0.563,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "AUROPHARMA.NS": {
         "strategy": "NONE",
@@ -263,10 +255,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DMART.NS": {
         "strategy": "STRETCH",
@@ -274,34 +266,30 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 19.23,
-        "sharpe_ratio": 0.268,
+        "expected_return": 19.15,
+        "sharpe_ratio": 0.347,
         "max_drawdown": 15.73,
-        "stability_score": 63.1,
+        "stability_score": 62.4,
         "folds_passed": 1,
-        "composite_score": 0.6108,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6146,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "AXISBANK.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 8.79,
-        "sharpe_ratio": 0.081,
-        "max_drawdown": 3.67,
-        "stability_score": 93.0,
-        "folds_passed": 1,
-        "composite_score": 0.6099,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BSE.NS": {
         "strategy": "MACD",
@@ -310,34 +298,30 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 46.75,
-        "sharpe_ratio": 0.234,
+        "expected_return": 64.28,
+        "sharpe_ratio": 0.25,
         "max_drawdown": 31.79,
-        "stability_score": 63.0,
+        "stability_score": 64.1,
         "folds_passed": 1,
-        "composite_score": 0.6182,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6453,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BAJAJ-AUTO.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 13.11,
-        "sharpe_ratio": 0.169,
-        "max_drawdown": 8.63,
-        "stability_score": 92.2,
-        "folds_passed": 1,
-        "composite_score": 0.6108,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BAJFINANCE.NS": {
         "strategy": "MACD",
@@ -346,16 +330,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 7.12,
-        "sharpe_ratio": 0.041,
+        "expected_return": 4.92,
+        "sharpe_ratio": 0.072,
         "max_drawdown": 6.56,
-        "stability_score": 88.6,
+        "stability_score": 83.2,
         "folds_passed": 1,
-        "composite_score": 0.5996,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5979,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BAJAJFINSV.NS": {
         "strategy": "NONE",
@@ -366,10 +350,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BAJAJHLDNG.NS": {
         "strategy": "STRETCH",
@@ -378,64 +362,60 @@
             "threshold": 0.03
         },
         "expected_return": 45.98,
-        "sharpe_ratio": 2.111,
+        "sharpe_ratio": 2.397,
         "max_drawdown": 0.0,
         "stability_score": 100.0,
         "folds_passed": 1,
-        "composite_score": 0.7745,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.7888,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BANKBARODA.NS": {
-        "strategy": "TREND",
-        "params": {},
-        "expected_return": 5.06,
-        "sharpe_ratio": -0.008,
-        "max_drawdown": 5.98,
-        "stability_score": 78.8,
-        "folds_passed": 1,
-        "composite_score": 0.5952,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "BANKINDIA.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 2.36,
-        "sharpe_ratio": 0.008,
-        "max_drawdown": 10.45,
-        "stability_score": 71.3,
-        "folds_passed": 1,
-        "composite_score": 0.583,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "BDL.NS": {
         "strategy": "STRETCH",
         "params": {
             "window": 20,
-            "threshold": 0.05
+            "threshold": 0.03
         },
-        "expected_return": 31.14,
-        "sharpe_ratio": 0.417,
-        "max_drawdown": 8.08,
-        "stability_score": 93.0,
+        "expected_return": 23.65,
+        "sharpe_ratio": 0.427,
+        "max_drawdown": 11.51,
+        "stability_score": 79.5,
         "folds_passed": 1,
-        "composite_score": 0.6514,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6338,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "BANKINDIA.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "BDL.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "BEL.NS": {
         "strategy": "STRETCH",
@@ -444,60 +424,57 @@
             "threshold": 0.05
         },
         "expected_return": 21.89,
-        "sharpe_ratio": 0.26,
+        "sharpe_ratio": 0.31,
         "max_drawdown": 11.25,
-        "stability_score": 85.5,
+        "stability_score": 84.5,
         "folds_passed": 1,
-        "composite_score": 0.6233,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6258,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BHARATFORG.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 18.65,
-        "sharpe_ratio": 0.155,
-        "max_drawdown": 2.2,
-        "stability_score": 82.6,
-        "folds_passed": 1,
-        "composite_score": 0.6313,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BHEL.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 12.04,
-        "sharpe_ratio": 0.127,
-        "max_drawdown": 11.09,
-        "stability_score": 76.4,
-        "folds_passed": 1,
-        "composite_score": 0.6023,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BPCL.NS": {
         "strategy": "TREND",
         "params": {},
-        "expected_return": 5.56,
-        "sharpe_ratio": -0.014,
-        "max_drawdown": 4.03,
-        "stability_score": 77.7,
+        "expected_return": -0.18,
+        "sharpe_ratio": -0.096,
+        "max_drawdown": 5.1,
+        "stability_score": 60.8,
         "folds_passed": 1,
-        "composite_score": 0.5996,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5847,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BHARTIARTL.NS": {
         "strategy": "MACD",
@@ -506,47 +483,47 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 8.06,
-        "sharpe_ratio": 0.047,
-        "max_drawdown": 5.08,
-        "stability_score": 87.0,
+        "expected_return": 10.21,
+        "sharpe_ratio": 0.159,
+        "max_drawdown": 4.27,
+        "stability_score": 94.4,
         "folds_passed": 1,
-        "composite_score": 0.6043,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6147,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BIOCON.NS": {
-        "strategy": "TREND",
-        "params": {},
-        "expected_return": 1.65,
-        "sharpe_ratio": -0.178,
-        "max_drawdown": 4.3,
-        "stability_score": 74.0,
-        "folds_passed": 1,
-        "composite_score": 0.585,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "BLUESTARCO.NS": {
         "strategy": "STRETCH",
         "params": {
             "window": 20,
-            "threshold": 0.03
+            "threshold": 0.05
         },
-        "expected_return": 9.32,
-        "sharpe_ratio": 0.209,
-        "max_drawdown": 12.24,
-        "stability_score": 94.0,
+        "expected_return": 36.86,
+        "sharpe_ratio": 0.545,
+        "max_drawdown": 10.41,
+        "stability_score": 100.0,
         "folds_passed": 1,
-        "composite_score": 0.5999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6617,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "BLUESTARCO.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "BOSCHLTD.NS": {
         "strategy": "MACD",
@@ -555,16 +532,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 30.97,
-        "sharpe_ratio": 0.245,
+        "expected_return": 30.28,
+        "sharpe_ratio": 0.736,
         "max_drawdown": 4.57,
-        "stability_score": 93.2,
+        "stability_score": 96.2,
         "folds_passed": 1,
-        "composite_score": 0.6496,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6731,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "BRITANNIA.NS": {
         "strategy": "MACD",
@@ -573,48 +550,44 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 15.63,
-        "sharpe_ratio": 0.236,
+        "expected_return": 19.03,
+        "sharpe_ratio": 0.487,
         "max_drawdown": 5.98,
-        "stability_score": 76.1,
+        "stability_score": 75.7,
         "folds_passed": 1,
-        "composite_score": 0.6233,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6409,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CGPOWER.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 13.78,
-        "sharpe_ratio": 0.102,
-        "max_drawdown": 12.89,
-        "stability_score": 65.0,
-        "folds_passed": 1,
-        "composite_score": 0.6,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CANBK.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 25.72,
-        "sharpe_ratio": 0.249,
-        "max_drawdown": 4.63,
-        "stability_score": 79.4,
-        "folds_passed": 1,
-        "composite_score": 0.6418,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CHOLAFIN.NS": {
         "strategy": "STRETCH",
@@ -622,16 +595,16 @@
             "window": 20,
             "threshold": 0.05
         },
-        "expected_return": 48.03,
-        "sharpe_ratio": 0.655,
+        "expected_return": 60.25,
+        "sharpe_ratio": 0.744,
         "max_drawdown": 13.57,
-        "stability_score": 92.7,
+        "stability_score": 94.3,
         "folds_passed": 1,
-        "composite_score": 0.6776,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.7004,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CIPLA.NS": {
         "strategy": "NONE",
@@ -642,24 +615,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "COALINDIA.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 8.56,
-        "sharpe_ratio": -0.093,
-        "max_drawdown": 7.15,
-        "stability_score": 61.5,
-        "folds_passed": 1,
-        "composite_score": 0.5939,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "COCHINSHIP.NS": {
         "strategy": "NONE",
@@ -670,10 +643,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "COFORGE.NS": {
         "strategy": "NONE",
@@ -684,10 +657,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "COLPAL.NS": {
         "strategy": "NONE",
@@ -698,10 +671,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CONCOR.NS": {
         "strategy": "NONE",
@@ -712,45 +685,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "COROMANDEL.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 16.48,
-        "sharpe_ratio": 0.387,
-        "max_drawdown": 10.32,
-        "stability_score": 88.0,
-        "folds_passed": 1,
-        "composite_score": 0.6234,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "CUMMINSIND.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 49.4,
-        "sharpe_ratio": 0.535,
-        "max_drawdown": 3.24,
-        "stability_score": 100.0,
-        "folds_passed": 1,
-        "composite_score": 0.6944,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DLF.NS": {
         "strategy": "NONE",
@@ -761,10 +727,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DABUR.NS": {
         "strategy": "NONE",
@@ -775,41 +741,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DIVISLAB.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 11.02,
-        "sharpe_ratio": 0.155,
-        "max_drawdown": 10.74,
-        "stability_score": 90.6,
-        "folds_passed": 1,
-        "composite_score": 0.6028,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DIXON.NS": {
         "strategy": "TREND",
         "params": {},
-        "expected_return": 41.1,
-        "sharpe_ratio": 0.361,
+        "expected_return": 20.59,
+        "sharpe_ratio": 0.221,
         "max_drawdown": 16.85,
-        "stability_score": 80.3,
+        "stability_score": 70.6,
         "folds_passed": 1,
-        "composite_score": 0.646,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6082,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "DRREDDY.NS": {
         "strategy": "NONE",
@@ -820,28 +783,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "EICHERMOT.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 27.16,
-        "sharpe_ratio": 0.291,
-        "max_drawdown": 3.62,
-        "stability_score": 98.0,
-        "folds_passed": 1,
-        "composite_score": 0.6481,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ETERNAL.NS": {
         "strategy": "NONE",
@@ -853,9 +812,9 @@
         "folds_passed": 0,
         "composite_score": -999,
         "data_start": "2021-07-23",
-        "data_end": "2026-05-22",
-        "data_rows": 1172,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 1208,
+        "optimized_on": "2026-06-10"
     },
     "EXIDEIND.NS": {
         "strategy": "NONE",
@@ -866,24 +825,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NYKAA.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 20.98,
-        "sharpe_ratio": 0.087,
-        "max_drawdown": 6.46,
-        "stability_score": 80.6,
-        "folds_passed": 1,
-        "composite_score": 0.6229,
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
         "data_start": "2021-11-10",
-        "data_end": "2026-05-22",
-        "data_rows": 1121,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 1134,
+        "optimized_on": "2026-06-10"
     },
     "FEDERALBNK.NS": {
         "strategy": "NONE",
@@ -894,98 +853,83 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "FORTIS.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 20.73,
-        "sharpe_ratio": 0.374,
-        "max_drawdown": 10.86,
-        "stability_score": 70.4,
-        "folds_passed": 1,
-        "composite_score": 0.6281,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GAIL.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "GVT&D.NS": {
         "strategy": "STRETCH",
         "params": {
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": -5.38,
-        "sharpe_ratio": -0.308,
-        "max_drawdown": 12.6,
-        "stability_score": 69.1,
+        "expected_return": 19.14,
+        "sharpe_ratio": 0.428,
+        "max_drawdown": 12.1,
+        "stability_score": 72.7,
         "folds_passed": 1,
-        "composite_score": 0.5513,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6259,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "GVT&D.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 81.7,
-        "sharpe_ratio": 0.738,
-        "max_drawdown": 2.16,
-        "stability_score": 97.0,
-        "folds_passed": 1,
-        "composite_score": 0.7551,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GMRAIRPORT.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 19.76,
-        "sharpe_ratio": 0.336,
-        "max_drawdown": 6.06,
-        "stability_score": 88.6,
-        "folds_passed": 1,
-        "composite_score": 0.6343,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GLENMARK.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 68.31,
-        "sharpe_ratio": 0.545,
-        "max_drawdown": 1.74,
-        "stability_score": 100.0,
-        "folds_passed": 1,
-        "composite_score": 0.7262,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GODFRYPHLP.NS": {
         "strategy": "MACD",
@@ -994,33 +938,30 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 134.06,
-        "sharpe_ratio": 0.454,
+        "expected_return": 136.72,
+        "sharpe_ratio": 0.511,
         "max_drawdown": 15.82,
-        "stability_score": 98.5,
+        "stability_score": 95.4,
         "folds_passed": 1,
-        "composite_score": 0.7411,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.7439,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GODREJCP.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 3.77,
-        "sharpe_ratio": -0.027,
-        "max_drawdown": 10.32,
-        "stability_score": 89.2,
-        "folds_passed": 1,
-        "composite_score": 0.5837,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GODREJPROP.NS": {
         "strategy": "NONE",
@@ -1031,10 +972,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "GRASIM.NS": {
         "strategy": "MACD",
@@ -1043,16 +984,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 16.97,
-        "sharpe_ratio": 0.211,
+        "expected_return": 16.0,
+        "sharpe_ratio": 0.268,
         "max_drawdown": 8.46,
-        "stability_score": 78.7,
+        "stability_score": 77.5,
         "folds_passed": 1,
-        "composite_score": 0.6191,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6205,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HCLTECH.NS": {
         "strategy": "NONE",
@@ -1063,10 +1004,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HDFCAMC.NS": {
         "strategy": "NONE",
@@ -1077,10 +1018,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HDFCBANK.NS": {
         "strategy": "NONE",
@@ -1091,10 +1032,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HDFCLIFE.NS": {
         "strategy": "MACD",
@@ -1103,16 +1044,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 10.31,
-        "sharpe_ratio": 0.07,
-        "max_drawdown": 11.12,
-        "stability_score": 68.0,
+        "expected_return": 14.9,
+        "sharpe_ratio": 0.188,
+        "max_drawdown": 10.8,
+        "stability_score": 60.2,
         "folds_passed": 1,
-        "composite_score": 0.5967,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6101,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HAVELLS.NS": {
         "strategy": "STRETCH",
@@ -1121,75 +1062,75 @@
             "threshold": 0.05
         },
         "expected_return": 29.93,
-        "sharpe_ratio": 0.494,
+        "sharpe_ratio": 0.579,
         "max_drawdown": 11.37,
-        "stability_score": 90.4,
+        "stability_score": 91.5,
         "folds_passed": 1,
-        "composite_score": 0.6468,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6511,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HEROMOTOCO.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 7.89,
-        "sharpe_ratio": 0.044,
-        "max_drawdown": 14.16,
-        "stability_score": 69.4,
-        "folds_passed": 1,
-        "composite_score": 0.5857,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HINDALCO.NS": {
-        "strategy": "TREND",
-        "params": {},
-        "expected_return": 33.89,
-        "sharpe_ratio": 0.164,
-        "max_drawdown": 7.23,
-        "stability_score": 77.4,
-        "folds_passed": 1,
-        "composite_score": 0.6446,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "HAL.NS": {
-        "strategy": "VOLATILITY",
-        "params": {},
-        "expected_return": 6.99,
-        "sharpe_ratio": 0.054,
-        "max_drawdown": 10.97,
-        "stability_score": 65.8,
-        "folds_passed": 1,
-        "composite_score": 0.5912,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "HINDPETRO.NS": {
         "strategy": "MACD",
         "params": {
             "fast": 12,
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 17.6,
-        "sharpe_ratio": 0.206,
-        "max_drawdown": 8.62,
-        "stability_score": 76.8,
+        "expected_return": 13.85,
+        "sharpe_ratio": 0.237,
+        "max_drawdown": 6.33,
+        "stability_score": 88.6,
         "folds_passed": 1,
-        "composite_score": 0.6195,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6199,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "HAL.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "HINDPETRO.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "HINDUNILVR.NS": {
         "strategy": "NONE",
@@ -1200,28 +1141,27 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HINDZINC.NS": {
-        "strategy": "MACD",
+        "strategy": "STRETCH",
         "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
+            "window": 20,
+            "threshold": 0.05
         },
-        "expected_return": 53.0,
-        "sharpe_ratio": 0.445,
-        "max_drawdown": 10.63,
-        "stability_score": 94.4,
+        "expected_return": 5.85,
+        "sharpe_ratio": 0.091,
+        "max_drawdown": 19.47,
+        "stability_score": 72.9,
         "folds_passed": 1,
-        "composite_score": 0.6805,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5744,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "POWERINDIA.NS": {
         "strategy": "MACD",
@@ -1230,16 +1170,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 70.58,
-        "sharpe_ratio": 0.345,
-        "max_drawdown": 12.33,
-        "stability_score": 85.6,
-        "folds_passed": 2,
-        "composite_score": 0.6984,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 70.3,
+        "sharpe_ratio": 0.495,
+        "max_drawdown": 11.87,
+        "stability_score": 91.6,
+        "folds_passed": 1,
+        "composite_score": 0.7065,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "HUDCO.NS": {
         "strategy": "NONE",
@@ -1250,10 +1190,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ICICIBANK.NS": {
         "strategy": "MACD",
@@ -1262,30 +1202,30 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 9.46,
-        "sharpe_ratio": 0.08,
-        "max_drawdown": 9.01,
-        "stability_score": 95.9,
+        "expected_return": 16.68,
+        "sharpe_ratio": 0.458,
+        "max_drawdown": 3.32,
+        "stability_score": 97.0,
         "folds_passed": 1,
-        "composite_score": 0.6002,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6413,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ICICIGI.NS": {
-        "strategy": "VOLATILITY",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 18.07,
-        "sharpe_ratio": 0.577,
-        "max_drawdown": 0.0,
-        "stability_score": 100.0,
-        "folds_passed": 1,
-        "composite_score": 0.656,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IDFCFIRSTB.NS": {
         "strategy": "NONE",
@@ -1296,10 +1236,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ITC.NS": {
         "strategy": "NONE",
@@ -1310,24 +1250,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "INDIANB.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 31.64,
-        "sharpe_ratio": 0.392,
-        "max_drawdown": 5.05,
-        "stability_score": 83.2,
-        "folds_passed": 1,
-        "composite_score": 0.657,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "INDHOTEL.NS": {
         "strategy": "STRETCH",
@@ -1335,32 +1275,30 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 40.87,
-        "sharpe_ratio": 1.115,
+        "expected_return": 42.72,
+        "sharpe_ratio": 1.295,
         "max_drawdown": 2.44,
         "stability_score": 100.0,
         "folds_passed": 1,
-        "composite_score": 0.7122,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.724,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IOC.NS": {
-        "strategy": "BREAKOUT",
-        "params": {
-            "window": 20
-        },
-        "expected_return": 1.48,
-        "sharpe_ratio": -0.133,
-        "max_drawdown": 8.94,
-        "stability_score": 74.8,
-        "folds_passed": 1,
-        "composite_score": 0.5777,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IRCTC.NS": {
         "strategy": "NONE",
@@ -1371,10 +1309,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IRFC.NS": {
         "strategy": "NONE",
@@ -1385,10 +1323,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IREDA.NS": {
         "strategy": "NONE",
@@ -1400,26 +1338,23 @@
         "folds_passed": 0,
         "composite_score": -999,
         "data_start": "2023-11-29",
-        "data_end": "2026-05-22",
-        "data_rows": 613,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 626,
+        "optimized_on": "2026-06-10"
     },
     "INDUSTOWER.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 3.83,
-        "sharpe_ratio": -0.02,
-        "max_drawdown": 13.09,
-        "stability_score": 83.8,
-        "folds_passed": 1,
-        "composite_score": 0.5786,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "INDUSINDBK.NS": {
         "strategy": "NONE",
@@ -1430,10 +1365,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NAUKRI.NS": {
         "strategy": "NONE",
@@ -1444,10 +1379,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "INFY.NS": {
         "strategy": "NONE",
@@ -1458,10 +1393,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "INDIGO.NS": {
         "strategy": "MACD",
@@ -1470,33 +1405,33 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 27.49,
-        "sharpe_ratio": 0.371,
-        "max_drawdown": 3.39,
-        "stability_score": 100.0,
+        "expected_return": 26.06,
+        "sharpe_ratio": 0.422,
+        "max_drawdown": 3.36,
+        "stability_score": 99.6,
         "folds_passed": 1,
-        "composite_score": 0.653,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6534,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "JSWENERGY.NS": {
         "strategy": "STRETCH",
         "params": {
             "window": 20,
-            "threshold": 0.03
+            "threshold": 0.07
         },
-        "expected_return": 24.22,
-        "sharpe_ratio": 0.325,
-        "max_drawdown": 11.29,
-        "stability_score": 66.1,
+        "expected_return": 25.61,
+        "sharpe_ratio": 0.338,
+        "max_drawdown": 20.62,
+        "stability_score": 68.5,
         "folds_passed": 1,
-        "composite_score": 0.63,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6141,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "JSWSTEEL.NS": {
         "strategy": "NONE",
@@ -1507,24 +1442,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "JINDALSTEL.NS": {
         "strategy": "VOLATILITY",
         "params": {},
-        "expected_return": 17.09,
-        "sharpe_ratio": 0.197,
-        "max_drawdown": 11.81,
-        "stability_score": 70.4,
+        "expected_return": 24.81,
+        "sharpe_ratio": 0.34,
+        "max_drawdown": 11.54,
+        "stability_score": 72.9,
         "folds_passed": 1,
-        "composite_score": 0.6119,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6312,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "JIOFIN.NS": {
         "strategy": "NONE",
@@ -1536,9 +1471,9 @@
         "folds_passed": 0,
         "composite_score": -999,
         "data_start": "2023-08-21",
-        "data_end": "2026-05-22",
-        "data_rows": 674,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 693,
+        "optimized_on": "2026-06-10"
     },
     "JUBLFOOD.NS": {
         "strategy": "NONE",
@@ -1549,27 +1484,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "KEI.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 13.24,
-        "sharpe_ratio": 0.205,
-        "max_drawdown": 12.22,
-        "stability_score": 93.5,
+        "strategy": "VOLATILITY",
+        "params": {},
+        "expected_return": 46.3,
+        "sharpe_ratio": 0.335,
+        "max_drawdown": 29.77,
+        "stability_score": 62.8,
         "folds_passed": 1,
-        "composite_score": 0.6057,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6267,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "KPITTECH.NS": {
         "strategy": "STRETCH",
@@ -1578,15 +1510,15 @@
             "threshold": 0.05
         },
         "expected_return": 7.97,
-        "sharpe_ratio": 0.071,
+        "sharpe_ratio": 0.172,
         "max_drawdown": 12.21,
-        "stability_score": 94.6,
+        "stability_score": 93.4,
         "folds_passed": 1,
-        "composite_score": 0.5911,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5961,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "KALYANKJIL.NS": {
         "strategy": "MACD",
@@ -1595,16 +1527,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 49.58,
-        "sharpe_ratio": 0.319,
+        "expected_return": 49.67,
+        "sharpe_ratio": 0.362,
         "max_drawdown": 21.98,
-        "stability_score": 69.9,
+        "stability_score": 63.6,
         "folds_passed": 1,
-        "composite_score": 0.6464,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6487,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "KOTAKBANK.NS": {
         "strategy": "NONE",
@@ -1615,24 +1547,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "LTF.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 46.23,
-        "sharpe_ratio": 0.313,
-        "max_drawdown": 9.97,
-        "stability_score": 81.0,
-        "folds_passed": 1,
-        "composite_score": 0.6651,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "LICHSGFIN.NS": {
         "strategy": "NONE",
@@ -1643,10 +1575,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "LTM.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "LT.NS": {
         "strategy": "STRETCH",
@@ -1655,15 +1601,15 @@
             "threshold": 0.03
         },
         "expected_return": 15.1,
-        "sharpe_ratio": 0.246,
+        "sharpe_ratio": 0.332,
         "max_drawdown": 10.93,
-        "stability_score": 63.9,
+        "stability_score": 61.9,
         "folds_passed": 1,
-        "composite_score": 0.6131,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6174,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "LAURUSLABS.NS": {
         "strategy": "NONE",
@@ -1674,10 +1620,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "LODHA.NS": {
         "strategy": "STRETCH",
@@ -1686,15 +1632,15 @@
             "threshold": 0.07
         },
         "expected_return": 15.87,
-        "sharpe_ratio": 0.19,
+        "sharpe_ratio": 0.257,
         "max_drawdown": 11.97,
-        "stability_score": 69.3,
+        "stability_score": 68.9,
         "folds_passed": 1,
-        "composite_score": 0.6094,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6127,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "LUPIN.NS": {
         "strategy": "NONE",
@@ -1705,10 +1651,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MRF.NS": {
         "strategy": "NONE",
@@ -1719,10 +1665,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "M&MFIN.NS": {
         "strategy": "STRETCH",
@@ -1731,15 +1677,15 @@
             "threshold": 0.03
         },
         "expected_return": 2.59,
-        "sharpe_ratio": -0.029,
+        "sharpe_ratio": 0.039,
         "max_drawdown": 11.71,
-        "stability_score": 68.8,
+        "stability_score": 69.2,
         "folds_passed": 1,
-        "composite_score": 0.579,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5824,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "M&M.NS": {
         "strategy": "STRETCH",
@@ -1747,18 +1693,32 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 40.64,
-        "sharpe_ratio": 0.953,
+        "expected_return": 31.12,
+        "sharpe_ratio": 0.927,
         "max_drawdown": 1.71,
         "stability_score": 100.0,
         "folds_passed": 1,
-        "composite_score": 0.7052,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6896,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MANKIND.NS": {
+        "strategy": "TREND",
+        "params": {},
+        "expected_return": 6.26,
+        "sharpe_ratio": 0.112,
+        "max_drawdown": 2.09,
+        "stability_score": 61.4,
+        "folds_passed": 1,
+        "composite_score": 0.6108,
+        "data_start": "2023-05-09",
+        "data_end": "2026-06-10",
+        "data_rows": 764,
+        "optimized_on": "2026-06-10"
+    },
+    "MARICO.NS": {
         "strategy": "NONE",
         "params": {},
         "expected_return": 0,
@@ -1767,55 +1727,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2023-05-09",
-        "data_end": "2026-05-22",
-        "data_rows": 751,
-        "optimized_on": "2026-05-22"
-    },
-    "MARICO.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 11.61,
-        "sharpe_ratio": 0.161,
-        "max_drawdown": 11.28,
-        "stability_score": 71.8,
-        "folds_passed": 1,
-        "composite_score": 0.6029,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MARUTI.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 17.09,
-        "sharpe_ratio": 0.206,
-        "max_drawdown": 7.19,
-        "stability_score": 76.1,
-        "folds_passed": 1,
-        "composite_score": 0.6216,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MFSL.NS": {
-        "strategy": "VOLATILITY",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 21.95,
-        "sharpe_ratio": 0.393,
-        "max_drawdown": 10.25,
-        "stability_score": 100.0,
-        "folds_passed": 1,
-        "composite_score": 0.6321,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MAXHEALTH.NS": {
         "strategy": "STRETCH",
@@ -1824,15 +1767,15 @@
             "threshold": 0.03
         },
         "expected_return": 46.76,
-        "sharpe_ratio": 3.23,
+        "sharpe_ratio": 3.624,
         "max_drawdown": 0.0,
         "stability_score": 100.0,
         "folds_passed": 1,
-        "composite_score": 0.8317,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.8513,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MAZDOCK.NS": {
         "strategy": "STRETCH",
@@ -1841,29 +1784,32 @@
             "threshold": 0.07
         },
         "expected_return": 39.62,
-        "sharpe_ratio": 0.45,
+        "sharpe_ratio": 0.511,
         "max_drawdown": 18.43,
-        "stability_score": 88.3,
+        "stability_score": 87.1,
         "folds_passed": 1,
-        "composite_score": 0.6451,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6481,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MOTILALOFS.NS": {
-        "strategy": "NONE",
-        "params": {},
-        "expected_return": 0,
-        "sharpe_ratio": 0,
-        "max_drawdown": 100,
-        "stability_score": 0,
-        "folds_passed": 0,
-        "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "STRETCH",
+        "params": {
+            "window": 20,
+            "threshold": 0.03
+        },
+        "expected_return": 16.92,
+        "sharpe_ratio": 0.405,
+        "max_drawdown": 11.0,
+        "stability_score": 64.9,
+        "folds_passed": 1,
+        "composite_score": 0.6236,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MPHASIS.NS": {
         "strategy": "NONE",
@@ -1874,38 +1820,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MCX.NS": {
         "strategy": "TREND",
         "params": {},
-        "expected_return": 79.13,
-        "sharpe_ratio": 0.254,
-        "max_drawdown": 9.91,
-        "stability_score": 77.8,
+        "expected_return": 83.49,
+        "sharpe_ratio": 0.188,
+        "max_drawdown": 10.34,
+        "stability_score": 80.5,
         "folds_passed": 1,
-        "composite_score": 0.7116,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.7139,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MUTHOOTFIN.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 30.13,
-        "sharpe_ratio": 0.282,
-        "max_drawdown": 15.93,
-        "stability_score": 76.4,
-        "folds_passed": 1,
-        "composite_score": 0.6274,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NHPC.NS": {
         "strategy": "NONE",
@@ -1916,10 +1862,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NMDC.NS": {
         "strategy": "STRETCH",
@@ -1928,15 +1874,15 @@
             "threshold": 0.05
         },
         "expected_return": 22.52,
-        "sharpe_ratio": 0.276,
+        "sharpe_ratio": 0.336,
         "max_drawdown": 11.65,
-        "stability_score": 78.9,
+        "stability_score": 79.1,
         "folds_passed": 1,
-        "composite_score": 0.6243,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6273,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NTPC.NS": {
         "strategy": "NONE",
@@ -1947,42 +1893,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NATIONALUM.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 91.74,
-        "sharpe_ratio": 0.35,
-        "max_drawdown": 7.18,
-        "stability_score": 76.2,
-        "folds_passed": 1,
-        "composite_score": 0.7408,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "NESTLEIND.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 23.99,
-        "sharpe_ratio": 0.266,
-        "max_drawdown": 8.67,
-        "stability_score": 77.2,
-        "folds_passed": 1,
-        "composite_score": 0.6319,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "OBEROIRLTY.NS": {
         "strategy": "STRETCH",
@@ -1990,51 +1932,44 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 21.93,
-        "sharpe_ratio": 0.223,
+        "expected_return": 29.7,
+        "sharpe_ratio": 0.366,
         "max_drawdown": 23.1,
-        "stability_score": 68.1,
+        "stability_score": 76.1,
         "folds_passed": 1,
-        "composite_score": 0.5979,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6167,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ONGC.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 3.89,
-        "sharpe_ratio": -0.004,
-        "max_drawdown": 9.47,
-        "stability_score": 76.0,
-        "folds_passed": 1,
-        "composite_score": 0.5867,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "OIL.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 26.75,
-        "sharpe_ratio": 0.707,
-        "max_drawdown": 4.13,
-        "stability_score": 96.3,
-        "folds_passed": 1,
-        "composite_score": 0.6672,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PAYTM.NS": {
         "strategy": "NONE",
@@ -2046,9 +1981,9 @@
         "folds_passed": 0,
         "composite_score": -999,
         "data_start": "2021-11-18",
-        "data_end": "2026-05-22",
-        "data_rows": 1115,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 1128,
+        "optimized_on": "2026-06-10"
     },
     "OFSS.NS": {
         "strategy": "NONE",
@@ -2059,10 +1994,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "POLICYBZR.NS": {
         "strategy": "NONE",
@@ -2074,9 +2009,9 @@
         "folds_passed": 0,
         "composite_score": -999,
         "data_start": "2021-11-15",
-        "data_end": "2026-05-22",
-        "data_rows": 1117,
-        "optimized_on": "2026-05-22"
+        "data_end": "2026-06-10",
+        "data_rows": 1130,
+        "optimized_on": "2026-06-10"
     },
     "PIIND.NS": {
         "strategy": "NONE",
@@ -2087,24 +2022,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PAGEIND.NS": {
-        "strategy": "NONE",
+        "strategy": "TREND",
         "params": {},
-        "expected_return": 0,
-        "sharpe_ratio": 0,
-        "max_drawdown": 100,
-        "stability_score": 0,
-        "folds_passed": 0,
-        "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 3.05,
+        "sharpe_ratio": 0.016,
+        "max_drawdown": 2.84,
+        "stability_score": 81.2,
+        "folds_passed": 1,
+        "composite_score": 0.5997,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1236,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PATANJALI.NS": {
         "strategy": "NONE",
@@ -2115,27 +2050,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PERSISTENT.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 22.55,
-        "sharpe_ratio": 0.259,
-        "max_drawdown": 10.48,
-        "stability_score": 87.2,
-        "folds_passed": 1,
-        "composite_score": 0.6258,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PHOENIXLTD.NS": {
         "strategy": "STRETCH",
@@ -2143,16 +2075,16 @@
             "window": 20,
             "threshold": 0.05
         },
-        "expected_return": 34.4,
-        "sharpe_ratio": 0.321,
+        "expected_return": 35.17,
+        "sharpe_ratio": 0.393,
         "max_drawdown": 8.56,
-        "stability_score": 81.5,
+        "stability_score": 86.1,
         "folds_passed": 1,
-        "composite_score": 0.6505,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6553,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1236,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PIDILITIND.NS": {
         "strategy": "NONE",
@@ -2163,24 +2095,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "POLYCAB.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 43.38,
-        "sharpe_ratio": 0.233,
-        "max_drawdown": 4.32,
-        "stability_score": 78.8,
-        "folds_passed": 1,
-        "composite_score": 0.6681,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PFC.NS": {
         "strategy": "NONE",
@@ -2191,10 +2123,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "POWERGRID.NS": {
         "strategy": "NONE",
@@ -2205,10 +2137,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PRESTIGE.NS": {
         "strategy": "NONE",
@@ -2219,84 +2151,87 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "PNB.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "RECLTD.NS": {
+        "strategy": "TREND",
+        "params": {},
+        "expected_return": 3.88,
+        "sharpe_ratio": 0.137,
+        "max_drawdown": 3.25,
+        "stability_score": 74.6,
+        "folds_passed": 1,
+        "composite_score": 0.6062,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "RADICO.NS": {
         "strategy": "MACD",
         "params": {
             "fast": 12,
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 5.9,
-        "sharpe_ratio": 0.002,
-        "max_drawdown": 7.19,
-        "stability_score": 69.6,
+        "expected_return": 13.06,
+        "sharpe_ratio": 0.142,
+        "max_drawdown": 11.91,
+        "stability_score": 82.9,
         "folds_passed": 1,
-        "composite_score": 0.5946,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "RECLTD.NS": {
-        "strategy": "NONE",
-        "params": {},
-        "expected_return": 0,
-        "sharpe_ratio": 0,
-        "max_drawdown": 100,
-        "stability_score": 0,
-        "folds_passed": 0,
-        "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
-        "data_rows": 1238,
-        "optimized_on": "2026-05-22"
-    },
-    "RADICO.NS": {
-        "strategy": "VOLATILITY",
-        "params": {},
-        "expected_return": 29.31,
-        "sharpe_ratio": 0.536,
-        "max_drawdown": 10.24,
-        "stability_score": 93.5,
-        "folds_passed": 1,
-        "composite_score": 0.6503,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6029,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "RVNL.NS": {
         "strategy": "VOLATILITY",
         "params": {},
         "expected_return": 46.82,
-        "sharpe_ratio": 0.431,
+        "sharpe_ratio": 0.482,
         "max_drawdown": 25.37,
-        "stability_score": 66.5,
+        "stability_score": 68.0,
         "folds_passed": 1,
-        "composite_score": 0.641,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6436,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "RELIANCE.NS": {
-        "strategy": "NONE",
-        "params": {},
-        "expected_return": 0,
-        "sharpe_ratio": 0,
-        "max_drawdown": 100,
-        "stability_score": 0,
-        "folds_passed": 0,
-        "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "STRETCH",
+        "params": {
+            "window": 20,
+            "threshold": 0.03
+        },
+        "expected_return": 6.29,
+        "sharpe_ratio": 0.123,
+        "max_drawdown": 10.31,
+        "stability_score": 80.3,
+        "folds_passed": 1,
+        "composite_score": 0.595,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SBICARD.NS": {
         "strategy": "NONE",
@@ -2307,10 +2242,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SBILIFE.NS": {
         "strategy": "NONE",
@@ -2321,42 +2256,41 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SRF.NS": {
-        "strategy": "MACD",
+        "strategy": "STRETCH",
         "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
+            "window": 20,
+            "threshold": 0.03
         },
-        "expected_return": 7.66,
-        "sharpe_ratio": 0.046,
-        "max_drawdown": 12.95,
-        "stability_score": 65.3,
+        "expected_return": 11.75,
+        "sharpe_ratio": 0.325,
+        "max_drawdown": 10.8,
+        "stability_score": 81.4,
         "folds_passed": 1,
-        "composite_score": 0.5879,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6123,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "MOTHERSON.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 20.09,
-        "sharpe_ratio": 0.032,
-        "max_drawdown": 7.13,
-        "stability_score": 70.6,
-        "folds_passed": 1,
-        "composite_score": 0.6175,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SHREECEM.NS": {
         "strategy": "NONE",
@@ -2367,28 +2301,24 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SHRIRAMFIN.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": -5.25,
-        "sharpe_ratio": -0.066,
-        "max_drawdown": 16.09,
-        "stability_score": 66.4,
-        "folds_passed": 2,
-        "composite_score": 0.5566,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SIEMENS.NS": {
         "strategy": "NONE",
@@ -2399,10 +2329,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SOLARINDS.NS": {
         "strategy": "MACD",
@@ -2411,30 +2341,30 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 53.84,
-        "sharpe_ratio": 0.627,
+        "expected_return": 65.79,
+        "sharpe_ratio": 0.663,
         "max_drawdown": 6.65,
-        "stability_score": 94.5,
+        "stability_score": 94.4,
         "folds_passed": 1,
-        "composite_score": 0.6988,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.7186,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1237,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SBIN.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 16.89,
-        "sharpe_ratio": 0.138,
-        "max_drawdown": 10.3,
-        "stability_score": 81.0,
-        "folds_passed": 1,
-        "composite_score": 0.6116,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SAIL.NS": {
         "strategy": "NONE",
@@ -2445,10 +2375,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SUNPHARMA.NS": {
         "strategy": "NONE",
@@ -2459,10 +2389,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SUPREMEIND.NS": {
         "strategy": "NONE",
@@ -2473,10 +2403,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "SUZLON.NS": {
         "strategy": "NONE",
@@ -2487,10 +2417,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TVSMOTOR.NS": {
         "strategy": "MACD",
@@ -2499,16 +2429,16 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 12.06,
-        "sharpe_ratio": 0.105,
-        "max_drawdown": 9.78,
-        "stability_score": 71.1,
-        "folds_passed": 2,
-        "composite_score": 0.6038,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 22.52,
+        "sharpe_ratio": 0.322,
+        "max_drawdown": 11.69,
+        "stability_score": 76.3,
+        "folds_passed": 1,
+        "composite_score": 0.6265,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TATACOMM.NS": {
         "strategy": "NONE",
@@ -2519,10 +2449,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TCS.NS": {
         "strategy": "NONE",
@@ -2533,10 +2463,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TATACONSUM.NS": {
         "strategy": "NONE",
@@ -2547,10 +2477,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TATAELXSI.NS": {
         "strategy": "NONE",
@@ -2561,28 +2491,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TATAINVEST.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 54.72,
-        "sharpe_ratio": 0.398,
-        "max_drawdown": 12.42,
-        "stability_score": 88.0,
-        "folds_passed": 1,
-        "composite_score": 0.6772,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "TMPV.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "TATAPOWER.NS": {
         "strategy": "NONE",
@@ -2593,28 +2533,28 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TATASTEEL.NS": {
-        "strategy": "MACD",
+        "strategy": "RSI",
         "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
+            "window": 14,
+            "buy": 35,
+            "sell": 70
         },
-        "expected_return": 13.38,
-        "sharpe_ratio": 0.133,
-        "max_drawdown": 9.0,
-        "stability_score": 79.1,
+        "expected_return": 24.7,
+        "sharpe_ratio": 0.329,
+        "max_drawdown": 11.97,
+        "stability_score": 72.2,
         "folds_passed": 1,
-        "composite_score": 0.6087,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6296,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TECHM.NS": {
         "strategy": "NONE",
@@ -2625,10 +2565,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TITAN.NS": {
         "strategy": "MACD",
@@ -2637,44 +2577,48 @@
             "slow": 26,
             "signal": 9
         },
-        "expected_return": 18.81,
-        "sharpe_ratio": 0.369,
-        "max_drawdown": 6.51,
-        "stability_score": 92.2,
+        "expected_return": 5.12,
+        "sharpe_ratio": 0.069,
+        "max_drawdown": 9.09,
+        "stability_score": 67.2,
         "folds_passed": 1,
-        "composite_score": 0.6337,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.5929,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TORNTPHARM.NS": {
-        "strategy": "TREND",
-        "params": {},
-        "expected_return": 24.58,
+        "strategy": "MACD",
+        "params": {
+            "fast": 12,
+            "slow": 26,
+            "signal": 9
+        },
+        "expected_return": 11.72,
         "sharpe_ratio": 0.224,
-        "max_drawdown": 5.88,
-        "stability_score": 90.4,
+        "max_drawdown": 6.49,
+        "stability_score": 61.2,
         "folds_passed": 1,
-        "composite_score": 0.6363,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6158,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TRENT.NS": {
         "strategy": "TREND",
         "params": {},
-        "expected_return": 19.02,
-        "sharpe_ratio": 0.182,
+        "expected_return": 20.1,
+        "sharpe_ratio": 0.229,
         "max_drawdown": 10.1,
-        "stability_score": 75.1,
+        "stability_score": 75.5,
         "folds_passed": 1,
-        "composite_score": 0.6175,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6214,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "TIINDIA.NS": {
         "strategy": "NONE",
@@ -2685,45 +2629,38 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "UPL.NS": {
-        "strategy": "STRETCH",
-        "params": {
-            "window": 20,
-            "threshold": 0.03
-        },
-        "expected_return": 10.91,
-        "sharpe_ratio": 0.109,
-        "max_drawdown": 12.09,
-        "stability_score": 93.1,
-        "folds_passed": 1,
-        "composite_score": 0.5976,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ULTRACEMCO.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 12.0,
-        "sharpe_ratio": 0.164,
-        "max_drawdown": 7.65,
-        "stability_score": 70.7,
-        "folds_passed": 2,
-        "composite_score": 0.6109,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "UNIONBANK.NS": {
         "strategy": "STRETCH",
@@ -2731,34 +2668,44 @@
             "window": 20,
             "threshold": 0.03
         },
-        "expected_return": 14.69,
-        "sharpe_ratio": 0.152,
-        "max_drawdown": 15.84,
-        "stability_score": 76.4,
+        "expected_return": 20.7,
+        "sharpe_ratio": 0.381,
+        "max_drawdown": 12.4,
+        "stability_score": 75.9,
         "folds_passed": 1,
-        "composite_score": 0.5979,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6253,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "UNITDSPR.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     },
     "VBL.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 33.69,
-        "sharpe_ratio": 0.386,
-        "max_drawdown": 6.37,
-        "stability_score": 91.8,
-        "folds_passed": 1,
-        "composite_score": 0.6571,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "VEDL.NS": {
         "strategy": "STRETCH",
@@ -2767,47 +2714,43 @@
             "threshold": 0.05
         },
         "expected_return": 27.42,
-        "sharpe_ratio": 0.502,
+        "sharpe_ratio": 0.59,
         "max_drawdown": 10.5,
-        "stability_score": 92.9,
+        "stability_score": 93.0,
         "folds_passed": 1,
-        "composite_score": 0.6452,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "composite_score": 0.6496,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "IDEA.NS": {
-        "strategy": "TREND",
+        "strategy": "NONE",
         "params": {},
-        "expected_return": 77.99,
-        "sharpe_ratio": 0.237,
-        "max_drawdown": 8.86,
-        "stability_score": 80.8,
-        "folds_passed": 1,
-        "composite_score": 0.7111,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "VOLTAS.NS": {
-        "strategy": "MACD",
-        "params": {
-            "fast": 12,
-            "slow": 26,
-            "signal": 9
-        },
-        "expected_return": 7.68,
-        "sharpe_ratio": 0.049,
-        "max_drawdown": 8.39,
-        "stability_score": 60.1,
-        "folds_passed": 1,
-        "composite_score": 0.5972,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "WIPRO.NS": {
         "strategy": "NONE",
@@ -2818,10 +2761,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "YESBANK.NS": {
         "strategy": "NONE",
@@ -2832,10 +2775,10 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
     },
     "ZYDUSLIFE.NS": {
         "strategy": "NONE",
@@ -2846,9 +2789,166 @@
         "stability_score": 0,
         "folds_passed": 0,
         "composite_score": -999,
-        "data_start": "2021-05-24",
-        "data_end": "2026-05-22",
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
         "data_rows": 1238,
-        "optimized_on": "2026-05-22"
+        "optimized_on": "2026-06-10"
+    },
+    "ANGELONE.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "CDSL.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "CAMS.NS": {
+        "strategy": "STRETCH",
+        "params": {
+            "window": 20,
+            "threshold": 0.07
+        },
+        "expected_return": 32.35,
+        "sharpe_ratio": 0.438,
+        "max_drawdown": 21.7,
+        "stability_score": 64.2,
+        "folds_passed": 1,
+        "composite_score": 0.627,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "KAYNES.NS": {
+        "strategy": "MACD",
+        "params": {
+            "fast": 12,
+            "slow": 26,
+            "signal": 9
+        },
+        "expected_return": 81.29,
+        "sharpe_ratio": 0.501,
+        "max_drawdown": 9.72,
+        "stability_score": 70.3,
+        "folds_passed": 1,
+        "composite_score": 0.7276,
+        "data_start": "2022-11-22",
+        "data_end": "2026-06-10",
+        "data_rows": 878,
+        "optimized_on": "2026-06-10"
+    },
+    "DATAPATTNS.NS": {
+        "strategy": "MACD",
+        "params": {
+            "fast": 12,
+            "slow": 26,
+            "signal": 9
+        },
+        "expected_return": 29.5,
+        "sharpe_ratio": 0.21,
+        "max_drawdown": 30.51,
+        "stability_score": 71.3,
+        "folds_passed": 1,
+        "composite_score": 0.5937,
+        "data_start": "2021-12-24",
+        "data_end": "2026-06-10",
+        "data_rows": 1103,
+        "optimized_on": "2026-06-10"
+    },
+    "OLECTRA.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "APARINDS.NS": {
+        "strategy": "STRETCH",
+        "params": {
+            "window": 20,
+            "threshold": 0.03
+        },
+        "expected_return": 22.86,
+        "sharpe_ratio": 0.346,
+        "max_drawdown": 13.98,
+        "stability_score": 83.8,
+        "folds_passed": 1,
+        "composite_score": 0.6236,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "TATACHEM.NS": {
+        "strategy": "STRETCH",
+        "params": {
+            "window": 20,
+            "threshold": 0.03
+        },
+        "expected_return": 23.96,
+        "sharpe_ratio": 0.316,
+        "max_drawdown": 20.85,
+        "stability_score": 70.3,
+        "folds_passed": 1,
+        "composite_score": 0.61,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "ACE.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
+    },
+    "POONAWALLA.NS": {
+        "strategy": "NONE",
+        "params": {},
+        "expected_return": 0,
+        "sharpe_ratio": 0,
+        "max_drawdown": 100,
+        "stability_score": 0,
+        "folds_passed": 0,
+        "composite_score": -999,
+        "data_start": "2021-06-10",
+        "data_end": "2026-06-10",
+        "data_rows": 1238,
+        "optimized_on": "2026-06-10"
     }
 }

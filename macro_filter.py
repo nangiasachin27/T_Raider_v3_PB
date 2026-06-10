@@ -722,7 +722,10 @@ class MacroFilter:
         if ref is None:
             return None
         try:
-            data = yf.Ticker(ref).history(period="3d", progress=False)
+            # Increase period slightly and drop any NaN rows
+            data = yf.Ticker(ref).history(period="5d", progress=False)
+            data = data.dropna(subset=['Close']) 
+            
             if len(data) < 2:
                 return None
             prev = float(data['Close'].iloc[-2])
@@ -730,7 +733,9 @@ class MacroFilter:
             return (last / prev - 1) * 100 if prev > 0 else None
         except TypeError:
             try:
-                data = yf.Ticker(ref).history(period="3d")
+                # Fallback block also gets the dropna fix
+                data = yf.Ticker(ref).history(period="5d")
+                data = data.dropna(subset=['Close']) 
                 if len(data) < 2:
                     return None
                 prev = float(data['Close'].iloc[-2])
@@ -741,8 +746,7 @@ class MacroFilter:
                 return None
         except Exception as e:
             warnings.warn(f"Overnight reference fetch failed ({ref}): {e}")
-            return None
-
+            return None  
     def _check_calendar(self) -> tuple[bool, str]:
         """Check if today is a configured high-risk event day."""
         today = datetime.date.today().isoformat()

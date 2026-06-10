@@ -75,19 +75,17 @@ def get_ticker_data_window(ticker: str,
     """
     Determines the actual date range where a ticker has valid price data
     in the already-downloaded DataFrame.
-
-    This is the data-driven survivorship bias fix:
-      - A stock listed in Sep 2020 will have no data before Sep 2020.
-      - Clipping the backtest to data_start means we never test it on
-        data from before it existed — no hardcoded index membership needed.
-
-    Returns:
-        (data_start, data_end, num_rows)
-        Returns (None, None, 0) if the ticker has no data.
     """
     try:
-        df = full_df[ticker].dropna(how='all') if isinstance(full_df.columns, pd.MultiIndex) \
-             else full_df.dropna(how='all')
+        # FIX: Correctly handle yfinance MultiIndex output
+        if isinstance(full_df.columns, pd.MultiIndex):
+            if ticker in full_df.columns.get_level_values(1):
+                df = full_df.xs(ticker, level=1, axis=1).dropna(how='all')
+            else:
+                return None, None, 0
+        else:
+            # Handle flat index (single ticker download)
+            df = full_df.dropna(how='all')
 
         if df.empty:
             return None, None, 0
@@ -100,8 +98,7 @@ def get_ticker_data_window(ticker: str,
     except Exception as e:
         warnings.warn(f"Unexpected error getting data window for {ticker}: {e}")
         return None, None, 0
-
-
+    
 def validate_universe(tickers: List[str],
                       full_df: pd.DataFrame,
                       min_days: int = 500) -> Dict[str, Dict]:

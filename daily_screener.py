@@ -418,7 +418,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
     # This mirrors V1 behaviour while keeping the directional guard intact.
     "CONSERVATIVE": {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.03},
     "BALANCED":     {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.05},
-    "AGGRESSIVE":   {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.02},
+    "AGGRESSIVE":   {"allow_mean_reversion": True,  "nifty_drop_threshold": 0.01},
 }
     config = RISK_PROFILES.get(mode, RISK_PROFILES["CONSERVATIVE"])
     print(f"  Mean-reversion    : {config['allow_mean_reversion']}"

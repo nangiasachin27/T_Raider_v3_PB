@@ -574,7 +574,7 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
             target_qty = int(target_qty * risk_mult)
 
             # 20% concentration cap (kept from original bot logic)
-        max_position_cost = total_baseline_wealth * 0.20
+        max_position_cost = total_baseline_wealth * 0.35
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price
@@ -776,7 +776,7 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA"):
             target_qty = int(target_qty * risk_mult)
 
         # 20% concentration cap
-        max_position_cost = total_baseline_wealth * 0.20
+        max_position_cost = total_baseline_wealth * 0.35
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price

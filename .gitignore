@@ -11,6 +11,7 @@ venv/
 config/broker_config.json
 config/capital_override.json
 config/upstox_instrument_cache.json
+config/portfolio.json
 *.log
 
 # OPTIONAL: Ignore your actual portfolio if you want to keep your money private
