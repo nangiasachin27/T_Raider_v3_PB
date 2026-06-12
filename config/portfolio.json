@@ -5,7 +5,7 @@
             "qty": 75,
             "entry_price": 263.46,
             "entry_date": "2026-04-30",
-            "peak_price": 273.65
+            "peak_price": 274.8
         },
         "TORNTPHARM.NS": {
             "qty": 1,
@@ -22,7 +22,8 @@
         "BHEL.NS": {
             "qty": 47,
             "entry_price": 376.5,
-            "entry_date": "2026-06-10"
+            "entry_date": "2026-06-10",
+            "peak_price": 378.9
         },
         "UPL.NS": {
             "qty": 32,
