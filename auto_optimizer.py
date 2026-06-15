@@ -47,6 +47,10 @@ from strategies.volatility import apply_bollinger_strategy
 from strategies.breakout import apply_breakout_strategy
 from strategies.momentum import apply_macd_strategy
 from strategies.stretch import apply_stretch_strategy
+
+# ── New Strategies Added Here ─────────────────────────────────────────────────
+from strategies import obv_momentum, nr7, supertrend, stoch_rsi
+
 from engine.backtester import SimpleBacktester
 
 
@@ -144,9 +148,16 @@ def _composite_score(ann_return, sharpe, max_dd):
 
 
 def _run_strategy(name, func, params, price):
-    if name in ("TREND", "VOLATILITY"):
-        return func(price)
-    return func(price, **params)
+    if name in ("TREND", "VOLATILITY", "NR7_SQUEEZE"):
+        res = func(price)
+    else:
+        res = func(price, **params)
+        
+    # Ensure 'Price' column exists for SimpleBacktester compatibility with new strategies
+    if 'Price' not in res.columns and 'Close' in res.columns:
+        res['Price'] = res['Close']
+        
+    return res
 
 
 # ── Walk-Forward Validation ───────────────────────────────────────────────────
@@ -189,7 +200,12 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
 
         # Training fold
         train_price = price.iloc[start: start + train_days]
-        train_sig   = _run_strategy(strategy_name, strategy_func, params, train_price)
+        train_df    = df.iloc[start: start + train_days]
+        
+        # New strategies require the full dataframe, older ones require just the price series
+        input_data = train_df if strategy_name in ["OBV_MOMENTUM", "NR7_SQUEEZE", "SUPERTREND", "STOCH_RSI"] else train_price
+
+        train_sig   = _run_strategy(strategy_name, strategy_func, params, input_data)
         bt_train    = SimpleBacktester(stop_loss_pct=0.10)
         bt_train.run(train_sig)
 
@@ -200,7 +216,11 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
 
         # Out-of-sample fold
         test_price = price.iloc[start + train_days: start + train_days + test_days]
-        test_sig   = _run_strategy(strategy_name, strategy_func, params, test_price)
+        test_df    = df.iloc[start + train_days: start + train_days + test_days]
+        
+        input_data_test = test_df if strategy_name in ["OBV_MOMENTUM", "NR7_SQUEEZE", "SUPERTREND", "STOCH_RSI"] else test_price
+
+        test_sig   = _run_strategy(strategy_name, strategy_func, params, input_data_test)
         bt_test    = SimpleBacktester(stop_loss_pct=0.10)
         bt_test.run(test_sig)
 
@@ -267,6 +287,11 @@ def optimize_hybrid_universe(tickers=None):
         ("STRETCH",   apply_stretch_strategy,   [
             {"window": 20, "threshold": d} for d in [0.03, 0.05, 0.07]
         ]),
+        # ── 4 New Strategies Added Below ──────────────────────────────────────
+        ("OBV_MOMENTUM", obv_momentum.execute_strategy, [{"ema_period": 20}, {"ema_period": 14}]),
+        ("NR7_SQUEEZE",  nr7.execute_strategy,          [{}]),
+        ("SUPERTREND",   supertrend.execute_strategy,   [{"period": 10, "multiplier": 3.0}, {"period": 14, "multiplier": 2.5}]),
+        ("STOCH_RSI",    stoch_rsi.execute_strategy,    [{"rsi_period": 14, "stoch_period": 14, "k_smooth": 3, "d_smooth": 3}]),
     ]
 
     master_plan = {}
