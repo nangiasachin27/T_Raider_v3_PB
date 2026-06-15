@@ -1,17 +1,11 @@
 {
-    "cash": 4905.679016113281,
+    "cash": 16881.98762512207,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
             "entry_price": 263.46,
             "entry_date": "2026-04-30",
-            "peak_price": 272.8
-        },
-        "HDFCLIFE.NS": {
-            "qty": 29,
-            "entry_price": 586.9,
-            "entry_date": "2026-04-30",
-            "peak_price": 620.0
+            "peak_price": 274.8
         },
         "TORNTPHARM.NS": {
             "qty": 1,
@@ -19,35 +13,27 @@
             "entry_date": "2026-04-30",
             "peak_price": 4572.6001
         },
-        "ASHOKLEY.NS": {
-            "qty": 103,
-            "entry_price": 153.2100067138672,
-            "entry_date": "2026-05-13",
-            "peak_price": 164.08
-        },
-        "INDIANB.NS": {
-            "qty": 17,
-            "entry_price": 813.9500122070312,
-            "entry_date": "2026-05-13",
-            "peak_price": 840.15
-        },
-        "CANBK.NS": {
-            "qty": 99,
-            "entry_price": 127.97000122070312,
-            "entry_date": "2026-05-21",
-            "peak_price": 134.16
-        },
-        "GLENMARK.NS": {
-            "qty": 5,
-            "entry_price": 2259.10009765625,
-            "entry_date": "2026-05-22",
-            "peak_price": 2384.8999
-        },
         "PNB.NS": {
             "qty": 56,
             "entry_price": 106.26000213623047,
             "entry_date": "2026-05-25",
-            "peak_price": 106.67
+            "peak_price": 109.7
+        },
+        "BHEL.NS": {
+            "qty": 47,
+            "entry_price": 376.5,
+            "entry_date": "2026-06-10",
+            "peak_price": 378.9
+        },
+        "UPL.NS": {
+            "qty": 32,
+            "entry_price": 610.75,
+            "entry_date": "2026-06-10"
+        },
+        "PERSISTENT.NS": {
+            "qty": 4,
+            "entry_price": 4890.0,
+            "entry_date": "2026-06-11"
         }
     },
     "history": [
@@ -311,6 +297,78 @@
             "price": 271.45001220703125,
             "strategy": "Signal Exit",
             "total": 4886.1
+        },
+        {
+            "timestamp": "2026-06-08 09:51:20",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 103,
+            "price": 141.00999450683594,
+            "strategy": "ActiveCut (-8.0%)",
+            "total": 14524.03
+        },
+        {
+            "timestamp": "2026-06-08 09:51:20",
+            "ticker": "HDFCLIFE.NS",
+            "side": "sell",
+            "qty": 29,
+            "price": 562.9500122070312,
+            "strategy": "ActiveCut (-4.1%)",
+            "total": 16325.55
+        },
+        {
+            "timestamp": "2026-06-08 09:51:50",
+            "ticker": "CANBK.NS",
+            "side": "sell",
+            "qty": 99,
+            "price": 131.8699951171875,
+            "strategy": "Signal Exit",
+            "total": 13055.13
+        },
+        {
+            "timestamp": "2026-06-10 09:51:13",
+            "ticker": "GLENMARK.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 2144.39990234375,
+            "strategy": "ActiveCut (-5.1%)",
+            "total": 10722.0
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "INDIANB.NS",
+            "side": "sell",
+            "qty": 17,
+            "price": 832.2999877929688,
+            "strategy": "Signal Exit",
+            "total": 14149.1
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "BHEL.NS",
+            "side": "buy",
+            "qty": 47,
+            "price": 376.5,
+            "strategy": "ATR Sized (ATR:12.7) [BALANCED]",
+            "total": 17695.5
+        },
+        {
+            "timestamp": "2026-06-10 09:51:33",
+            "ticker": "UPL.NS",
+            "side": "buy",
+            "qty": 32,
+            "price": 610.75,
+            "strategy": "ATR Sized (ATR:12.7) [BALANCED]",
+            "total": 19544.0
+        },
+        {
+            "timestamp": "2026-06-11 09:51:46",
+            "ticker": "PERSISTENT.NS",
+            "side": "buy",
+            "qty": 4,
+            "price": 4890.0,
+            "strategy": "ATR Sized (ATR:180.5) [BALANCED]",
+            "total": 19560.0
         }
     ]
 }
