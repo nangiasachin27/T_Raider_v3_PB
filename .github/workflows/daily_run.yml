@@ -1,85 +1,79 @@
-name: T_Raider Daily Autopilot Run
+name: T_Raider Daily Autopilot
 
 on:
-  schedule:
-    # Runs Monday to Friday at 15:45 IST (10:15 UTC) after market close
-    - cron: '15 10 * * 1-5'
   workflow_dispatch:
-    inputs:
-      force_mode:
-        description: 'Override Execution Mode'
-        required: true
-        default: 'AGGRESSIVE'
-        type: choice
-        options:
-          - AUTO
-          - BALANCED
-          - AGGRESSIVE
+  schedule:
+    - cron: '10 10 * * 1-5'  # 15:40 IST
+
+permissions:
+  contents: write
 
 jobs:
-  run-trading-system:
+  trade:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-      # ── 1. Checkout Code ────────────────────────────────────────────────────
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
-      # ── 2. Set Up Environment ───────────────────────────────────────────────
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-python: '3.11'
-          cache: 'pip'
+          python-version: '3.11'
 
       - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        run: pip install -r requirements.txt
 
-      # ── 3. Run Autopilot Core Loop ──────────────────────────────────────────
-      - name: Run Core Autopilot Cycle
+      # ── Run Quarterly Manager ─────────────────────────────────────
+      - name: Run Quarterly Autopilot
         id: bot_run
         env:
-          UPSTOX_API_KEY: ${{ secrets.UPSTOX_API_KEY }}
-          UPSTOX_API_SECRET: ${{ secrets.UPSTOX_API_SECRET }}
           UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
-        run: |
-          # Use manual dispatch input if available, otherwise default to AGGRESSIVE configuration
-          EXEC_MODE="${{ github.event.inputs.force_mode || 'AGGRESSIVE' }}"
-          python -u autopilot/quarterly_manager.py --mode $EXEC_MODE
+        run: python -u autopilot/quarterly_manager.py --mode AGGRESSIVE
 
-      # ── 4. Render New Performance Dashboard ─────────────────────────────────
-      - name: Generate Analytics Graphics
-        if: always() # Ensure visual analysis triggers even if minor cycle faults occur
+      # ── Generate Reports ────────────────────────────────────────
+      - name: Generate Reports
+        if: success() || steps.bot_run.outcome == 'success'
         run: |
           python plot_performance.py
+          python autopilot/tracker.py > config/tracker_output.txt
+          python autopilot/quarterly_report.py > config/quarterly_output.txt
 
-      # ── 5. Print Performance Dashboard to Workflow Summary ──────────────────
-      - name: Publish Performance Dashboard to Output Summary
+      # ── Publish to GitHub Step Summary ──────────────────────────
+      - name: Publish Reports to GitHub Summary
+        if: success() || steps.bot_run.outcome == 'success'
+        run: |
+          echo "### 📈 T_RAIDER PERFORMANCE REPORT" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat config/tracker_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Quarterly Performance Report" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat config/quarterly_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          # Embed chart as base64 image
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 Performance Dashboard" >> $GITHUB_STEP_SUMMARY
+          if [ -f config/performance_dashboard.png ]; then
+            IMG_BASE64=$(base64 -w 0 config/performance_dashboard.png)
+            echo "<img src=\"data:image/png;base64,${IMG_BASE64}\" width=\"900\" />" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ Chart not generated" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # ── Commit & Push State ─────────────────────────────────────
+      - name: Commit & Push State Updates
         if: always()
         run: |
-          echo "## 📊 T_Raider Performance Summary" >> $GITHUB_STEP_SUMMARY
-          echo "System execution cycle finished at $(date)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📈 Portfolio Analytics Visualization Dashboard" >> $GITHUB_STEP_SUMMARY
-          # Embedding raw GitHub routing link for immediate rendering on the Actions Summary page
-          echo "![Performance Dashboard](https://github.com/${{ github.repository }}/raw/${{ github.ref_name }}/config/performance_dashboard.png)" >> $GITHUB_STEP_SUMMARY
-
-      # ── 6. Persist Updated Tracking States ──────────────────────────────────
-      - name: Commit and Push Updated State Logs
-        if: success()
-        run: |
-          git config --local user.email "bot@t_raider.internal"
-          git config --local user.name "T_Raider Quant Bot"
+          git config --global user.name 'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
           
-          # Stage configuration files, manual run records, and the new dashboard image
-          git add config/portfolio.json config/performance_dashboard.png config/last_run_log.txt config/manual_logs/
+          echo "Run at: $(date) | Status: ${{ steps.bot_run.outcome }}" > config/last_run_log.txt
           
-          # Commit modifications safely if states shifted during today's market cycle
-          git commit -m "🤖 Auto-Update: Core state logs & performance dashboard [Skip CI]" || echo "No state delta detected today."
-          git push origin ${{ github.ref_name }}
+          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/performance_dashboard.png config/quarterly_config.json
+          git add -f config/capital_override.json
+          
+          git commit -m "Autopilot: $(date) [${{ steps.bot_run.outcome }}]" || true
+          git push
