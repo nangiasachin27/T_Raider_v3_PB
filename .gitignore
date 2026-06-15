@@ -12,6 +12,9 @@ config/broker_config.json
 config/capital_override.json
 config/upstox_instrument_cache.json
 config/portfolio.json
+config/daily_equity.csv
+config/performance_chart.png
+config/performance_dashboard.png
 *.log
 
 # OPTIONAL: Ignore your actual portfolio if you want to keep your money private
