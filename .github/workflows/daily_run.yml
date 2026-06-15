@@ -72,8 +72,8 @@ jobs:
           
           echo "Run at: $(date) | Status: ${{ steps.bot_run.outcome }}" > config/last_run_log.txt
           
-          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/performance_dashboard.png config/quarterly_config.json
-          git add -f config/capital_override.json
+          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/quarterly_config.json
+          git add -f config/capital_override.json config/performance_dashboard.png
           
           git commit -m "Autopilot: $(date) [${{ steps.bot_run.outcome }}]" || true
           git push
