@@ -44,21 +44,22 @@ jobs:
         run: |
           echo "### 📈 T_RAIDER PERFORMANCE REPORT" >> $GITHUB_STEP_SUMMARY
           echo '```text' >> $GITHUB_STEP_SUMMARY
-          cat config/tracker_output.txt >> $GITHUB_STEP_SUMMARY
+          # Safety net: only grab the last 500 lines to prevent 1MB limit crash
+          tail -n 500 config/tracker_output.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📊 Quarterly Performance Report" >> $GITHUB_STEP_SUMMARY
           echo '```text' >> $GITHUB_STEP_SUMMARY
-          cat config/quarterly_output.txt >> $GITHUB_STEP_SUMMARY
+          tail -n 500 config/quarterly_output.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           
-          # Embed chart as base64 image
+          # Removed Base64 Image to fix the 1MB GitHub limit crash!
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📈 Performance Dashboard" >> $GITHUB_STEP_SUMMARY
           if [ -f config/performance_dashboard.png ]; then
-            IMG_BASE64=$(base64 -w 0 config/performance_dashboard.png)
-            echo "<img src=\"data:image/png;base64,${IMG_BASE64}\" width=\"900\" />" >> $GITHUB_STEP_SUMMARY
+            echo "✅ Chart generated successfully. It has been committed to the repository." >> $GITHUB_STEP_SUMMARY
+            echo "**Check the \`config/performance_dashboard.png\` file in your repo branch to view the latest chart.**" >> $GITHUB_STEP_SUMMARY
           else
             echo "⚠️ Chart not generated" >> $GITHUB_STEP_SUMMARY
           fi
