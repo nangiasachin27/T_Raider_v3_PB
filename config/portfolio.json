@@ -1,5 +1,5 @@
 {
-    "cash": 21303.48762512207,
+    "cash": 16881.98762512207,
     "holdings": {
         "BANKBARODA.NS": {
             "qty": 75,
@@ -23,17 +23,19 @@
             "qty": 47,
             "entry_price": 376.5,
             "entry_date": "2026-06-10",
-            "peak_price": 378.9
+            "peak_price": 383.85
         },
         "UPL.NS": {
             "qty": 32,
             "entry_price": 610.75,
-            "entry_date": "2026-06-10"
+            "entry_date": "2026-06-10",
+            "peak_price": 614.75
         },
         "PERSISTENT.NS": {
             "qty": 4,
             "entry_price": 4890.0,
-            "entry_date": "2026-06-11"
+            "entry_date": "2026-06-11",
+            "peak_price": 5022.0
         }
     },
     "history": [
@@ -369,15 +371,6 @@
             "price": 4890.0,
             "strategy": "ATR Sized (ATR:180.5) [BALANCED]",
             "total": 19560.0
-        },
-        {
-            "timestamp": "2026-06-17 13:15:29",
-            "ticker": "TORNTPHARM.NS",
-            "side": "sell",
-            "qty": 1,
-            "price": 4421.5,
-            "strategy": "Signal Exit",
-            "total": 4421.5
         }
     ]
 }
