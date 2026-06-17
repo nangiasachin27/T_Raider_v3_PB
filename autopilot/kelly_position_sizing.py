@@ -23,8 +23,8 @@ class KellyPositionSizer:
     """
 
     # Hardcoded safety limits
-    KELLY_FRACTION = 0.50        # Quarter Kelly (conservative)
-    MAX_RISK_PER_TRADE = 0.04    # Hard cap: 4% of capital max
+    KELLY_FRACTION = 0.35        # Quarter Kelly (conservative)
+    MAX_RISK_PER_TRADE = 0.025    # Hard cap: 4% of capital max
     MIN_RISK_PER_TRADE = 0.005   # Floor: 0.5% of capital min
     MIN_TRADES_FOR_KELLY = 10    # Need 10+ trades before Kelly activates
     ATR_MULTIPLIER = 2.0         # Risk per share = ATR * 2
@@ -172,8 +172,8 @@ class KellyPositionSizer:
         """Fallback fixed percentage sizing when Kelly not available."""
         risk_map = {
             "CONSERVATIVE": 0.01,   # 1%
-            "BALANCED": 0.02,      # 1.5%
-            "AGGRESSIVE": 0.04      # 2%
+            "BALANCED": 0.015,      # 1.5%
+            "AGGRESSIVE": 0.025      # 2%
         }
         risk_fraction = risk_map.get(mode, 0.01)
 

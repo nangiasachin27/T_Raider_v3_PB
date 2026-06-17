@@ -97,9 +97,18 @@ def _load_stocks_universe() -> List[str]:
     path = Path("config/stocks.json")
     if not path.exists():
         return []
+    
     with open(path) as f:
-        data = json.load(f)
-    return data.get("nifty_50", [])
+        config = json.load(f)
+        
+    all_tickers = []
+    for value in config.values():
+        if isinstance(value, list):
+            all_tickers.extend(value)
+            
+    # Deduplicate while preserving order
+    seen = set()
+    return [t for t in all_tickers if not (t in seen or seen.add(t))]
 
 
 def _get_quarter_start(cfg: Dict) -> date:

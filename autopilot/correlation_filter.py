@@ -21,7 +21,7 @@ class CorrelationFilter:
     """
 
     # Hardcoded thresholds — edit code to change
-    DEFAULT_THRESHOLD = 0.95      # Reject if |correlation| > 0.75
+    DEFAULT_THRESHOLD = 0.82      # Reject if |correlation| > 0.75
     MIN_HISTORY_DAYS = 30         # Need 30 days of overlapping data
     LOOKBACK_DAYS = 90            # Use last 90 days for correlation
 
