@@ -35,6 +35,10 @@ from strategies.volatility import apply_bollinger_strategy
 from strategies.breakout import apply_breakout_strategy
 from strategies.momentum import apply_macd_strategy
 from strategies.stretch import apply_stretch_strategy
+from strategies.nr7 import execute_strategy as apply_nr7_squeeze_strategy
+from strategies.obv_momentum import execute_strategy as apply_obv_momentum_strategy
+from strategies.supertrend import execute_strategy as apply_supertrend_strategy
+from strategies.stoch_rsi import execute_strategy as apply_stoch_rsi_strategy
 from autopilot.logger import load_portfolio
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
 
@@ -389,12 +393,24 @@ def _print_correlation_matrix(portfolio: Dict, full_market_data: pd.DataFrame):
 def run_screener(tickers, capital: Optional[float] = None, min_stability: float = 60.0,
                  volume_min_ratio: float = 0.80, mode: str = "CONSERVATIVE",
                  market: str = "INDIA",
-                 correlation_threshold: float = None):   # CHANGE 3: new param
+                 correlation_threshold: float = None,
+                 filters: str = "ALL"):   # CHANGE 3: new param
     """
     correlation_threshold: override CorrelationFilter.DEFAULT_THRESHOLD (0.75).
     Set to 1.0 to effectively disable the filter.
     Pass None to use the default from correlation_filter.py.
     """
+    active_filters = []
+    if filters.upper() == "ALL":
+        active_filters = ["REGIME", "MACRO", "VOLUME", "CORRELATION"]
+    elif filters.upper() == "NONE":
+        active_filters = []
+    else:
+        active_filters = [f.strip().upper() for f in filters.split(",")]
+
+    if "VOLUME" not in active_filters:
+        volume_min_ratio = 0.0  # Disables volume restrictions
+    # ------------------------------------
 
     print(f"\n--- T_Raider Hybrid Execution Engine (v3.6 — Correlation Filter) ---")
     print(f"Timestamp : {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -451,8 +467,12 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
 
     # ── Gate 1b: Macro Environment Filter ────────────────────────────────
     print("\n🌍 Fetching macro environment data…")
-    if market not in MARKET_CONFIGS:
-        print(f"  ⚠️ Unknown market '{market}' — macro filter disabled.")
+    # ADD "MACRO" not in active_filters
+    if market not in MARKET_CONFIGS or "MACRO" not in active_filters:
+        if "MACRO" not in active_filters:
+            print("  ⚠️ Macro filter DISABLED via --filters argument.")
+        else:
+            print(f"  ⚠️ Unknown market '{market}' — macro filter disabled.")
         macro = macro_context = None
     else:
         macro         = MacroFilter(MARKET_CONFIGS[market])
@@ -529,6 +549,20 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         elif strat_type == "BREAKOUT":   res = apply_breakout_strategy(price, window=p.get('window', 20))
         elif strat_type == "MACD":       res = apply_macd_strategy(price)
         elif strat_type == "STRETCH":    res = apply_stretch_strategy(price, window=p.get('window', 20), threshold=p.get('threshold', 0.05))
+        elif strat_type == "NR7_SQUEEZE":
+            res = apply_nr7_squeeze_strategy(df)
+        elif strat_type == "OBV_MOMENTUM":
+            res = apply_obv_momentum_strategy(df, ema_period=p.get('ema_period', 20))
+        elif strat_type == "SUPERTREND":
+            res = apply_supertrend_strategy(df, period=p.get('period', 10), multiplier=p.get('multiplier', 3.0))
+        elif strat_type == "STOCH_RSI":
+            res = apply_stoch_rsi_strategy(
+                df,
+                rsi_period=p.get('rsi_period', 14),
+                stoch_period=p.get('stoch_period', 14),
+                k_smooth=p.get('k_smooth', 3),
+                d_smooth=p.get('d_smooth', 3),
+            )
         else:
             continue
 
@@ -553,7 +587,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         if latest_signal == 1:
 
             # Gate 1: Regime
-            if not is_uptrend:
+            if not is_uptrend and "REGIME" in active_filters:
                 if config["allow_mean_reversion"]:
                     if nifty_drop > config["nifty_drop_threshold"] and strat_type in ['RSI', 'VOLATILITY', 'STRETCH']:
                         pass
@@ -644,7 +678,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
             # Also skip if the ticker is already held (current_qty > 0) — that
             # case is handled by the concentration check above, and correlation
             # vs self is always 1.0 which would always block incorrectly.
-            if confidence_tier in ("HIGH", "MEDIUM") and current_qty == 0:
+            if confidence_tier in ("HIGH", "MEDIUM") and current_qty == 0 and "CORRELATION" in active_filters:
                 corr_passed, corr_reason = CorrelationFilter.check(
                     ticker=ticker,
                     portfolio=portfolio,

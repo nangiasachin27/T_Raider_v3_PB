@@ -672,7 +672,7 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
 # MAIN AUTOPILOT CYCLE
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA"):
+def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA", filters: str = "ALL"):
     print("\n" + "=" * 60)
     print(f"🤖 T_RAIDER AUTOPILOT v4 — MODE: {mode}")
     print("   Active Profit Pushing + Capital Rotation")
@@ -709,7 +709,7 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA"):
     check_stop_losses(tickers, full_market_data)
 
     # ── Get signals (pass mode to screener) ───────────────────────────────
-    buy_signals, sell_signals = run_screener(tickers, mode=mode)
+    buy_signals, sell_signals = run_screener(tickers, mode=mode, filters=filters)
 
     # ── PHASE 1: FULL EXITS (strategy signal) ─────────────────────────
     print("\n--- PHASE 1: STRATEGY SIGNAL EXITS ---")

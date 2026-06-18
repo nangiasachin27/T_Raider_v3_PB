@@ -389,8 +389,9 @@ def _print_active_results(result: Dict):
 # ═════════════════════════════════════════════════════════════════════════════
 
 class QuarterlyManager:
-    def __init__(self, mode: str = "CONSERVATIVE"):
+    def __init__(self, mode: str = "CONSERVATIVE", filters: str = "ALL"):
         self.mode    = mode
+        self.filters = filters
         self.state   = QuarterState.from_file()
         self.adapter = get_execution_adapter(self.state)
 
@@ -422,7 +423,7 @@ class QuarterlyManager:
 
         self.state.inject_capital()
         print(f"\n🤖 Running daily autopilot cycle...")
-        run_autopilot_cycle(mode=self.mode,market=market)
+        run_autopilot_cycle(mode=self.mode,market=market, filters=self.filters)
 
         post_snapshot = self.adapter.get_portfolio_snapshot()
         if post_snapshot.total_value > self.state.highest_value:
@@ -438,6 +439,9 @@ def main():
     parser.add_argument("--mode", default="AUTO", 
                        choices=["AUTO", "CONSERVATIVE", "BALANCED", "AGGRESSIVE"],
                        help="Trading mode: AUTO = auto-select based on performance")
+    # ADD THE FILTERS ARGUMENT
+    parser.add_argument("--filters", default="ALL",
+                       help="Comma-separated filters to enable: ALL, NONE, REGIME, MACRO, VOLUME, CORRELATION")
     args = parser.parse_args()
 
     # AUTO mode selection
@@ -453,7 +457,7 @@ def main():
     else:
         selected_mode = args.mode
 
-    manager = QuarterlyManager(mode=selected_mode)
+    manager = QuarterlyManager(mode=selected_mode, filters=args.filters)
     manager.run()
 
 

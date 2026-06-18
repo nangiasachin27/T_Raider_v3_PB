@@ -799,14 +799,6 @@
         "yf_sector": "Healthcare",
         "nse_index": "^CNXPHARMA"
     },
-    "ZOMATO.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
-    },
-    "TATAMOTORS.NS": {
-        "yf_sector": "Unknown",
-        "nse_index": "UNKNOWN"
-    },
     "ANGELONE.NS": {
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
@@ -847,7 +839,27 @@
         "yf_sector": "Financial Services",
         "nse_index": "^CNXFIN"
     },
-    "LTIM.NS": {
+    "NIFTYBEES.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "BANKBEES.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "CPSEETF.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "ITBEES.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "GOLDBEES.NS": {
+        "yf_sector": "Unknown",
+        "nse_index": "UNKNOWN"
+    },
+    "LIQUIDBEES.NS": {
         "yf_sector": "Unknown",
         "nse_index": "UNKNOWN"
     }
