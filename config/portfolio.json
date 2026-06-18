@@ -1,37 +1,6 @@
 {
-    "cash": 21319.58772277832,
-    "holdings": {
-        "BANKBARODA.NS": {
-            "qty": 75,
-            "entry_price": 263.46,
-            "entry_date": "2026-04-30",
-            "peak_price": 281.65
-        },
-        "PNB.NS": {
-            "qty": 56,
-            "entry_price": 106.26000213623047,
-            "entry_date": "2026-05-25",
-            "peak_price": 109.7
-        },
-        "BHEL.NS": {
-            "qty": 47,
-            "entry_price": 376.5,
-            "entry_date": "2026-06-10",
-            "peak_price": 392.2
-        },
-        "UPL.NS": {
-            "qty": 32,
-            "entry_price": 610.75,
-            "entry_date": "2026-06-10",
-            "peak_price": 614.75
-        },
-        "PERSISTENT.NS": {
-            "qty": 4,
-            "entry_price": 4890.0,
-            "entry_date": "2026-06-11",
-            "peak_price": 5047.0
-        }
-    },
+    "cash": 107088.50816345215,
+    "holdings": {},
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -374,6 +343,51 @@
             "price": 4437.60009765625,
             "strategy": "Signal Exit",
             "total": 4437.6
+        },
+        {
+            "timestamp": "2026-06-18 09:51:22",
+            "ticker": "BANKBARODA.NS",
+            "side": "sell",
+            "qty": 75,
+            "price": 282.95001220703125,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 21221.25
+        },
+        {
+            "timestamp": "2026-06-18 09:51:22",
+            "ticker": "PNB.NS",
+            "side": "sell",
+            "qty": 56,
+            "price": 109.5199966430664,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 6133.12
+        },
+        {
+            "timestamp": "2026-06-18 09:51:23",
+            "ticker": "BHEL.NS",
+            "side": "sell",
+            "qty": 47,
+            "price": 406.6499938964844,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19112.55
+        },
+        {
+            "timestamp": "2026-06-18 09:51:23",
+            "ticker": "UPL.NS",
+            "side": "sell",
+            "qty": 32,
+            "price": 611.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19552.0
+        },
+        {
+            "timestamp": "2026-06-18 09:51:23",
+            "ticker": "PERSISTENT.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 4937.5,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19750.0
         }
     ]
 }
