@@ -550,7 +550,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
         elif strat_type == "MACD":       res = apply_macd_strategy(price)
         elif strat_type == "STRETCH":    res = apply_stretch_strategy(price, window=p.get('window', 20), threshold=p.get('threshold', 0.05))
         elif strat_type == "NR7_SQUEEZE":
-            res = apply_nr7_squeeze_strategy(df)
+            res = apply_nr7_squeeze_strategy(df, lookback=p.get('lookback', 7), breakout_window=p.get('breakout_window', 3))
         elif strat_type == "OBV_MOMENTUM":
             res = apply_obv_momentum_strategy(df, ema_period=p.get('ema_period', 20))
         elif strat_type == "SUPERTREND":

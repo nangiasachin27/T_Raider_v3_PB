@@ -101,7 +101,7 @@ def get_ticker_data_window(ticker: str,
     
 def validate_universe(tickers: List[str],
                       full_df: pd.DataFrame,
-                      min_days: int = 500) -> Dict[str, Dict]:
+                      min_days: int = 300) -> Dict[str, Dict]:
     """
     Validates every ticker in the universe against the downloaded price data.
 

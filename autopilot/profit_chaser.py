@@ -99,7 +99,7 @@ def _mode_overrides(chaser: dict, mode: str) -> dict:
 # ════════════════════════════════════════════════════════════════════════════
 
 def _quarter_end(cfg: dict) -> date:
-    start = date.fromisoformat(cfg["quarter_start_date"])
+    start = datetime.fromisoformat(cfg["quarter_start_date"])
     return date(
         start.year + (start.month + cfg["quarter_days"] // 30 - 1) // 12,
         (start.month + cfg["quarter_days"] // 30 - 1) % 12 + 1,
