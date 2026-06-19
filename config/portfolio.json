@@ -1,6 +1,12 @@
 {
-    "cash": 107088.50816345215,
-    "holdings": {},
+    "cash": 69730.70869445801,
+    "holdings": {
+        "POONAWALLA.NS": {
+            "qty": 87,
+            "entry_price": 429.3999938964844,
+            "entry_date": "2026-06-19"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -388,6 +394,15 @@
             "price": 4937.5,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 19750.0
+        },
+        {
+            "timestamp": "2026-06-19 09:51:37",
+            "ticker": "POONAWALLA.NS",
+            "side": "buy",
+            "qty": 87,
+            "price": 429.3999938964844,
+            "strategy": "ATR Sized (ATR:12.6) [AGGRESSIVE]",
+            "total": 37357.8
         }
     ]
 }
