@@ -1,10 +1,20 @@
 {
-    "cash": 69730.70869445801,
+    "cash": 64.60615539550781,
     "holdings": {
         "POONAWALLA.NS": {
             "qty": 87,
             "entry_price": 429.3999938964844,
             "entry_date": "2026-06-19"
+        },
+        "DRREDDY.NS": {
+            "qty": 29,
+            "entry_price": 1291.300048828125,
+            "entry_date": "2026-06-22"
+        },
+        "SAIL.NS": {
+            "qty": 184,
+            "entry_price": 175.10000610351562,
+            "entry_date": "2026-06-22"
         }
     },
     "history": [
@@ -403,6 +413,24 @@
             "price": 429.3999938964844,
             "strategy": "ATR Sized (ATR:12.6) [AGGRESSIVE]",
             "total": 37357.8
+        },
+        {
+            "timestamp": "2026-06-22 09:51:33",
+            "ticker": "DRREDDY.NS",
+            "side": "buy",
+            "qty": 29,
+            "price": 1291.300048828125,
+            "strategy": "ATR Sized (ATR:21.4) [AGGRESSIVE]",
+            "total": 37447.7
+        },
+        {
+            "timestamp": "2026-06-22 09:51:33",
+            "ticker": "SAIL.NS",
+            "side": "buy",
+            "qty": 184,
+            "price": 175.10000610351562,
+            "strategy": "ATR Sized (ATR:6.2) [AGGRESSIVE]",
+            "total": 32218.4
         }
     ]
 }
