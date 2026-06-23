@@ -1,20 +1,26 @@
 {
-    "cash": 64.60615539550781,
+    "cash": 52.468589782714844,
     "holdings": {
-        "POONAWALLA.NS": {
-            "qty": 87,
-            "entry_price": 429.3999938964844,
-            "entry_date": "2026-06-19"
-        },
         "DRREDDY.NS": {
             "qty": 29,
             "entry_price": 1291.300048828125,
-            "entry_date": "2026-06-22"
+            "entry_date": "2026-06-22",
+            "peak_price": 1301.2
         },
         "SAIL.NS": {
             "qty": 184,
             "entry_price": 175.10000610351562,
             "entry_date": "2026-06-22"
+        },
+        "JSWSTEEL.NS": {
+            "qty": 29,
+            "entry_price": 1239.199951171875,
+            "entry_date": "2026-06-23"
+        },
+        "NMDC.NS": {
+            "qty": 13,
+            "entry_price": 85.4800033569336,
+            "entry_date": "2026-06-23"
         }
     },
     "history": [
@@ -431,6 +437,33 @@
             "price": 175.10000610351562,
             "strategy": "ATR Sized (ATR:6.2) [AGGRESSIVE]",
             "total": 32218.4
+        },
+        {
+            "timestamp": "2026-06-23 09:51:41",
+            "ticker": "POONAWALLA.NS",
+            "side": "sell",
+            "qty": 87,
+            "price": 425.70001220703125,
+            "strategy": "Capital Rotation \u2192 JSWSTEEL.NS",
+            "total": 37035.9
+        },
+        {
+            "timestamp": "2026-06-23 09:51:41",
+            "ticker": "JSWSTEEL.NS",
+            "side": "buy",
+            "qty": 29,
+            "price": 1239.199951171875,
+            "strategy": "ATR Sized (ATR:28.2) [AGGRESSIVE]",
+            "total": 35936.8
+        },
+        {
+            "timestamp": "2026-06-23 09:51:41",
+            "ticker": "NMDC.NS",
+            "side": "buy",
+            "qty": 13,
+            "price": 85.4800033569336,
+            "strategy": "ATR Sized (ATR:2.4) [AGGRESSIVE]",
+            "total": 1111.24
         }
     ]
 }
