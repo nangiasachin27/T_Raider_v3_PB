@@ -41,6 +41,7 @@ from strategies.supertrend import execute_strategy as apply_supertrend_strategy
 from strategies.stoch_rsi import execute_strategy as apply_stoch_rsi_strategy
 from autopilot.logger import load_portfolio
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
+from autopilot.beta_filter import BetaFilter
 
 # CHANGE 1: Import CorrelationFilter
 from autopilot.correlation_filter import CorrelationFilter
@@ -388,6 +389,51 @@ def _print_correlation_matrix(portfolio: Dict, full_market_data: pd.DataFrame):
     print("─" * 60)
 
 
+def apply_cross_sectional_ranking(buy_signals: List[Dict]) -> List[Dict]:
+    """
+    Computes a cross-sectional standardized score (Z-Score) for all active signals
+    to systematically rank candidates when capital is constrained.
+    """
+    if not buy_signals:
+        return []
+    
+    # Convert to DataFrame for vectorized statistical operations
+    df = pd.DataFrame(buy_signals)
+    
+    # Extract ranking components
+    metrics = ['expected_return', 'stability', 'sharpe_ratio']
+    for metric in metrics:
+        df[metric] = pd.to_numeric(df[metric], errors='coerce').fillna(0.0)
+    
+    # Compute cross-sectional Z-Scores (handle zero variance cases gracefully)
+    z_scores = {}
+    for metric in metrics:
+        mean = df[metric].mean()
+        std = df[metric].std()
+        if std > 0:
+            z_scores[f'{metric}_z'] = (df[metric] - mean) / std
+        else:
+            z_scores[f'{metric}_z'] = 0.0  # Equal weight if no variance
+            
+    # Combine Z-scores into a singular factor score
+    # Weights: 40% Sharpe, 35% Expected Return, 25% Stability
+    df['cross_sectional_factor'] = (
+        0.35 * z_scores['expected_return_z'] +
+        0.25 * z_scores['stability_z'] +
+        0.40 * z_scores['sharpe_ratio_z']
+    )
+    
+    # Apply Sector Boosting directly to the final factor score
+    # If a sector is outperforming, boost its cross-sectional priority rank
+    df['final_rank_score'] = df.apply(
+        lambda row: row['cross_sectional_factor'] + 0.5 if row.get('is_sector_strong', False) else row['cross_sectional_factor'],
+        axis=1
+    )
+    
+    # Sort descending by our multi-factor rank score
+    df = df.sort_values(by='final_rank_score', ascending=False)
+    
+    return df.to_dict(orient='records')
 # ── Main screener ─────────────────────────────────────────────────────────────
 
 def run_screener(tickers, capital: Optional[float] = None, min_stability: float = 60.0,
@@ -737,6 +783,27 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 "folds_passed":     plan.get('folds_passed', None),
                 "volume_ratio":     round(vol_ratio, 1) if avg_vol > 0 else None,
             })
+        
+            # ── Gate 4.6 (NEW): Adaptive Portfolio Beta Filter ───────────────────
+            if confidence_tier in ("HIGH", "MEDIUM") and current_qty == 0:
+                beta_passed, beta_reason = BetaFilter.check_portfolio_beta_gate(
+                    candidate_ticker=ticker,
+                    portfolio=portfolio,
+                    full_market_data=full_market_data,
+                    is_uptrend=is_uptrend # Uses the pre-calculated regime check state
+                )
+                if not beta_passed:
+                    all_signals.append(ScreenerSignal(
+                        ticker=ticker, signal_type="BUY", price=latest_price,
+                        strategy=strat_type, expected_return=plan.get('expected_return', 0),
+                        stability_score=stability, confidence_tier="SKIP",
+                        suggested_qty=0, risk_per_trade_inr=0,
+                        current_holdings=current_qty, portfolio_weight_pct=weight_pct,
+                        reason=beta_reason,
+                    ))
+                    continue
+                # If passed, append tracking telemetry text to signal metadata logs
+                reason = f"{reason} | {beta_reason}"
 
         # ── SELL signal pipeline ──────────────────────────────────────────
         elif latest_signal == -1:
@@ -783,11 +850,9 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
 
     active_buys = [b for b in buy_signals if b['ticker'] not in current_holdings_keys]
     if active_buys:
-        active_buys.sort(
-            key=lambda x: x['composite_score'] if x['composite_score'] is not None
-                          else x['expected_return'],
-            reverse=True,
-        )
+        # Apply the new multi-factor cross-sectional ranking engine
+        active_buys = apply_cross_sectional_ranking(active_buys)
+        print (f"Here are some active Buys -->{active_buys}--<")
         for b in active_buys:
             rs_str  = f"{b['sector_rs']:>6.1f}%" if b['sector_rs'] != 0.0 else "N/A"
             rs_icon = "🔥" if b['is_sector_strong'] else "❄️"

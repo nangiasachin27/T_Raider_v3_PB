@@ -211,9 +211,8 @@ def _score_holding(ticker: str, holding: dict, live_price: float,
 # ═══════════════════════════════════════════════════════════════════════════════
 # PHASE 0: LIVE TRAILING STOPS
 # ═══════════════════════════════════════════════════════════════════════════════
-
 def check_trailing_stops(tickers, full_market_data):
-    print(f"\n--- PHASE 0: LIVE TRAILING STOPS ---")
+    print(f"\n--- PHASE 0: VOLATILITY-ADAPTIVE TRAILING STOPS ---")
     portfolio = load_portfolio()
     holdings = portfolio.get("holdings", {})
     if not holdings:
@@ -222,6 +221,23 @@ def check_trailing_stops(tickers, full_market_data):
 
     stops_triggered = 0
     portfolio_changed = False 
+    
+    # Fetch broad market VIX to dynamically scale our ATR multipliers
+    try:
+        vix_series = yf.download("^INDIAVIX", period="2d", progress=False)["Close"].squeeze()
+        latest_vix = float(vix_series.iloc[-1])
+    except Exception:
+        latest_vix = 15.0  # Safe default baseline VIX
+        
+    # Scale multiplier based on broad market volatility regime
+    # High market fear = widen stops to survive noise; Low market fear = lock profits tighter
+    if latest_vix > 18.0:
+        atr_multiplier = 3.0  # High Volatility Regime
+    elif latest_vix < 13.0:
+        atr_multiplier = 1.75 # Low Volatility Regime
+    else:
+        atr_multiplier = 2.25 # Balanced Regime
+
     for ticker, holding_data in list(holdings.items()):
         holding = _normalise_holding(holding_data)
         qty = holding["qty"]
@@ -234,44 +250,54 @@ def check_trailing_stops(tickers, full_market_data):
         df = get_stock_data(full_market_data, ticker)
         if df.empty:
             continue
-        if isinstance(df.columns, pd.MultiIndex):
-            df.columns = df.columns.get_level_values(0)
-
+            
         price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
         current_price = float(df[price_col].iloc[-1])
 
+        # Track and update peak prices
         new_peak = max(peak_price, current_price) if peak_price > 0 else current_price
         if new_peak != peak_price:
             holding["peak_price"] = round(new_peak, 4)
             portfolio["holdings"][ticker] = holding
             portfolio_changed = True
 
+        # Calculate asset-specific ATR
+        atr = calculate_atr(df, window=14)
+        if atr <= 0:
+            atr = current_price * 0.03  # Fallback to 3% price variance if ATR calculation fails
+
+        # Volatility-adaptive trailing stop formulation
+        vol_adaptive_stop_price = new_peak - (atr * atr_multiplier)
+        
+        # Protective emergency hard floor at 10% from initial entry point
+        hard_floor_stop = entry_price * 0.90
+        effective_stop = max(hard_floor_stop, vol_adaptive_stop_price)
+
         gain_pct = (current_price - entry_price) / entry_price
-        target_pct = _get_target_pct(ticker)
-        trail_pct = _get_live_trailing_stop_pct(gain_pct, target_pct)
-
-        trailing_stop_price = new_peak * (1 - trail_pct)
-        effective_stop = max(entry_price * 0.90, trailing_stop_price)
-
         print(f" {ticker:18} | Entry: ₹{entry_price:.2f} | "
               f"Peak: ₹{new_peak:.2f} | Now: ₹{current_price:.2f} | "
-              f"Gain: {gain_pct*100:+.1f}% | Trail: {trail_pct*100:.0f}% | "
+              f"Gain: {gain_pct*100:+.1f}% | ATR Mult: {atr_multiplier}x | "
               f"Stop: ₹{effective_stop:.2f}", end="")
 
         if current_price <= effective_stop:
-            print(f" → 🔴 TRAILING STOP: Selling {qty} shares")
+            stop_type = "HARD FLOOR STOP" if hard_floor_stop > vol_adaptive_stop_price else "VOL-ADAPTIVE TRAIL"
+            print(f" → 🔴 {stop_type} TRIGGERED: Selling {qty} shares")
             record_transaction(ticker, "sell", qty, current_price,
-                               f"Trailing Stop ({gain_pct*100:.1f}%, trail={trail_pct*100:.0f}%)")
+                               f"Adaptive Stop ({gain_pct*100:.1f}%, type={stop_type})")
             stops_triggered += 1
+            # Remove from local track mapping immediately to allow other processes to allocate capital
+            if ticker in portfolio["holdings"]:
+                del portfolio["holdings"][ticker]
+                portfolio_changed = True
         else:
             print()
-        if portfolio_changed:          # <-- ADD
-           save_portfolio(portfolio) 
+            
+    if portfolio_changed:
+        save_portfolio(portfolio) 
+        
     if stops_triggered == 0:
-        print(" No positions hit trailing stop.")
+        print(" No positions hit volatility-adaptive trailing stops.")
     return stops_triggered
-
-
 # ═══════════════════════════════════════════════════════════════════════════════
 # PHASE 0.1: PROFIT TARGETS (Active Full Exit per stock)
 # ═══════════════════════════════════════════════════════════════════════════════
