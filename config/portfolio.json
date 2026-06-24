@@ -1,16 +1,11 @@
 {
-    "cash": 52.468589782714844,
+    "cash": 134.11910247802734,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
             "entry_price": 1291.300048828125,
             "entry_date": "2026-06-22",
-            "peak_price": 1301.2
-        },
-        "SAIL.NS": {
-            "qty": 184,
-            "entry_price": 175.10000610351562,
-            "entry_date": "2026-06-22"
+            "peak_price": 1328.8
         },
         "JSWSTEEL.NS": {
             "qty": 29,
@@ -20,7 +15,18 @@
         "NMDC.NS": {
             "qty": 13,
             "entry_price": 85.4800033569336,
-            "entry_date": "2026-06-23"
+            "entry_date": "2026-06-23",
+            "peak_price": 85.6
+        },
+        "AXISBANK.NS": {
+            "qty": 22,
+            "entry_price": 1383.5999755859375,
+            "entry_date": "2026-06-24"
+        },
+        "BAJFINANCE.NS": {
+            "qty": 1,
+            "entry_price": 989.1500244140625,
+            "entry_date": "2026-06-24"
         }
     },
     "history": [
@@ -464,6 +470,33 @@
             "price": 85.4800033569336,
             "strategy": "ATR Sized (ATR:2.4) [AGGRESSIVE]",
             "total": 1111.24
+        },
+        {
+            "timestamp": "2026-06-24 09:51:59",
+            "ticker": "SAIL.NS",
+            "side": "sell",
+            "qty": 184,
+            "price": 171.25,
+            "strategy": "Capital Rotation \u2192 HINDPETRO.NS",
+            "total": 31510.0
+        },
+        {
+            "timestamp": "2026-06-24 09:51:59",
+            "ticker": "AXISBANK.NS",
+            "side": "buy",
+            "qty": 22,
+            "price": 1383.5999755859375,
+            "strategy": "ATR Sized (ATR:24.2) [AGGRESSIVE]",
+            "total": 30439.2
+        },
+        {
+            "timestamp": "2026-06-24 09:51:59",
+            "ticker": "BAJFINANCE.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 989.1500244140625,
+            "strategy": "ATR Sized (ATR:24.1) [AGGRESSIVE]",
+            "total": 989.15
         }
     ]
 }
