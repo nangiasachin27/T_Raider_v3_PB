@@ -760,6 +760,14 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA", filte
     # ── PHASE 2: ENTRIES ──────────────────────────────────────────────
     print("\n--- PHASE 2: VOLATILITY-ADJUSTED ENTRIES ---")
 
+    # CRITICAL FIX (Option A): Sort buy signals by their opportunity score descending.
+    # This prevents lower-ranked assets (e.g., COALINDIA.NS) from front-running 
+    # and consuming cash explicitly intended for high-alpha targets (e.g., INDIANB.NS).
+    buy_signals = sorted(
+        buy_signals, 
+        key=lambda x: _score_opportunity(x["ticker"], optimized_params), 
+        reverse=True
+    )
     # Dynamic risk from ActiveProfitEngine
     risk_mult = _read_active_risk_mult()
     print(f"\n📐 Active Risk Multiplier: {risk_mult:.1f}x")

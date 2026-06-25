@@ -85,17 +85,17 @@ def generate_report():
     cash      = portfolio['cash']
     holdings  = portfolio['holdings']
 
-    print("\n" + "═" * 50)
+    print("\n" + "═" * 60)
     print("📈 T_RAIDER WEEKLY PERFORMANCE TRACKER")
-    print("═" * 50)
+    print("═" * 60)
 
     total_market_value = 0
 
     if not holdings:
         print("Current Status: ALL CASH")
     else:
-        print(f"{'TICKER':12} | {'QTY':5} | {'ENTRY':10} | {'LIVE PRICE':12} | {'VALUE':12}")
-        print("-" * 50)
+        print(f"{'TICKER':12} | {'QTY':5} | {'ENTRY':10} | {'LIVE PRICE':12}| {'DIFF':7} | {'VALUE':12}")
+        print("-" * 60)
 
         for ticker, data in holdings.items():
             # Handle both old flat format (int) and new dict format
@@ -114,7 +114,7 @@ def generate_report():
 
             entry_str = f"₹{entry_price:.1f}" if entry_price else "-"
             print(f"{ticker:12} | {qty:<5} | {entry_str:>10} | "
-                  f"₹{current_price:>10.2f} | ₹{value:>10.2f}")
+                  f"₹{current_price:>10.2f} | {float(current_price) - entry_price:<7.2f} |₹{value:>10.2f}")
 
     # ── 1. Gross Wealth ───────────────────────────────────────────────────────
     net_worth = cash + total_market_value
@@ -159,7 +159,7 @@ def generate_report():
     net_take_home_profit = gross_profit_loss - estimated_stcg_tax
     net_take_home_pct    = (net_take_home_profit / 100000) * 100
 
-    print("-" * 50)
+    print("-" * 60)
     print(f"CASH IN HAND       : ₹{cash:,.2f}")
     print(f"STOCK MARKET VALUE : ₹{total_market_value:,.2f}")
     print(f"CURRENT NET WORTH  : ₹{net_worth:,.2f}")
