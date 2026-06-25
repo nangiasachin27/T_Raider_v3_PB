@@ -1,11 +1,11 @@
 {
-    "cash": 134.11910247802734,
+    "cash": 967.1690292358398,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
             "entry_price": 1291.300048828125,
             "entry_date": "2026-06-22",
-            "peak_price": 1328.8
+            "peak_price": 1349.3
         },
         "JSWSTEEL.NS": {
             "qty": 29,
@@ -18,15 +18,15 @@
             "entry_date": "2026-06-23",
             "peak_price": 85.6
         },
-        "AXISBANK.NS": {
-            "qty": 22,
-            "entry_price": 1383.5999755859375,
-            "entry_date": "2026-06-24"
+        "HEROMOTOCO.NS": {
+            "qty": 6,
+            "entry_price": 4900.2001953125,
+            "entry_date": "2026-06-25"
         },
-        "BAJFINANCE.NS": {
+        "JINDALSTEL.NS": {
             "qty": 1,
-            "entry_price": 989.1500244140625,
-            "entry_date": "2026-06-24"
+            "entry_price": 1057.699951171875,
+            "entry_date": "2026-06-25"
         }
     },
     "history": [
@@ -497,6 +497,42 @@
             "price": 989.1500244140625,
             "strategy": "ATR Sized (ATR:24.1) [AGGRESSIVE]",
             "total": 989.15
+        },
+        {
+            "timestamp": "2026-06-25 09:51:57",
+            "ticker": "BAJFINANCE.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 980.3499755859375,
+            "strategy": "Signal Exit",
+            "total": 980.35
+        },
+        {
+            "timestamp": "2026-06-25 09:51:57",
+            "ticker": "AXISBANK.NS",
+            "side": "sell",
+            "qty": 22,
+            "price": 1377.800048828125,
+            "strategy": "Capital Rotation \u2192 TATACONSUM.NS",
+            "total": 30311.6
+        },
+        {
+            "timestamp": "2026-06-25 09:51:57",
+            "ticker": "HEROMOTOCO.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 4900.2001953125,
+            "strategy": "ATR Sized (ATR:95.0) [AGGRESSIVE]",
+            "total": 29401.2
+        },
+        {
+            "timestamp": "2026-06-25 09:51:57",
+            "ticker": "JINDALSTEL.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 1057.699951171875,
+            "strategy": "ATR Sized (ATR:29.4) [AGGRESSIVE]",
+            "total": 1057.7
         }
     ]
 }
