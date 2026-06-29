@@ -605,10 +605,16 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price
 
-        if total_cost <= cash and final_qty > 0:
+        # NEW: Immediately skip if the stock is too risky/expensive to buy even 1 share
+        if final_qty <= 0:
+            print(f"\n ⚠️ SKIPPING {ticker}: Too volatile or expensive. Buying 1 share exceeds max risk limit.")
+            continue
+
+        if total_cost <= cash:
             continue  # Enough cash, no rotation needed
 
         print(f"\n 💡 Rotation needed for {ticker}: need ₹{total_cost:,.0f}, have ₹{cash:,.0f}")
+
 
         if not holding_scores:
             print("   No holdings to rotate.")
