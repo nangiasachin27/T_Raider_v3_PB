@@ -3,14 +3,14 @@
         "date": "2026-06-29",
         "total_universe": 204,
         "strategies": {
-            "NONE": 46,
             "STRETCH": 64,
-            "MACD": 19,
-            "RSI_DIVERGENCE": 17,
-            "NR7_SQUEEZE": 10,
+            "NONE": 59,
             "OBV_MOMENTUM": 24,
-            "BREAKOUT": 7,
+            "MACD": 19,
+            "RSI_DIVERGENCE": 16,
             "RSI": 12,
+            "NR7_SQUEEZE": 10,
+            "BREAKOUT": 7,
             "TREND": 3,
             "VOLATILITY": 2
         }

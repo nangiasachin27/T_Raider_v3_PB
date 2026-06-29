@@ -53,3 +53,19 @@ jobs:
           
           git commit -m "Research Lab: Weekly Tune-Up & Knowledge Update [$(date +'%Y-%m-%d')]" || echo "No changes to commit"
           git push
+      
+      # ── Commit & Push State ───────────────────────────────────────────
+      - name: Commit & Push Knowledge Updates
+        if: always()
+        run: |
+          git config --global user.name 'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
+          
+          # Add the newly generated knowledge files
+          git add config/optimal_params.json \
+                  config/research_diagnostics.json \
+                  config/research_history.json \
+                  config/stock_profiles.csv
+          
+          git commit -m "Research Lab: Weekly Tune-Up & Knowledge Update [$(date +'%Y-%m-%d')]" || echo "No changes to commit"
+          git push

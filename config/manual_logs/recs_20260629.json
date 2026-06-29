@@ -1,14 +1,14 @@
 {
   "date": "20260629",
-  "timestamp": "2026-06-29T13:52:51.531616",
+  "timestamp": "2026-06-29T14:48:40.180325",
   "market_regime": {
     "is_uptrend": true,
-    "nifty_close": 23941.55,
-    "nifty_ema50": 23849.38,
+    "nifty_close": 23967.3,
+    "nifty_ema50": 23850.39,
     "nifty_drop_50d_high": 0.0,
-    "summary": "Nifty 50: UPTREND \u25b2  |  Close: 23,942  |  EMA50: 23,849  |  Spread: +0.39%",
+    "summary": "Nifty 50: UPTREND \u25b2  |  Close: 23,967  |  EMA50: 23,850  |  Spread: +0.49%",
     "macro": {
-      "vix": 13.922499656677246,
+      "vix": 13.694999694824219,
       "vix_status": "NORMAL",
       "inst_flow": 5747.75,
       "flow_status": "BULLISH",
@@ -21,23 +21,23 @@
     "cash": 967.1690292358398,
     "holdings_count": 5
   },
-  "total_signals": 3,
+  "total_signals": 4,
   "high_confidence": 1,
   "medium_confidence": 0,
   "recommendations": [
     {
       "ticker": "TORNTPHARM.NS",
       "signal_type": "BUY",
-      "price": 4634.89990234375,
+      "price": 4619.39990234375,
       "strategy": "MACD",
       "expected_return": 24.64,
-      "stability_score": 84.7,
+      "stability_score": 87.4,
       "confidence_tier": "HIGH",
       "suggested_qty": 0,
       "risk_per_trade_inr": 1070.8851,
       "current_holdings": 0,
       "portfolio_weight_pct": 0.0,
-      "reason": "Strong MC validation + within concentration limits | Max correlation: 0.42 with DRREDDY.NS (below threshold 0.82) | Healthcare \ud83d\udd25 | Vol: 140% avg",
+      "reason": "Strong MC validation + within concentration limits | Max correlation: 0.42 with DRREDDY.NS (below threshold 0.82) | Healthcare \ud83d\udd25 | Vol: 165% avg",
       "atr_14d": 0.0,
       "cash_required": 0.0
     }
