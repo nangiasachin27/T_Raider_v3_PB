@@ -5,7 +5,7 @@
             "qty": 29,
             "entry_price": 1291.300048828125,
             "entry_date": "2026-06-22",
-            "peak_price": 1349.3
+            "peak_price": 1375.7
         },
         "JSWSTEEL.NS": {
             "qty": 29,
@@ -26,7 +26,8 @@
         "JINDALSTEL.NS": {
             "qty": 1,
             "entry_price": 1057.699951171875,
-            "entry_date": "2026-06-25"
+            "entry_date": "2026-06-25",
+            "peak_price": 1069.7
         }
     },
     "history": [
