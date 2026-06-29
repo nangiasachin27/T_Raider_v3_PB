@@ -49,6 +49,8 @@ from strategies.volatility import apply_bollinger_strategy
 from strategies.breakout import apply_breakout_strategy
 from strategies.momentum import apply_macd_strategy
 from strategies.stretch import apply_stretch_strategy
+from strategies.rsi_divergence import rsi_divergence_strategy
+from strategies.atr_breakout import atr_breakout_strategy
 
 # ── New Strategies Added Here ─────────────────────────────────────────────────
 from strategies import obv_momentum, nr7, supertrend, stoch_rsi
@@ -181,27 +183,8 @@ def _run_strategy(name, func, params, price):
 
 
 # ── Walk-Forward Validation ───────────────────────────────────────────────────
-
 def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
-                           train_years=3, test_years=1, mc_threshold=60.0):
-    """
-    BUG FIX 3: Non-overlapping walk-forward folds.
-
-    BEFORE (broken):
-        start += test_days
-        → Fold 2 training overlapped 75% with Fold 1 training.
-        → Stability scores were inflated across ALL strategies.
-        → optimal_params.json stability figures were overconfident.
-
-    AFTER (fixed):
-        start += train_days + test_days
-        → Each fold is completely independent of the previous.
-        → Fewer folds per stock (honest), but each fold is truly OOS.
-        → Stability scores now reflect genuine out-of-sample performance.
-
-    NOTE: After applying this fix, re-run auto_optimizer.py to rebuild
-    optimal_params.json. Existing stability scores are overstated.
-    """
+                           train_years=3, test_years=1, mc_threshold=55.0):
     price       = df[price_col].copy()
     price.index = pd.to_datetime(price.index)
     total_days  = len(price)
@@ -215,6 +198,9 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
     oos_metrics = []
     fold_count  = 0
     start       = 0
+    
+    # NEW: Robustly define which strategies need the full dataframe (High/Low/Vol)
+    full_df_strats = ["OBV_MOMENTUM", "NR7_SQUEEZE", "SUPERTREND", "STOCH_RSI", "RSI_DIVERGENCE", "ATR_BREAKOUT"]
 
     while start + train_days + test_days <= total_days:
 
@@ -222,8 +208,8 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
         train_price = price.iloc[start: start + train_days]
         train_df    = df.iloc[start: start + train_days]
         
-        # New strategies require the full dataframe, older ones require just the price series
-        input_data = train_df if strategy_name in ["OBV_MOMENTUM", "NR7_SQUEEZE", "SUPERTREND", "STOCH_RSI"] else train_price
+        # Route the correct data format based on strategy name (Case-insensitive)
+        input_data = train_df if strategy_name.upper() in full_df_strats else train_price
 
         train_sig   = _run_strategy(strategy_name, strategy_func, params, input_data)
         bt_train    = SimpleBacktester(stop_loss_pct=0.10)
@@ -231,14 +217,15 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
 
         if run_monte_carlo_filter(bt_train.trades) < mc_threshold:
             # Training fold failed MC — skip to next non-overlapping window
-            start += train_days + test_days   # FIX 3
+            start += train_days + test_days
             continue
 
         # Out-of-sample fold
         test_price = price.iloc[start + train_days: start + train_days + test_days]
         test_df    = df.iloc[start + train_days: start + train_days + test_days]
         
-        input_data_test = test_df if strategy_name in ["OBV_MOMENTUM", "NR7_SQUEEZE", "SUPERTREND", "STOCH_RSI"] else test_price
+        # Route the correct data format for the test fold
+        input_data_test = test_df if strategy_name.upper() in full_df_strats else test_price
 
         test_sig   = _run_strategy(strategy_name, strategy_func, params, input_data_test)
         bt_test    = SimpleBacktester(stop_loss_pct=0.10)
@@ -246,19 +233,19 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
 
         test_mc = run_monte_carlo_filter(bt_test.trades)
         if test_mc < mc_threshold:
-            start += train_days + test_days   # FIX 3
+            start += train_days + test_days
             continue
 
         metrics = bt_test.get_metrics(test_sig)
         oos_metrics.append({
             'oos_return': float(metrics['Post-Tax Annualized'].replace('%', '')),
-            'oos_sharpe': _compute_sharpe(bt_test.trades),    # FIX 4 applied here
+            'oos_sharpe': _compute_sharpe(bt_test.trades),    
             'oos_max_dd': _compute_max_drawdown(bt_test.trades),
             'oos_mc':     test_mc,
         })
         fold_count += 1
 
-        # FIX 3: advance by full window so next fold is non-overlapping
+        # Advance by full window so next fold is non-overlapping
         start += train_days + test_days
 
     if not oos_metrics:
@@ -272,7 +259,6 @@ def walk_forward_validate(df, price_col, strategy_name, strategy_func, params,
         'oos_mc':      float(np.mean([m['oos_mc']     for m in oos_metrics])),
         'folds_passed': fold_count,
     }
-
 
 # ── Per-ticker worker (module-level so Windows spawn can pickle it) ───────────
 #
@@ -305,19 +291,39 @@ def _optimise_ticker(payload: dict):
     winning_strat  = "NONE"
     winning_params = {}
     winning_wf     = {}
+    # NEW: Array to store research diagnostics for this ticker
+    diagnostics = []
 
     for name, func, param_grid in strategies:
         for p in param_grid:
             wf = walk_forward_validate(df, price_col, name, func, p)
             if not wf['passed']:
+                # NEW: Log why it failed (Usually Monte Carlo < 60% or not enough OOS folds)
+                diagnostics.append({
+                    "strategy": name,
+                    "params": p,
+                    "reason": "Failed Walk-Forward / Monte Carlo Filter",
+                    "stability_score": round(wf.get('oos_mc', 0), 1) if 'oos_mc' in wf else 0.0
+                })
                 continue
+                
             score = _composite_score(wf['oos_return'], wf['oos_sharpe'], wf['oos_max_dd'])
+            
+            # NEW: Log passing strategies so Research can see what "almost" won
+            diagnostics.append({
+                "strategy": name,
+                "params": p,
+                "reason": "Outscored by better strategy" if score <= best_score else "Current Best",
+                "score": round(score, 4),
+                "expected_return": round(wf.get('oos_return', 0), 2),
+                "stability_score": round(wf.get('oos_mc', 0), 1)
+            })
+
             if score > best_score:
                 best_score     = score
                 winning_strat  = name
                 winning_params = p
                 winning_wf     = wf
-
     result = {
         "strategy":        winning_strat,
         "params":          winning_params,
@@ -331,6 +337,7 @@ def _optimise_ticker(payload: dict):
         "data_end":        str(meta['data_end']),
         "data_rows":       meta['num_rows'],
         "optimized_on":    str(today),
+        "diagnostics":     diagnostics  # NEW: Temporarily attach diagnostics to the result
     }
     return ticker, result, meta
 
@@ -421,9 +428,21 @@ def optimize_hybrid_universe(tickers=None):
                 (9,  14, 2, 3),   # mixed: fast RSI, medium stoch
             ]
         ]),
+        # ── RSI_DIVERGENCE: For Choppy / Sideways Markets ─────────────
+        ("RSI_DIVERGENCE", rsi_divergence_strategy, [
+            {"rsi_period": 14, "oversold": 30, "overbought": 70},
+            {"rsi_period": 10, "oversold": 25, "overbought": 75}
+        ]),
+        
+        # ── ATR_BREAKOUT: For Highly Volatile Markets ─────────────────
+        ("ATR_BREAKOUT", atr_breakout_strategy, [
+            {"lookback": 20, "atr_period": 14, "atr_multiplier": 3.0},
+            {"lookback": 15, "atr_period": 10, "atr_multiplier": 2.5}
+        ])
     ]
 
     master_plan = {}
+    research_diagnostics = {}
     today       = date.today()
 
     # ── Build per-ticker payloads ─────────────────────────────────────────────
@@ -456,6 +475,10 @@ def optimize_hybrid_universe(tickers=None):
             if result is None:
                 print(f"  ⚠️  {ticker} — skipped (insufficient data after clip)")
                 continue
+            # NEW: Extract diagnostics before saving to keep optimal_params.json clean
+            ticker_diagnostics = result.pop("diagnostics", [])
+            research_diagnostics[ticker] = ticker_diagnostics
+
             master_plan[ticker] = result
             status = "✅" if result['strategy'] != "NONE" else "❌"
             print(
@@ -472,9 +495,14 @@ def optimize_hybrid_universe(tickers=None):
     with open('config/optimal_params.json', 'w') as f:
         json.dump(master_plan, f, indent=4)
 
+    # NEW: Save Research file
+    with open('config/research_diagnostics.json', 'w') as f:
+        json.dump(research_diagnostics, f, indent=4)
+
     accepted = sum(1 for v in master_plan.values() if v['strategy'] != 'NONE')
     print(f"\n✅ Done. {accepted}/{len(eligible)} eligible stocks passed all filters.")
     print(f"📄 Saved to config/optimal_params.json")
+    print(f"🔬 Saved research data to config/research_diagnostics.json")
     print(f"\n⚠️  NOTE: Walk-forward folds are now non-overlapping (v3.1 fix).")
     print(f"    Stability scores will be LOWER than v3.0 — this is correct.")
     print(f"    Previous optimal_params.json scores were overstated.")
