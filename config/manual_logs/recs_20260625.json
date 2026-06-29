@@ -1,0 +1,45 @@
+{
+  "date": "20260625",
+  "timestamp": "2026-06-25T14:57:50.959231",
+  "market_regime": {
+    "is_uptrend": true,
+    "nifty_close": 24095.3,
+    "nifty_ema50": 23847.13,
+    "nifty_drop_50d_high": 0.0,
+    "summary": "Nifty 50: UPTREND \u25b2  |  Close: 24,095  |  EMA50: 23,847  |  Spread: +1.04%",
+    "macro": {
+      "vix": 13.007499694824219,
+      "vix_status": "NORMAL",
+      "inst_flow": 3637.26,
+      "flow_status": "BULLISH",
+      "overnight_pct": -0.09829319733113406,
+      "high_risk_day": false,
+      "high_risk_reason": ""
+    }
+  },
+  "portfolio_snapshot": {
+    "cash": 134.11910247802734,
+    "holdings_count": 5
+  },
+  "total_signals": 17,
+  "high_confidence": 1,
+  "medium_confidence": 0,
+  "recommendations": [
+    {
+      "ticker": "BAJFINANCE.NS",
+      "signal_type": "SELL",
+      "price": 983.9500122070312,
+      "strategy": "OBV_MOMENTUM",
+      "expected_return": 22.41,
+      "stability_score": 80.6,
+      "confidence_tier": "HIGH",
+      "suggested_qty": 0,
+      "risk_per_trade_inr": 0,
+      "current_holdings": 1,
+      "portfolio_weight_pct": 0.9162845177067016,
+      "reason": "Exit signal on existing position \u2014 execute immediately",
+      "atr_14d": 0.0,
+      "cash_required": 0.0
+    }
+  ]
+}

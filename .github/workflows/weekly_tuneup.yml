@@ -1,0 +1,55 @@
+name: T_Raider Weekly Tune-Up & Research
+
+on:
+  workflow_dispatch:          # Allows you to run it manually from the GitHub UI
+  schedule:
+    - cron: '0 5 * * 6'      # Runs every Saturday at 05:00 UTC (10:30 AM IST)
+
+permissions:
+  contents: write
+
+jobs:
+  research-and-optimize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      # ── Run the Optimizer and Research Lab ────────────────────────────
+      - name: Run Weekly Tune-up
+        id: tuneup_run
+        run: |
+          python -u run_monthly_tuneup.py > config/tuneup_output.txt
+
+      # ── Publish to GitHub Step Summary ────────────────────────────────
+      - name: Publish to GitHub Summary
+        if: always()
+        run: |
+          echo "### 🔬 T_RAIDER RESEARCH LAB — Weekly Tune-Up" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          tail -n 100 config/tuneup_output.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      # ── Commit & Push State ───────────────────────────────────────────
+      - name: Commit & Push Knowledge Updates
+        if: always()
+        run: |
+          git config --global user.name 'T-Raider-Bot'
+          git config --global user.email 'bot@traider.ai'
+          
+          # Add the newly generated knowledge files
+          git add config/optimal_params.json \
+                  config/research_diagnostics.json \
+                  config/research_history.json
+          
+          git commit -m "Research Lab: Weekly Tune-Up & Knowledge Update [$(date +'%Y-%m-%d')]" || echo "No changes to commit"
+          git push

@@ -1,0 +1,28 @@
+{
+  "date": "20260624",
+  "timestamp": "2026-06-24T15:26:07.674680",
+  "market_regime": {
+    "is_uptrend": true,
+    "nifty_close": 24016.65,
+    "nifty_ema50": 23836.39,
+    "nifty_drop_50d_high": 0.0,
+    "summary": "Nifty 50: UPTREND \u25b2  |  Close: 24,017  |  EMA50: 23,836  |  Spread: +0.76%",
+    "macro": {
+      "vix": 13.350000381469727,
+      "vix_status": "NORMAL",
+      "inst_flow": 680.21,
+      "flow_status": "BULLISH",
+      "overnight_pct": -1.4362785193208105,
+      "high_risk_day": false,
+      "high_risk_reason": ""
+    }
+  },
+  "portfolio_snapshot": {
+    "cash": 21.809349060058594,
+    "holdings_count": 6
+  },
+  "total_signals": 21,
+  "high_confidence": 0,
+  "medium_confidence": 0,
+  "recommendations": []
+}
