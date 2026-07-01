@@ -51,7 +51,7 @@ class ActiveConfig:
     CUT_MAX_AGGRESSIVE = 3       # max losers when behind target
 
     # --- Dead money ---
-    DEAD_MONEY_DAYS = 45         # max days without meaningful progress
+    #DEAD_MONEY_DAYS = 45         # max days without meaningful progress
     DEAD_MONEY_MIN_GAIN = 0.02   # must be +2% after DEAD_MONEY_DAYS
 
     # --- Risk scaling ---
@@ -366,6 +366,7 @@ class ActiveProfitEngine:
         self.base = _get_base_capital(self.qcfg)
         self.target = _get_target_pct(self.qcfg)
         self.quarter_days = _get_quarter_days(self.qcfg)
+        self.dead_money_days = max(7, self.quarter_days // 3)
         self.quarter_start = _get_quarter_start(self.qcfg)
         self.snapshot = _get_portfolio_snapshot()
 
@@ -510,7 +511,7 @@ class ActiveProfitEngine:
         executed = []
 
         for h in self.snapshot.get("holdings", []):
-            if h["days_held"] < ActiveConfig.DEAD_MONEY_DAYS:
+            if h["days_held"] < self.dead_money_days:
                 continue
             if h["gain_pct"] >= ActiveConfig.DEAD_MONEY_MIN_GAIN:
                 continue
