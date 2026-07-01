@@ -85,12 +85,18 @@ def calculate_atr(df: pd.DataFrame, window: int = 14) -> float:
     atr = tr.rolling(window=window).mean().iloc[-1]
     return float(atr) if pd.notna(atr) else 0.0
 
-
-def calculate_position_size(capital: float, atr: float, risk_pct: float = 0.01) -> int:
-    if atr <= 0:
+def calculate_position_size(capital: float, atr: float, price: float, risk_pct: float = 0.01, max_alloc_pct: float = 0.20) -> int:
+    if atr <= 0 or price <= 0:
         return 0
-    return max(int((capital * risk_pct) / (atr * 2)), 0)
-
+    
+    # Standard ATR risk-based sizing
+    atr_qty = int((capital * risk_pct) / (atr * 2))
+    
+    # Hard cap based on portfolio percentage (e.g., max 20% of capital)
+    max_budget_qty = int((capital * max_alloc_pct) / price)
+    
+    # Return the smaller of the two to ensure we never breach the portfolio bucket size
+    return max(min(atr_qty, max_budget_qty), 0)
 
 # ── Volume confirmation ───────────────────────────────────────────────────────
 
@@ -721,7 +727,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
 
             # Gate 3: ATR sizing + confidence
             atr            = calculate_atr(df)
-            suggested_qty  = calculate_position_size(effective_capital, atr)
+            suggested_qty  = calculate_position_size(effective_capital, atr, latest_price)
             estimated_cost = suggested_qty * latest_price
 
             confidence_tier, reason = classify_buy_confidence(

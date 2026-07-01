@@ -176,11 +176,12 @@ def portfolio_current_return(portfolio: dict, prices: pd.Series, cfg: dict) -> f
 
     net_worth        = cash + total_market_value
     original_capital = float(cfg.get("original_capital", 100000.0))
+    base_capital     = float(cfg.get("current_base_capital", original_capital))
 
-    if original_capital <= 0:
+    if base_capital <= 0:
         return 0.0
 
-    return (net_worth - original_capital) / original_capital
+    return (net_worth - base_capital) / base_capital
     # FIX 1: Dead code that was here previously (old entry-price formula) is removed.
 
 

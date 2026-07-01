@@ -35,7 +35,7 @@ ACTIVE_CONFIG = {
     "tighten_threshold_2": 0.80,         # At 80% of target, tighten to...
     "tightened_stop_2": 0.05,            # ...5%
 
-    "dead_money_max_days": 60,           # Max hold without meaningful progress
+    #"dead_money_max_days": 60,           # Max hold without meaningful progress
     "dead_money_min_gain": 0.02,         # Must be +2% after dead_money_max_days
 
     "rotation_threshold": 20,              # New signal must score holding_score + 20
@@ -56,7 +56,8 @@ def get_active_capital():
     if override.exists():
         with open(override) as f:
             return json.load(f).get("total_baseline_wealth", 100000.0)
-    return 100000.0
+    qcfg = _load_quarterly_config()
+    return float(qcfg.get("current_base_capital", 100000.0))
 
 
 def calculate_atr(df, window=14):
@@ -196,7 +197,11 @@ def _score_holding(ticker: str, holding: dict, live_price: float,
     )
 
     cfg = ACTIVE_CONFIG
-    if days_held > cfg["dead_money_max_days"] and gain_pct < cfg["dead_money_min_gain"]:
+
+    qcfg = _load_quarterly_config()
+    quarter_days = qcfg.get("quarter_days", 90)
+    dynamic_dead_money_days = max(10, quarter_days // 3)
+    if days_held > dynamic_dead_money_days and gain_pct < cfg["dead_money_min_gain"]:
         score -= 25
     if gain_pct < -0.05:
         score -= 15
@@ -363,6 +368,9 @@ def check_dead_money_exits(tickers, full_market_data):
 
     exits_triggered = 0
     cfg = ACTIVE_CONFIG
+    qcfg = _load_quarterly_config()
+    quarter_days = qcfg.get("quarter_days", 90)
+    dynamic_dead_money_days = max(10, quarter_days // 3)
 
     for ticker, holding_data in list(holdings.items()):
         holding = _normalise_holding(holding_data)
@@ -373,7 +381,7 @@ def check_dead_money_exits(tickers, full_market_data):
             continue
 
         days = _days_held(entry_date)
-        if days < cfg["dead_money_max_days"]:
+        if days < dynamic_dead_money_days:
             continue
 
         df = get_stock_data(full_market_data, ticker)
@@ -600,7 +608,7 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
             target_qty = int(target_qty * risk_mult)
 
             # 20% concentration cap (kept from original bot logic)
-        max_position_cost = total_baseline_wealth * 0.35
+        max_position_cost = total_baseline_wealth * 0.20
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price

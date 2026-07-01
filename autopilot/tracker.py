@@ -157,7 +157,7 @@ def generate_report():
 
     # ── 3. True Take-Home ─────────────────────────────────────────────────────
     net_take_home_profit = gross_profit_loss - estimated_stcg_tax
-    net_take_home_pct    = (net_take_home_profit / 100000) * 100
+    net_take_home_pct    = (net_take_home_profit / original_capital * 100) if original_capital > 0 else 0
 
     print("-" * 60)
     print(f"CASH IN HAND       : ₹{cash:,.2f}")
