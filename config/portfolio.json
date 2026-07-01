@@ -1,5 +1,5 @@
 {
-    "cash": 967.1690292358398,
+    "cash": 59.009559631347656,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -18,16 +18,26 @@
             "entry_date": "2026-06-23",
             "peak_price": 85.6
         },
-        "HEROMOTOCO.NS": {
-            "qty": 6,
-            "entry_price": 4900.2001953125,
-            "entry_date": "2026-06-25"
-        },
         "JINDALSTEL.NS": {
             "qty": 1,
             "entry_price": 1057.699951171875,
             "entry_date": "2026-06-25",
             "peak_price": 1069.7
+        },
+        "MCX.NS": {
+            "qty": 7,
+            "entry_price": 2955.89990234375,
+            "entry_date": "2026-07-01"
+        },
+        "TATAPOWER.NS": {
+            "qty": 24,
+            "entry_price": 375.1000061035156,
+            "entry_date": "2026-07-01"
+        },
+        "SAIL.NS": {
+            "qty": 1,
+            "entry_price": 167.4600067138672,
+            "entry_date": "2026-07-01"
         }
     },
     "history": [
@@ -534,6 +544,42 @@
             "price": 1057.699951171875,
             "strategy": "ATR Sized (ATR:29.4) [AGGRESSIVE]",
             "total": 1057.7
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "HEROMOTOCO.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 4825.5,
+            "strategy": "Capital Rotation \u2192 MCX.NS",
+            "total": 28953.0
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "MCX.NS",
+            "side": "buy",
+            "qty": 7,
+            "price": 2955.89990234375,
+            "strategy": "ATR Sized (Rotation from HEROMOTOCO.NS)",
+            "total": 20691.3
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "TATAPOWER.NS",
+            "side": "buy",
+            "qty": 24,
+            "price": 375.1000061035156,
+            "strategy": "ATR Sized (ATR:6.8) [AGGRESSIVE]",
+            "total": 9002.4
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "SAIL.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 167.4600067138672,
+            "strategy": "ATR Sized (ATR:5.3) [AGGRESSIVE]",
+            "total": 167.46
         }
     ]
 }
