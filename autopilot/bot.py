@@ -3,6 +3,7 @@ import sys
 import argparse
 import pandas as pd
 import numpy as np
+import yfinance as yf
 import json
 from pathlib import Path
 from datetime import datetime, date
