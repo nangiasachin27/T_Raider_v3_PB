@@ -671,20 +671,9 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
         print(f"\n 📊 Position limit reached ({len(holdings)}/{cfg['rotation_max_positions']}). "
               f"Evaluating proactive rebalancing...")
 
-        # Score best opportunities from full universe (not held)
-        held_tickers = set(holdings.keys())
-        universe_scores = []
-        for uticker in universe:
-            if uticker in held_tickers:
-                continue
-            uscore = _score_opportunity(uticker, optimized_params)
-            if uscore > -500:
-                universe_scores.append((uscore, uticker))
-
-        universe_scores.sort(key=lambda x: x[0], reverse=True)
-
-        if universe_scores and holding_scores:
-            best_score, best_ticker = universe_scores[0]
+        if scored_signals and holding_scores:
+            best_score, best_sig, best_plan = scored_signals[0] # Grab the #1 approved signal
+            best_ticker = best_sig["ticker"]
             weakest_score, weakest_ticker, weakest_holding, weakest_price, weakest_days = holding_scores[0]
 
             if best_score >= weakest_score + cfg["rotation_threshold"]:

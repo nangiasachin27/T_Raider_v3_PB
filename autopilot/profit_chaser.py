@@ -84,11 +84,12 @@ def _chaser_cfg(cfg: dict) -> dict:
 
 def _mode_overrides(chaser: dict, mode: str) -> dict:
     """Merge base chaser defaults with the selected mode's overrides."""
+    mode_thresholds = {"CONSERVATIVE": 0.03, "BALANCED": 0.05, "AGGRESSIVE": 0.01}
     base = {
         "weak_threshold":         chaser.get("weak_threshold",   -0.05),
         "strong_min_score":       chaser.get("strong_min_score",  0.70),
-        "buy_in_downtrend":       False,
-        "nifty_dip_pct_required": 0.05,
+        "buy_in_downtrend":       True,
+        "nifty_dip_pct_required": mode_thresholds.get(mode, 0.03),
     }
     overrides = chaser.get("mode_overrides", {}).get(mode, {})
     return {**base, **overrides}
@@ -228,16 +229,21 @@ def get_strong_candidates(
     params: dict,
     exclude_tickers: list[str],
     min_score: float,
+    is_uptrend: bool
 ) -> list[dict]:
     """
     Pull tickers from optimal_params.json with stability_score >= min_score
     that are not already held. Sorted best->worst by stability_score.
     """
     candidates = []
+    mr_strategies = ['RSI', 'VOLATILITY', 'STRETCH', 'RSI_DIVERGENCE']
     for ticker, plan in params.items():
         if ticker in exclude_tickers:
             continue
-        if plan.get("strategy") == "NONE":
+        strategy = plan.get("strategy")
+        if strategy == "NONE":
+            continue
+        if not is_uptrend and strategy not in mr_strategies:
             continue
         score = float(plan.get("stability_score", 0) or 0)
         if score >= min_score:
@@ -622,7 +628,7 @@ def run_chaser(mode: str = "CONSERVATIVE", market: str = "INDIA", dry_run: bool 
 
     # ── Strong candidates from optimal_params ────────────────────────────────
     min_score  = mo["strong_min_score"]
-    candidates = get_strong_candidates(params, held_tickers, min_score)
+    candidates = get_strong_candidates(params, held_tickers, min_score, is_uptrend)
 
     if not candidates and allow_buys:
         print(f"\n  ⚠️  No candidates with stability >= {min_score:.0%} found outside portfolio.")
