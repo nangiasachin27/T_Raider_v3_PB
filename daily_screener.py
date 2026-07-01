@@ -39,6 +39,8 @@ from strategies.nr7 import execute_strategy as apply_nr7_squeeze_strategy
 from strategies.obv_momentum import execute_strategy as apply_obv_momentum_strategy
 from strategies.supertrend import execute_strategy as apply_supertrend_strategy
 from strategies.stoch_rsi import execute_strategy as apply_stoch_rsi_strategy
+from strategies.atr_breakout import atr_breakout_strategy
+from strategies.rsi_divergence import rsi_divergence_strategy
 from autopilot.logger import load_portfolio
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
 from autopilot.beta_filter import BetaFilter
@@ -608,6 +610,20 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
                 stoch_period=p.get('stoch_period', 14),
                 k_smooth=p.get('k_smooth', 3),
                 d_smooth=p.get('d_smooth', 3),
+            )
+        elif strat_type == "ATR_BREAKOUT":
+            res = atr_breakout_strategy(
+                df, 
+                lookback=p.get('lookback', 20), 
+                atr_period=p.get('atr_period', 14), 
+                atr_multiplier=p.get('atr_multiplier', 2.0)
+            )
+        elif strat_type == "RSI_DIVERGENCE":
+            res = rsi_divergence_strategy(
+                df, 
+                rsi_period=p.get('rsi_period', 14), 
+                oversold=p.get('oversold', 30), 
+                overbought=p.get('overbought', 70)
             )
         else:
             continue
