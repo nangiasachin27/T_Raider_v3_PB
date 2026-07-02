@@ -1,5 +1,5 @@
 {
-    "cash": 59.009559631347656,
+    "cash": 42.810829162597656,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -24,20 +24,22 @@
             "entry_date": "2026-06-25",
             "peak_price": 1069.7
         },
-        "MCX.NS": {
-            "qty": 7,
-            "entry_price": 2955.89990234375,
-            "entry_date": "2026-07-01"
-        },
         "TATAPOWER.NS": {
             "qty": 24,
             "entry_price": 375.1000061035156,
-            "entry_date": "2026-07-01"
+            "entry_date": "2026-07-01",
+            "peak_price": 376.3
         },
         "SAIL.NS": {
             "qty": 1,
             "entry_price": 167.4600067138672,
-            "entry_date": "2026-07-01"
+            "entry_date": "2026-07-01",
+            "peak_price": 168.56
+        },
+        "GODREJCP.NS": {
+            "qty": 19,
+            "entry_price": 1076.199951171875,
+            "entry_date": "2026-07-02"
         }
     },
     "history": [
@@ -580,6 +582,24 @@
             "price": 167.4600067138672,
             "strategy": "ATR Sized (ATR:5.3) [AGGRESSIVE]",
             "total": 167.46
+        },
+        {
+            "timestamp": "2026-07-02 09:51:40",
+            "ticker": "MCX.NS",
+            "side": "sell",
+            "qty": 7,
+            "price": 2918.800048828125,
+            "strategy": "Signal Exit",
+            "total": 20431.6
+        },
+        {
+            "timestamp": "2026-07-02 09:51:40",
+            "ticker": "GODREJCP.NS",
+            "side": "buy",
+            "qty": 19,
+            "price": 1076.199951171875,
+            "strategy": "ATR Sized (ATR:22.6) [AGGRESSIVE]",
+            "total": 20447.8
         }
     ]
 }
