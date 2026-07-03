@@ -1,5 +1,5 @@
 {
-    "cash": 42.810829162597656,
+    "cash": 89.26178741455078,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -34,12 +34,12 @@
             "qty": 1,
             "entry_price": 167.4600067138672,
             "entry_date": "2026-07-01",
-            "peak_price": 168.56
+            "peak_price": 169.94
         },
-        "GODREJCP.NS": {
-            "qty": 19,
-            "entry_price": 1076.199951171875,
-            "entry_date": "2026-07-02"
+        "BANKBARODA.NS": {
+            "qty": 81,
+            "entry_price": 252.14999389648438,
+            "entry_date": "2026-07-03"
         }
     },
     "history": [
@@ -600,6 +600,24 @@
             "price": 1076.199951171875,
             "strategy": "ATR Sized (ATR:22.6) [AGGRESSIVE]",
             "total": 20447.8
+        },
+        {
+            "timestamp": "2026-07-03 09:51:37",
+            "ticker": "GODREJCP.NS",
+            "side": "sell",
+            "qty": 19,
+            "price": 1077.4000244140625,
+            "strategy": "Capital Rotation \u2192 BANKBARODA.NS",
+            "total": 20470.6
+        },
+        {
+            "timestamp": "2026-07-03 09:51:37",
+            "ticker": "BANKBARODA.NS",
+            "side": "buy",
+            "qty": 81,
+            "price": 252.14999389648438,
+            "strategy": "ATR Sized (ATR:6.8) [AGGRESSIVE]",
+            "total": 20424.15
         }
     ]
 }
