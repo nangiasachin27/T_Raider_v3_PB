@@ -1,5 +1,5 @@
 {
-    "cash": 89.26178741455078,
+    "cash": 38.71178436279297,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -10,7 +10,8 @@
         "JSWSTEEL.NS": {
             "qty": 29,
             "entry_price": 1239.199951171875,
-            "entry_date": "2026-06-23"
+            "entry_date": "2026-06-23",
+            "peak_price": 1243.2
         },
         "NMDC.NS": {
             "qty": 13,
@@ -28,18 +29,17 @@
             "qty": 24,
             "entry_price": 375.1000061035156,
             "entry_date": "2026-07-01",
-            "peak_price": 376.3
-        },
-        "SAIL.NS": {
-            "qty": 1,
-            "entry_price": 167.4600067138672,
-            "entry_date": "2026-07-01",
-            "peak_price": 169.94
+            "peak_price": 377.0
         },
         "BANKBARODA.NS": {
             "qty": 81,
             "entry_price": 252.14999389648438,
             "entry_date": "2026-07-03"
+        },
+        "ADANIPOWER.NS": {
+            "qty": 1,
+            "entry_price": 220.3000030517578,
+            "entry_date": "2026-07-06"
         }
     },
     "history": [
@@ -618,6 +618,24 @@
             "price": 252.14999389648438,
             "strategy": "ATR Sized (ATR:6.8) [AGGRESSIVE]",
             "total": 20424.15
+        },
+        {
+            "timestamp": "2026-07-06 09:52:05",
+            "ticker": "SAIL.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 169.75,
+            "strategy": "Capital Rotation \u2192 KOTAKBANK.NS",
+            "total": 169.75
+        },
+        {
+            "timestamp": "2026-07-06 09:52:05",
+            "ticker": "ADANIPOWER.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 220.3000030517578,
+            "strategy": "ATR Sized (ATR:6.0) [AGGRESSIVE]",
+            "total": 220.3
         }
     ]
 }
