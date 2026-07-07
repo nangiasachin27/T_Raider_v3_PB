@@ -1,5 +1,5 @@
 {
-    "cash": 38.71178436279297,
+    "cash": 7.711784362792969,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -29,7 +29,7 @@
             "qty": 24,
             "entry_price": 375.1000061035156,
             "entry_date": "2026-07-01",
-            "peak_price": 377.0
+            "peak_price": 377.15
         },
         "BANKBARODA.NS": {
             "qty": 81,
@@ -40,6 +40,11 @@
             "qty": 1,
             "entry_price": 220.3000030517578,
             "entry_date": "2026-07-06"
+        },
+        "ITBEES.NS": {
+            "qty": 1,
+            "entry_price": 31.0,
+            "entry_date": "2026-07-07"
         }
     },
     "history": [
@@ -636,6 +641,15 @@
             "price": 220.3000030517578,
             "strategy": "ATR Sized (ATR:6.0) [AGGRESSIVE]",
             "total": 220.3
+        },
+        {
+            "timestamp": "2026-07-07 09:51:40",
+            "ticker": "ITBEES.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 31.0,
+            "strategy": "ATR Sized (ATR:1.1) [AGGRESSIVE]",
+            "total": 31.0
         }
     ]
 }
