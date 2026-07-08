@@ -1,5 +1,5 @@
 {
-    "cash": 967.1690292358398,
+    "cash": 7.711784362792969,
     "holdings": {
         "DRREDDY.NS": {
             "qty": 29,
@@ -10,7 +10,8 @@
         "JSWSTEEL.NS": {
             "qty": 29,
             "entry_price": 1239.199951171875,
-            "entry_date": "2026-06-23"
+            "entry_date": "2026-06-23",
+            "peak_price": 1243.2
         },
         "NMDC.NS": {
             "qty": 13,
@@ -18,16 +19,32 @@
             "entry_date": "2026-06-23",
             "peak_price": 85.6
         },
-        "HEROMOTOCO.NS": {
-            "qty": 6,
-            "entry_price": 4900.2001953125,
-            "entry_date": "2026-06-25"
-        },
         "JINDALSTEL.NS": {
             "qty": 1,
             "entry_price": 1057.699951171875,
             "entry_date": "2026-06-25",
             "peak_price": 1069.7
+        },
+        "TATAPOWER.NS": {
+            "qty": 24,
+            "entry_price": 375.1000061035156,
+            "entry_date": "2026-07-01",
+            "peak_price": 377.15
+        },
+        "BANKBARODA.NS": {
+            "qty": 81,
+            "entry_price": 252.14999389648438,
+            "entry_date": "2026-07-03"
+        },
+        "ADANIPOWER.NS": {
+            "qty": 1,
+            "entry_price": 220.3000030517578,
+            "entry_date": "2026-07-06"
+        },
+        "ITBEES.NS": {
+            "qty": 1,
+            "entry_price": 31.0,
+            "entry_date": "2026-07-07"
         }
     },
     "history": [
@@ -534,6 +551,105 @@
             "price": 1057.699951171875,
             "strategy": "ATR Sized (ATR:29.4) [AGGRESSIVE]",
             "total": 1057.7
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "HEROMOTOCO.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 4825.5,
+            "strategy": "Capital Rotation \u2192 MCX.NS",
+            "total": 28953.0
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "MCX.NS",
+            "side": "buy",
+            "qty": 7,
+            "price": 2955.89990234375,
+            "strategy": "ATR Sized (Rotation from HEROMOTOCO.NS)",
+            "total": 20691.3
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "TATAPOWER.NS",
+            "side": "buy",
+            "qty": 24,
+            "price": 375.1000061035156,
+            "strategy": "ATR Sized (ATR:6.8) [AGGRESSIVE]",
+            "total": 9002.4
+        },
+        {
+            "timestamp": "2026-07-01 09:51:26",
+            "ticker": "SAIL.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 167.4600067138672,
+            "strategy": "ATR Sized (ATR:5.3) [AGGRESSIVE]",
+            "total": 167.46
+        },
+        {
+            "timestamp": "2026-07-02 09:51:40",
+            "ticker": "MCX.NS",
+            "side": "sell",
+            "qty": 7,
+            "price": 2918.800048828125,
+            "strategy": "Signal Exit",
+            "total": 20431.6
+        },
+        {
+            "timestamp": "2026-07-02 09:51:40",
+            "ticker": "GODREJCP.NS",
+            "side": "buy",
+            "qty": 19,
+            "price": 1076.199951171875,
+            "strategy": "ATR Sized (ATR:22.6) [AGGRESSIVE]",
+            "total": 20447.8
+        },
+        {
+            "timestamp": "2026-07-03 09:51:37",
+            "ticker": "GODREJCP.NS",
+            "side": "sell",
+            "qty": 19,
+            "price": 1077.4000244140625,
+            "strategy": "Capital Rotation \u2192 BANKBARODA.NS",
+            "total": 20470.6
+        },
+        {
+            "timestamp": "2026-07-03 09:51:37",
+            "ticker": "BANKBARODA.NS",
+            "side": "buy",
+            "qty": 81,
+            "price": 252.14999389648438,
+            "strategy": "ATR Sized (ATR:6.8) [AGGRESSIVE]",
+            "total": 20424.15
+        },
+        {
+            "timestamp": "2026-07-06 09:52:05",
+            "ticker": "SAIL.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 169.75,
+            "strategy": "Capital Rotation \u2192 KOTAKBANK.NS",
+            "total": 169.75
+        },
+        {
+            "timestamp": "2026-07-06 09:52:05",
+            "ticker": "ADANIPOWER.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 220.3000030517578,
+            "strategy": "ATR Sized (ATR:6.0) [AGGRESSIVE]",
+            "total": 220.3
+        },
+        {
+            "timestamp": "2026-07-07 09:51:40",
+            "ticker": "ITBEES.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 31.0,
+            "strategy": "ATR Sized (ATR:1.1) [AGGRESSIVE]",
+            "total": 31.0
         }
     ]
 }
