@@ -241,7 +241,7 @@ def _get_portfolio_snapshot() -> Dict:
 # SCORING SYSTEM (for proactive rebalancing)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def score_holding(ticker: str, holding: Dict, optimal_params: Dict) -> float:
+def score_holding(ticker: str, holding: Dict, optimal_params: Dict, dead_money_days: int = 30) -> float:
     """
     Score an existing holding. Lower = weaker candidate for sale.
     Composite score based on: gain/loss, days held, expected_return, stability.
@@ -266,7 +266,7 @@ def score_holding(ticker: str, holding: Dict, optimal_params: Dict) -> float:
 
     # Penalties
     cfg = ActiveConfig
-    if days_held > cfg.DEAD_MONEY_DAYS and gain_pct < cfg.DEAD_MONEY_MIN_GAIN:
+    if days_held > dead_money_days and gain_pct < cfg.DEAD_MONEY_MIN_GAIN:
         score -= 25  # Dead money penalty
     if gain_pct < -0.05:
         score -= 15
@@ -555,7 +555,7 @@ class ActiveProfitEngine:
         # Score all current holdings
         holding_scores = []
         for h in holdings:
-            score = score_holding(h["ticker"], h, self.optimal)
+            score = score_holding(h["ticker"], h, self.optimal,self.dead_money_days)
             holding_scores.append((score, h))
 
         # Score all universe opportunities (not currently held)

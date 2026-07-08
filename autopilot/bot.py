@@ -551,6 +551,81 @@ def check_stop_losses(tickers, full_market_data, hard_stop_pct=0.10):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 0.6: CONCENTRATION TRIM — runs regardless of P&L
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def check_concentration_limits(tickers, full_market_data, max_weight_pct: float = 20.0):
+    """
+    Trims any position whose current mark-to-market weight exceeds
+    max_weight_pct of total portfolio value, independent of gain/loss.
+
+    Existing trim/cut logic only fires on P&L thresholds (TRIM_GAIN_THRESHOLD,
+    CUT_LOSS_THRESHOLD), so a position that grows to 35%+ of the book purely
+    from a sizing-cap bug or price drift — while sitting flat or modestly
+    up — never gets touched. This check closes that gap.
+    """
+    print("\n--- PHASE 0.6: CONCENTRATION CHECK ---")
+    portfolio = load_portfolio()
+    holdings = portfolio.get("holdings", {})
+    cash = portfolio.get("cash", 0)
+    if not holdings:
+        print(" No open positions.")
+        return 0
+
+    # Mark everything to market first so weights are computed off real values.
+    priced = []
+    total_value = cash
+    for ticker, holding_data in holdings.items():
+        holding = _normalise_holding(holding_data)
+        qty = holding["qty"]
+        if qty <= 0:
+            continue
+        df = get_stock_data(full_market_data, ticker)
+        if df.empty:
+            continue
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = df.columns.get_level_values(0)
+        price_col = 'Adj Close' if 'Adj Close' in df.columns else 'Close'
+        price = float(df[price_col].iloc[-1])
+        value = qty * price
+        total_value += value
+        priced.append({"ticker": ticker, "qty": qty, "price": price, "value": value})
+
+    if total_value <= 0:
+        print(" Could not compute portfolio value — skipping.")
+        return 0
+
+    trims = 0
+    for p in priced:
+        weight_pct = p["value"] / total_value * 100
+        if weight_pct <= max_weight_pct:
+            continue
+
+        target_value = total_value * (max_weight_pct / 100.0)
+        target_qty = int(target_value // p["price"]) if p["price"] > 0 else 0
+        sell_qty = max(p["qty"] - target_qty, 0)
+
+        print(f" ⚠️ {p['ticker']:18} weight {weight_pct:.1f}% > {max_weight_pct:.0f}% cap "
+              f"— trimming {sell_qty} of {p['qty']} shares")
+
+        if sell_qty <= 0:
+            continue
+
+        record_transaction(
+            ticker=p["ticker"],
+            side="sell",
+            qty=sell_qty,
+            price=p["price"],
+            strategy_name=f"ConcentrationTrim ({weight_pct:.1f}% -> {max_weight_pct:.0f}%)",
+        )
+        trims += 1
+
+    if trims == 0:
+        print(" All positions within concentration limits.")
+    return trims
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # PHASE 1.5: CAPITAL ROTATION (Enhanced v2)
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -804,6 +879,9 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA", filte
     # ── PHASE 0.5: STOP LOSSES ──────────────────────────────────────────
     check_stop_losses(tickers, full_market_data)
 
+    # ── PHASE 0.6: CONCENTRATION CHECK ──────────────────────────────────
+    check_concentration_limits(tickers, full_market_data, max_weight_pct=20.0)
+
     # ── Get signals (pass mode to screener) ───────────────────────────────
     buy_signals, sell_signals = run_screener(tickers, mode=mode, filters=filters)
 
@@ -879,8 +957,10 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA", filte
         if risk_mult != 1.0:
             target_qty = int(target_qty * risk_mult)
 
-        # 20% concentration cap
-        max_position_cost = total_baseline_wealth * 0.35
+        # 20% concentration cap (FIX: was 0.35 — inconsistent with rotate_capital_for_buy
+        # and daily_screener.classify_buy_confidence, which both use 20%. This mismatch
+        # is what let DRREDDY.NS and JSWSTEEL.NS each grow to ~35% of the book.)
+        max_position_cost = total_baseline_wealth * 0.20
         capped_qty = int(max_position_cost // price) if price > 0 else 0
         final_qty = min(target_qty, capped_qty)
         total_cost = final_qty * price
