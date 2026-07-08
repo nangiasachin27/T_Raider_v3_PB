@@ -14,6 +14,7 @@ config/upstox_instrument_cache.json
 config/portfolio.json
 config/daily_equity.csv
 config/performance_chart.png
+config/.rotation_state.json
 *.log
 
 # OPTIONAL: Ignore your actual portfolio if you want to keep your money private

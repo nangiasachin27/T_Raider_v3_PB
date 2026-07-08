@@ -7,6 +7,7 @@ import yfinance as yf
 import json
 from pathlib import Path
 from datetime import datetime, date
+from typing import Optional
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from autopilot.kelly_position_sizing import KellyPositionSizer
@@ -43,9 +44,37 @@ ACTIVE_CONFIG = {
     "rotation_max_positions": 10,         # Target max open positions
     "rotation_min_cash_buffer": 5000,    # Always keep ₹5,000 cash
 
+    # FIX #1 — cash buffer is now actually enforced (see rotate_capital_for_buy).
+    # FIX #2 — reject any buy/rotation whose ticket size is too small to matter.
+    "min_trade_value": 3000,             # Never buy/rotate into a position worth < ₹3,000
+
+    # FIX #3 — rotation cooldown, so we stop reshuffling the same capital daily.
+    "rotation_min_hold_days": 5,          # A holding must be held >= 5 days before it can be rotated out
+    "rotation_cooldown_days": 3,          # Wait >= 3 calendar days between rotation events (globally)
+
     "partial_exit_threshold": 0.20,        # +20% partial book (legacy)
     "partial_exit_fraction": 0.50,       # Sell 50% at partial
 }
+
+ROTATION_STATE_PATH = Path("config/.rotation_state.json")
+
+
+def _get_last_rotation_date() -> Optional[date]:
+    """Read the date of the last executed capital rotation (FIX #3)."""
+    if not ROTATION_STATE_PATH.exists():
+        return None
+    try:
+        with open(ROTATION_STATE_PATH) as f:
+            data = json.load(f)
+        return datetime.strptime(data["last_rotation_date"], "%Y-%m-%d").date()
+    except Exception:
+        return None
+
+
+def _set_last_rotation_date(d: date) -> None:
+    """Persist the date of the most recent capital rotation (FIX #3)."""
+    with open(ROTATION_STATE_PATH, "w") as f:
+        json.dump({"last_rotation_date": d.isoformat()}, f)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -546,6 +575,17 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
         print(" No rotation needed — cash and position count OK.")
         return portfolio, executed
 
+    # FIX #3 - Global rotation cooldown. Don't reshuffle capital every single
+    # day just because a new candidate scores marginally higher; that's how
+    # you end up paying 0.4% round-trip friction on noise instead of signal.
+    last_rotation = _get_last_rotation_date()
+    today = date.today()
+    if last_rotation is not None and (today - last_rotation).days < cfg["rotation_cooldown_days"]:
+        days_left = cfg["rotation_cooldown_days"] - (today - last_rotation).days
+        print(f" Rotation cooldown active - last rotation {last_rotation.isoformat()}, "
+              f"{days_left} day(s) remaining. Skipping rotation this cycle.")
+        return portfolio, executed
+
     # Score all buy signals
     scored_signals = []
     for sig in buy_signals:
@@ -571,6 +611,13 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
         hprice_col = 'Adj Close' if 'Adj Close' in hdf.columns else 'Close'
         hprice = float(hdf[hprice_col].iloc[-1])
         days = _days_held(holding.get("entry_date", "unknown"))
+
+        # FIX #3 - a fresh position needs time to work before it can be
+        # rotated out again. Without this, capital bounces between tickers
+        # daily and never gets a chance to compound.
+        if days < cfg["rotation_min_hold_days"]:
+            continue
+
         hscore = _score_holding(hticker, holding, hprice, optimized_params, days)
         holding_scores.append((hscore, hticker, holding, hprice, days))
 
@@ -616,17 +663,22 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
 
         # NEW: Immediately skip if the stock is too risky/expensive to buy even 1 share
         if final_qty <= 0:
-            print(f"\n ⚠️ SKIPPING {ticker}: Too volatile or expensive. Buying 1 share exceeds max risk limit.")
+            print(f"\n WARNING SKIPPING {ticker}: Too volatile or expensive. Buying 1 share exceeds max risk limit.")
+            continue
+
+        # FIX #2 - never rotate into a ticket so small it can't move the needle.
+        if total_cost < cfg["min_trade_value"]:
+            print(f"\n WARNING SKIPPING {ticker}: ticket size Rs.{total_cost:,.0f} is below the "
+                  f"Rs.{cfg['min_trade_value']:,.0f} minimum trade value.")
             continue
 
         if total_cost <= cash:
             continue  # Enough cash, no rotation needed
 
-        print(f"\n 💡 Rotation needed for {ticker}: need ₹{total_cost:,.0f}, have ₹{cash:,.0f}")
-
+        print(f"\n Rotation needed for {ticker}: need Rs.{total_cost:,.0f}, have Rs.{cash:,.0f}")
 
         if not holding_scores:
-            print("   No holdings to rotate.")
+            print("   No holdings eligible to rotate (all too new, or none held).")
             continue
 
         weakest_score, weakest_ticker, weakest_holding, weakest_price, weakest_days = holding_scores[0]
@@ -634,38 +686,52 @@ def rotate_capital_for_buy(buy_signals, full_market_data,
         print(f"   Weakest holding: {weakest_ticker} (score={weakest_score:.1f}, held {weakest_days}d)")
         print(f"   New signal score: {score:.1f}")
 
-        if score >= weakest_score + cfg["rotation_threshold"]:
-            wqty = weakest_holding["qty"]
-            proceeds = wqty * weakest_price
-            print(f"   ✅ ROTATING: Sell {wqty} {weakest_ticker} @ ₹{weakest_price:.2f} "
-                  f"(proceeds ₹{proceeds:,.0f}) → Buy {ticker}")
-            record_transaction(weakest_ticker, "sell", wqty, weakest_price,
-                               f"Capital Rotation → {ticker}")
-            executed.append({
-                "sold": weakest_ticker,
-                "sold_qty": wqty,
-                "sold_price": weakest_price,
-                "bought": ticker,
-                "bought_qty": final_qty,
-                "bought_price": price,
-                "reason": f"Score {score:.1f} vs {weakest_score:.1f}"
-            })
+        if score < weakest_score + cfg["rotation_threshold"]:
+            print(f"   No rotation: score gap {score - weakest_score:.1f} < threshold {cfg['rotation_threshold']}")
+            continue
 
+        wqty = weakest_holding["qty"]
+        proceeds = wqty * weakest_price
+
+        # FIX #1 - enforce the cash buffer. Selling weakest_holding must not
+        # leave us so thin on cash that every subsequent buy gets floor-divided
+        # into a dust position. Skip the rotation if it would breach the floor
+        # (net of what we're about to spend buying the new ticker).
+        projected_cash = cash + proceeds - total_cost
+        if projected_cash < cfg["rotation_min_cash_buffer"]:
+            print(f"   Skipping rotation: would leave cash at Rs.{projected_cash:,.0f}, "
+                  f"below the Rs.{cfg['rotation_min_cash_buffer']:,.0f} buffer.")
+            continue
+
+        print(f"   ROTATING: Sell {wqty} {weakest_ticker} @ Rs.{weakest_price:.2f} "
+              f"(proceeds Rs.{proceeds:,.0f}) -> Buy {ticker}")
+        record_transaction(weakest_ticker, "sell", wqty, weakest_price,
+                           f"Capital Rotation -> {ticker}")
+        executed.append({
+            "sold": weakest_ticker,
+            "sold_qty": wqty,
+            "sold_price": weakest_price,
+            "bought": ticker,
+            "bought_qty": final_qty,
+            "bought_price": price,
+            "reason": f"Score {score:.1f} vs {weakest_score:.1f}"
+        })
+
+        portfolio = load_portfolio()
+        cash = portfolio.get("cash", 0)
+        holdings = portfolio.get("holdings", {})
+
+        if total_cost <= cash and final_qty > 0:
+            print(f"   ROTATION BUY: {ticker} | Rs.{price:.2f} | {final_qty} shares")
+            record_transaction(ticker, "buy", final_qty, price,
+                               f"ATR Sized (Rotation from {weakest_ticker})")
             portfolio = load_portfolio()
             cash = portfolio.get("cash", 0)
             holdings = portfolio.get("holdings", {})
-
-            if total_cost <= cash and final_qty > 0:
-                print(f"   🚀 ROTATION BUY: {ticker} | ₹{price:.2f} | {final_qty} shares")
-                record_transaction(ticker, "buy", final_qty, price,
-                                   f"ATR Sized (Rotation from {weakest_ticker})")
-                portfolio = load_portfolio()
-                cash = portfolio.get("cash", 0)
-                holdings = portfolio.get("holdings", {})
-            else:
-                print(f"   ⚠️ Still insufficient cash after rotation (₹{cash:,.0f} < ₹{total_cost:,.0f})")
+            # FIX #3 - stamp the cooldown only once a rotation actually executes.
+            _set_last_rotation_date(date.today())
         else:
-            print(f"   ❌ No rotation: score gap {score - weakest_score:.1f} < threshold {cfg['rotation_threshold']}")
+            print(f"   Still insufficient cash after rotation (Rs.{cash:,.0f} < Rs.{total_cost:,.0f})")
 
     # ── Case 2: Too many positions → proactive rebalancing ────
     if len(holdings) >= cfg["rotation_max_positions"]:
@@ -825,6 +891,16 @@ def run_autopilot_cycle(mode: str = "CONSERVATIVE", market: str = "INDIA", filte
             if final_qty <= 0:
                 print(f"⚠️ SKIPPED: {ticker} (Insufficient cash: ₹{portfolio['cash']:.2f})")
                 continue
+
+        # FIX #2 — a cash-starved buy that floor-divides down to a dust
+        # position (e.g. 1 share of a ₹200 stock) pays full transaction
+        # friction for a position too small to matter. Skip it instead of
+        # letting it eat into cash and position-count headroom for no reason.
+        if total_cost < ACTIVE_CONFIG["min_trade_value"]:
+            print(f"⚠️ SKIPPED: {ticker} (ticket size ₹{total_cost:,.0f} below "
+                  f"₹{ACTIVE_CONFIG['min_trade_value']:,.0f} minimum — cash too "
+                  f"constrained for a meaningful position)")
+            continue
 
         if final_qty > 0:
             print(f"🚀 BUY: {ticker} | ₹{price:.2f} | ATR: {atr:.2f} | "
