@@ -1,17 +1,10 @@
 {
-    "cash": 7.711784362792969,
+    "cash": 31498.790660858154,
     "holdings": {
-        "DRREDDY.NS": {
-            "qty": 29,
-            "entry_price": 1291.300048828125,
-            "entry_date": "2026-06-22",
-            "peak_price": 1375.7
-        },
         "JSWSTEEL.NS": {
-            "qty": 29,
+            "qty": 16,
             "entry_price": 1239.199951171875,
-            "entry_date": "2026-06-23",
-            "peak_price": 1243.2
+            "entry_date": "2026-06-23"
         },
         "NMDC.NS": {
             "qty": 13,
@@ -41,10 +34,10 @@
             "entry_price": 220.3000030517578,
             "entry_date": "2026-07-06"
         },
-        "ITBEES.NS": {
-            "qty": 1,
-            "entry_price": 31.0,
-            "entry_date": "2026-07-07"
+        "KALYANKJIL.NS": {
+            "qty": 48,
+            "entry_price": 442.6499938964844,
+            "entry_date": "2026-07-09"
         }
     },
     "history": [
@@ -650,6 +643,42 @@
             "price": 31.0,
             "strategy": "ATR Sized (ATR:1.1) [AGGRESSIVE]",
             "total": 31.0
+        },
+        {
+            "timestamp": "2026-07-09 09:51:25",
+            "ticker": "ITBEES.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 30.479999542236328,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 30.48
+        },
+        {
+            "timestamp": "2026-07-09 09:51:36",
+            "ticker": "DRREDDY.NS",
+            "side": "sell",
+            "qty": 29,
+            "price": 1267.699951171875,
+            "strategy": "Adaptive Stop (-1.8%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 36763.3
+        },
+        {
+            "timestamp": "2026-07-09 09:51:36",
+            "ticker": "JSWSTEEL.NS",
+            "side": "sell",
+            "qty": 13,
+            "price": 1226.5,
+            "strategy": "ConcentrationTrim (34.4% -> 20%)",
+            "total": 15944.5
+        },
+        {
+            "timestamp": "2026-07-09 09:51:48",
+            "ticker": "KALYANKJIL.NS",
+            "side": "buy",
+            "qty": 48,
+            "price": 442.6499938964844,
+            "strategy": "ATR Sized (ATR:18.2) [AGGRESSIVE]",
+            "total": 21247.2
         }
     ]
 }
