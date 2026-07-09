@@ -255,8 +255,14 @@ def check_trailing_stops(tickers, full_market_data):
         return 0
 
     stops_triggered = 0
-    portfolio_changed = False 
-    
+    # BUGFIX: previously this function saved a stale in-memory `portfolio`
+    # snapshot at the end, which silently overwrote the correct cash/holdings
+    # state that record_transaction() had already persisted to disk for any
+    # stop that triggered — destroying the sale proceeds. Peak-price updates
+    # (the only thing this function needs to persist itself) are now tracked
+    # separately and merged onto a freshly reloaded state at the end instead.
+    peak_updates = {}
+
     # Fetch broad market VIX to dynamically scale our ATR multipliers
     try:
         vix_series = yf.download("^INDIAVIX", period="2d", progress=False)["Close"].squeeze()
@@ -292,9 +298,7 @@ def check_trailing_stops(tickers, full_market_data):
         # Track and update peak prices
         new_peak = max(peak_price, current_price) if peak_price > 0 else current_price
         if new_peak != peak_price:
-            holding["peak_price"] = round(new_peak, 4)
-            portfolio["holdings"][ticker] = holding
-            portfolio_changed = True
+            peak_updates[ticker] = round(new_peak, 4)
 
         # Calculate asset-specific ATR
         atr = calculate_atr(df, window=14)
@@ -320,16 +324,23 @@ def check_trailing_stops(tickers, full_market_data):
             record_transaction(ticker, "sell", qty, current_price,
                                f"Adaptive Stop ({gain_pct*100:.1f}%, type={stop_type})")
             stops_triggered += 1
-            # Remove from local track mapping immediately to allow other processes to allocate capital
-            if ticker in portfolio["holdings"]:
-                del portfolio["holdings"][ticker]
-                portfolio_changed = True
+            # This position no longer exists — don't carry a peak-price update for it.
+            peak_updates.pop(ticker, None)
         else:
             print()
-            
-    if portfolio_changed:
-        save_portfolio(portfolio) 
-        
+
+    # Merge peak-price updates onto a FRESH copy of the portfolio, so we never
+    # clobber cash/holdings changes that record_transaction() made above.
+    if peak_updates:
+        fresh = load_portfolio()
+        fresh_holdings = fresh.get("holdings", {})
+        for ticker, new_peak in peak_updates.items():
+            if ticker in fresh_holdings:
+                h = _normalise_holding(fresh_holdings[ticker])
+                h["peak_price"] = new_peak
+                fresh_holdings[ticker] = h
+        save_portfolio(fresh)
+
     if stops_triggered == 0:
         print(" No positions hit volatility-adaptive trailing stops.")
     return stops_triggered
