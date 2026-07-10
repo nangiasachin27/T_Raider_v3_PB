@@ -1,10 +1,11 @@
 {
-    "cash": 31498.790660858154,
+    "cash": 2.630626678466797,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
             "entry_price": 1239.199951171875,
-            "entry_date": "2026-06-23"
+            "entry_date": "2026-06-23",
+            "peak_price": 1246.2
         },
         "NMDC.NS": {
             "qty": 13,
@@ -22,7 +23,7 @@
             "qty": 24,
             "entry_price": 375.1000061035156,
             "entry_date": "2026-07-01",
-            "peak_price": 377.15
+            "peak_price": 381.25
         },
         "BANKBARODA.NS": {
             "qty": 81,
@@ -35,9 +36,24 @@
             "entry_date": "2026-07-06"
         },
         "KALYANKJIL.NS": {
-            "qty": 48,
+            "qty": 44,
             "entry_price": 442.6499938964844,
             "entry_date": "2026-07-09"
+        },
+        "CDSL.NS": {
+            "qty": 14,
+            "entry_price": 1431.0,
+            "entry_date": "2026-07-10"
+        },
+        "HEROMOTOCO.NS": {
+            "qty": 2,
+            "entry_price": 4945.5,
+            "entry_date": "2026-07-10"
+        },
+        "BANKINDIA.NS": {
+            "qty": 24,
+            "entry_price": 144.88999938964844,
+            "entry_date": "2026-07-10"
         }
     },
     "history": [
@@ -679,6 +695,42 @@
             "price": 442.6499938964844,
             "strategy": "ATR Sized (ATR:18.2) [AGGRESSIVE]",
             "total": 21247.2
+        },
+        {
+            "timestamp": "2026-07-10 09:51:21",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 476.54998779296875,
+            "strategy": "ConcentrationTrim (21.6% -> 20%)",
+            "total": 1906.2
+        },
+        {
+            "timestamp": "2026-07-10 09:51:42",
+            "ticker": "CDSL.NS",
+            "side": "buy",
+            "qty": 14,
+            "price": 1431.0,
+            "strategy": "ATR Sized (ATR:33.4) [AGGRESSIVE]",
+            "total": 20034.0
+        },
+        {
+            "timestamp": "2026-07-10 09:51:42",
+            "ticker": "HEROMOTOCO.NS",
+            "side": "buy",
+            "qty": 2,
+            "price": 4945.5,
+            "strategy": "ATR Sized (ATR:103.5) [AGGRESSIVE]",
+            "total": 9891.0
+        },
+        {
+            "timestamp": "2026-07-10 09:51:42",
+            "ticker": "BANKINDIA.NS",
+            "side": "buy",
+            "qty": 24,
+            "price": 144.88999938964844,
+            "strategy": "ATR Sized (ATR:4.0) [AGGRESSIVE]",
+            "total": 3477.36
         }
     ]
 }
