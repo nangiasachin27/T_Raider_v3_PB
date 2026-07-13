@@ -1,5 +1,5 @@
 {
-    "cash": 2.630626678466797,
+    "cash": 2052.930675506592,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
@@ -12,12 +12,6 @@
             "entry_price": 85.4800033569336,
             "entry_date": "2026-06-23",
             "peak_price": 85.6
-        },
-        "JINDALSTEL.NS": {
-            "qty": 1,
-            "entry_price": 1057.699951171875,
-            "entry_date": "2026-06-25",
-            "peak_price": 1069.7
         },
         "TATAPOWER.NS": {
             "qty": 24,
@@ -36,24 +30,27 @@
             "entry_date": "2026-07-06"
         },
         "KALYANKJIL.NS": {
-            "qty": 44,
+            "qty": 42,
             "entry_price": 442.6499938964844,
             "entry_date": "2026-07-09"
         },
         "CDSL.NS": {
             "qty": 14,
             "entry_price": 1431.0,
-            "entry_date": "2026-07-10"
+            "entry_date": "2026-07-10",
+            "peak_price": 1444.9
         },
         "HEROMOTOCO.NS": {
             "qty": 2,
             "entry_price": 4945.5,
-            "entry_date": "2026-07-10"
+            "entry_date": "2026-07-10",
+            "peak_price": 4955.0
         },
         "BANKINDIA.NS": {
             "qty": 24,
             "entry_price": 144.88999938964844,
-            "entry_date": "2026-07-10"
+            "entry_date": "2026-07-10",
+            "peak_price": 145.72
         }
     },
     "history": [
@@ -731,6 +728,24 @@
             "price": 144.88999938964844,
             "strategy": "ATR Sized (ATR:4.0) [AGGRESSIVE]",
             "total": 3477.36
+        },
+        {
+            "timestamp": "2026-07-13 09:51:25",
+            "ticker": "JINDALSTEL.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 1028.300048828125,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 1028.3
+        },
+        {
+            "timestamp": "2026-07-13 09:51:44",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 511.0,
+            "strategy": "ConcentrationTrim (20.9% -> 20%)",
+            "total": 1022.0
         }
     ]
 }
