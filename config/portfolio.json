@@ -1,11 +1,11 @@
 {
-    "cash": 2052.930675506592,
+    "cash": 284.4702262878418,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
             "entry_price": 1239.199951171875,
             "entry_date": "2026-06-23",
-            "peak_price": 1246.2
+            "peak_price": 1249.1
         },
         "NMDC.NS": {
             "qty": 13,
@@ -27,10 +27,11 @@
         "ADANIPOWER.NS": {
             "qty": 1,
             "entry_price": 220.3000030517578,
-            "entry_date": "2026-07-06"
+            "entry_date": "2026-07-06",
+            "peak_price": 226.35
         },
         "KALYANKJIL.NS": {
-            "qty": 42,
+            "qty": 40,
             "entry_price": 442.6499938964844,
             "entry_date": "2026-07-09"
         },
@@ -40,17 +41,10 @@
             "entry_date": "2026-07-10",
             "peak_price": 1444.9
         },
-        "HEROMOTOCO.NS": {
-            "qty": 2,
-            "entry_price": 4945.5,
-            "entry_date": "2026-07-10",
-            "peak_price": 4955.0
-        },
-        "BANKINDIA.NS": {
-            "qty": 24,
-            "entry_price": 144.88999938964844,
-            "entry_date": "2026-07-10",
-            "peak_price": 145.72
+        "HDFCAMC.NS": {
+            "qty": 6,
+            "entry_price": 2662.10009765625,
+            "entry_date": "2026-07-14"
         }
     },
     "history": [
@@ -746,6 +740,42 @@
             "price": 511.0,
             "strategy": "ConcentrationTrim (20.9% -> 20%)",
             "total": 1022.0
+        },
+        {
+            "timestamp": "2026-07-14 09:51:22",
+            "ticker": "BANKINDIA.NS",
+            "side": "sell",
+            "qty": 24,
+            "price": 141.66000366210938,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 3399.84
+        },
+        {
+            "timestamp": "2026-07-14 09:51:45",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 529.6500244140625,
+            "strategy": "ConcentrationTrim (20.6% -> 20%)",
+            "total": 1059.3
+        },
+        {
+            "timestamp": "2026-07-14 09:52:02",
+            "ticker": "HEROMOTOCO.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 4872.5,
+            "strategy": "Signal Exit",
+            "total": 9745.0
+        },
+        {
+            "timestamp": "2026-07-14 09:52:02",
+            "ticker": "HDFCAMC.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 2662.10009765625,
+            "strategy": "ATR Sized (ATR:71.7) [AGGRESSIVE]",
+            "total": 15972.6
         }
     ]
 }
