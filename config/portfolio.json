@@ -1,5 +1,5 @@
 {
-    "cash": 284.4702262878418,
+    "cash": 82.78007125854492,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
@@ -17,21 +17,15 @@
             "qty": 24,
             "entry_price": 375.1000061035156,
             "entry_date": "2026-07-01",
-            "peak_price": 381.25
+            "peak_price": 381.45
         },
         "BANKBARODA.NS": {
             "qty": 81,
             "entry_price": 252.14999389648438,
             "entry_date": "2026-07-03"
         },
-        "ADANIPOWER.NS": {
-            "qty": 1,
-            "entry_price": 220.3000030517578,
-            "entry_date": "2026-07-06",
-            "peak_price": 226.35
-        },
         "KALYANKJIL.NS": {
-            "qty": 40,
+            "qty": 20,
             "entry_price": 442.6499938964844,
             "entry_date": "2026-07-09"
         },
@@ -44,7 +38,13 @@
         "HDFCAMC.NS": {
             "qty": 6,
             "entry_price": 2662.10009765625,
-            "entry_date": "2026-07-14"
+            "entry_date": "2026-07-14",
+            "peak_price": 2727.2
+        },
+        "ADANIPOWER.NS": {
+            "qty": 52,
+            "entry_price": 219.1699981689453,
+            "entry_date": "2026-07-15"
         }
     },
     "history": [
@@ -776,6 +776,33 @@
             "price": 2662.10009765625,
             "strategy": "ATR Sized (ATR:71.7) [AGGRESSIVE]",
             "total": 15972.6
+        },
+        {
+            "timestamp": "2026-07-15 09:51:43",
+            "ticker": "ADANIPOWER.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 219.14999389648438,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 219.15
+        },
+        {
+            "timestamp": "2026-07-15 09:52:31",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 20,
+            "price": 548.7999877929688,
+            "strategy": "Partial Exit +24%",
+            "total": 10976.0
+        },
+        {
+            "timestamp": "2026-07-15 09:53:37",
+            "ticker": "ADANIPOWER.NS",
+            "side": "buy",
+            "qty": 52,
+            "price": 219.1699981689453,
+            "strategy": "ATR Sized (ATR:6.4) [AGGRESSIVE]",
+            "total": 11396.84
         }
     ]
 }
