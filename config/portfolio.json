@@ -1,5 +1,5 @@
 {
-    "cash": 82.78007125854492,
+    "cash": 330.1901664733887,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
@@ -25,7 +25,7 @@
             "entry_date": "2026-07-03"
         },
         "KALYANKJIL.NS": {
-            "qty": 20,
+            "qty": 10,
             "entry_price": 442.6499938964844,
             "entry_date": "2026-07-09"
         },
@@ -41,10 +41,10 @@
             "entry_date": "2026-07-14",
             "peak_price": 2727.2
         },
-        "ADANIPOWER.NS": {
-            "qty": 52,
-            "entry_price": 219.1699981689453,
-            "entry_date": "2026-07-15"
+        "HDFCLIFE.NS": {
+            "qty": 29,
+            "entry_price": 567.5499877929688,
+            "entry_date": "2026-07-16"
         }
     },
     "history": [
@@ -803,6 +803,33 @@
             "price": 219.1699981689453,
             "strategy": "ATR Sized (ATR:6.4) [AGGRESSIVE]",
             "total": 11396.84
+        },
+        {
+            "timestamp": "2026-07-16 09:51:21",
+            "ticker": "ADANIPOWER.NS",
+            "side": "sell",
+            "qty": 52,
+            "price": 216.42999267578125,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 11254.36
+        },
+        {
+            "timestamp": "2026-07-16 09:51:41",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 10,
+            "price": 545.2000122070312,
+            "strategy": "Partial Exit +23%",
+            "total": 5452.0
+        },
+        {
+            "timestamp": "2026-07-16 09:52:28",
+            "ticker": "HDFCLIFE.NS",
+            "side": "buy",
+            "qty": 29,
+            "price": 567.5499877929688,
+            "strategy": "ATR Sized (ATR:15.0) [AGGRESSIVE]",
+            "total": 16458.95
         }
     ]
 }
