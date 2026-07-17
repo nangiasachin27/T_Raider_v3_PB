@@ -1,5 +1,5 @@
 {
-    "cash": 330.1901664733887,
+    "cash": 29.440044403076172,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
@@ -24,11 +24,6 @@
             "entry_price": 252.14999389648438,
             "entry_date": "2026-07-03"
         },
-        "KALYANKJIL.NS": {
-            "qty": 10,
-            "entry_price": 442.6499938964844,
-            "entry_date": "2026-07-09"
-        },
         "CDSL.NS": {
             "qty": 14,
             "entry_price": 1431.0,
@@ -41,10 +36,15 @@
             "entry_date": "2026-07-14",
             "peak_price": 2727.2
         },
-        "HDFCLIFE.NS": {
-            "qty": 29,
-            "entry_price": 567.5499877929688,
-            "entry_date": "2026-07-16"
+        "POLYCAB.NS": {
+            "qty": 2,
+            "entry_price": 8851.0,
+            "entry_date": "2026-07-17"
+        },
+        "DLF.NS": {
+            "qty": 7,
+            "entry_price": 667.3499755859375,
+            "entry_date": "2026-07-17"
         }
     },
     "history": [
@@ -830,6 +830,51 @@
             "price": 567.5499877929688,
             "strategy": "ATR Sized (ATR:15.0) [AGGRESSIVE]",
             "total": 16458.95
+        },
+        {
+            "timestamp": "2026-07-17 09:51:20",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 573.2000122070312,
+            "strategy": "ActiveTrim (+29%, target 25%)",
+            "total": 2866.0
+        },
+        {
+            "timestamp": "2026-07-17 09:51:20",
+            "ticker": "HDFCLIFE.NS",
+            "side": "sell",
+            "qty": 29,
+            "price": 563.5499877929688,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 16342.95
+        },
+        {
+            "timestamp": "2026-07-17 09:52:11",
+            "ticker": "KALYANKJIL.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 572.75,
+            "strategy": "Profit Target (29.4% >= 24.8%)",
+            "total": 2863.75
+        },
+        {
+            "timestamp": "2026-07-17 09:53:01",
+            "ticker": "POLYCAB.NS",
+            "side": "buy",
+            "qty": 2,
+            "price": 8851.0,
+            "strategy": "ATR Sized (ATR:271.8) [AGGRESSIVE]",
+            "total": 17702.0
+        },
+        {
+            "timestamp": "2026-07-17 09:53:01",
+            "ticker": "DLF.NS",
+            "side": "buy",
+            "qty": 7,
+            "price": 667.3499755859375,
+            "strategy": "ATR Sized (ATR:23.5) [AGGRESSIVE]",
+            "total": 4671.45
         }
     ]
 }
