@@ -1,11 +1,11 @@
 {
-    "cash": 29.440044403076172,
+    "cash": 441.8900566101074,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
             "entry_price": 1239.199951171875,
             "entry_date": "2026-06-23",
-            "peak_price": 1249.1
+            "peak_price": 1255.4
         },
         "NMDC.NS": {
             "qty": 13,
@@ -17,12 +17,13 @@
             "qty": 24,
             "entry_price": 375.1000061035156,
             "entry_date": "2026-07-01",
-            "peak_price": 381.45
+            "peak_price": 384.6
         },
         "BANKBARODA.NS": {
             "qty": 81,
             "entry_price": 252.14999389648438,
-            "entry_date": "2026-07-03"
+            "entry_date": "2026-07-03",
+            "peak_price": 254.8
         },
         "CDSL.NS": {
             "qty": 14,
@@ -39,12 +40,13 @@
         "POLYCAB.NS": {
             "qty": 2,
             "entry_price": 8851.0,
-            "entry_date": "2026-07-17"
+            "entry_date": "2026-07-17",
+            "peak_price": 8885.0
         },
-        "DLF.NS": {
-            "qty": 7,
-            "entry_price": 667.3499755859375,
-            "entry_date": "2026-07-17"
+        "GODFRYPHLP.NS": {
+            "qty": 2,
+            "entry_price": 2133.699951171875,
+            "entry_date": "2026-07-20"
         }
     },
     "history": [
@@ -875,6 +877,24 @@
             "price": 667.3499755859375,
             "strategy": "ATR Sized (ATR:23.5) [AGGRESSIVE]",
             "total": 4671.45
+        },
+        {
+            "timestamp": "2026-07-20 09:51:18",
+            "ticker": "DLF.NS",
+            "side": "sell",
+            "qty": 7,
+            "price": 668.5499877929688,
+            "strategy": "Rebalance \u2192 GODFRYPHLP.NS",
+            "total": 4679.85
+        },
+        {
+            "timestamp": "2026-07-20 09:53:07",
+            "ticker": "GODFRYPHLP.NS",
+            "side": "buy",
+            "qty": 2,
+            "price": 2133.699951171875,
+            "strategy": "ATR Sized (ATR:40.9) [AGGRESSIVE]",
+            "total": 4267.4
         }
     ]
 }
