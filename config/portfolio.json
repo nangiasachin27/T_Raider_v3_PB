@@ -1,11 +1,11 @@
 {
-    "cash": 441.8900566101074,
+    "cash": 3713.4891777038574,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
             "entry_price": 1239.199951171875,
             "entry_date": "2026-06-23",
-            "peak_price": 1255.4
+            "peak_price": 1267.7
         },
         "NMDC.NS": {
             "qty": 13,
@@ -25,28 +25,26 @@
             "entry_date": "2026-07-03",
             "peak_price": 254.8
         },
-        "CDSL.NS": {
-            "qty": 14,
-            "entry_price": 1431.0,
-            "entry_date": "2026-07-10",
-            "peak_price": 1444.9
-        },
         "HDFCAMC.NS": {
             "qty": 6,
             "entry_price": 2662.10009765625,
             "entry_date": "2026-07-14",
             "peak_price": 2727.2
         },
-        "POLYCAB.NS": {
-            "qty": 2,
-            "entry_price": 8851.0,
-            "entry_date": "2026-07-17",
-            "peak_price": 8885.0
-        },
         "GODFRYPHLP.NS": {
             "qty": 2,
             "entry_price": 2133.699951171875,
             "entry_date": "2026-07-20"
+        },
+        "MUTHOOTFIN.NS": {
+            "qty": 6,
+            "entry_price": 3075.5,
+            "entry_date": "2026-07-21"
+        },
+        "TVSMOTOR.NS": {
+            "qty": 4,
+            "entry_price": 3793.300048828125,
+            "entry_date": "2026-07-21"
         }
     },
     "history": [
@@ -895,6 +893,42 @@
             "price": 2133.699951171875,
             "strategy": "ATR Sized (ATR:40.9) [AGGRESSIVE]",
             "total": 4267.4
+        },
+        {
+            "timestamp": "2026-07-21 09:51:12",
+            "ticker": "POLYCAB.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 8896.0,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 17792.0
+        },
+        {
+            "timestamp": "2026-07-21 09:51:32",
+            "ticker": "CDSL.NS",
+            "side": "sell",
+            "qty": 14,
+            "price": 1364.699951171875,
+            "strategy": "Adaptive Stop (-4.6%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19105.8
+        },
+        {
+            "timestamp": "2026-07-21 09:52:07",
+            "ticker": "MUTHOOTFIN.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 3075.5,
+            "strategy": "ATR Sized (ATR:86.4) [AGGRESSIVE]",
+            "total": 18453.0
+        },
+        {
+            "timestamp": "2026-07-21 09:52:07",
+            "ticker": "TVSMOTOR.NS",
+            "side": "buy",
+            "qty": 4,
+            "price": 3793.300048828125,
+            "strategy": "ATR Sized (ATR:100.9) [AGGRESSIVE]",
+            "total": 15173.2
         }
     ]
 }
