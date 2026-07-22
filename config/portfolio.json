@@ -1,5 +1,5 @@
 {
-    "cash": 3713.4891777038574,
+    "cash": 2409.7902030944824,
     "holdings": {
         "JSWSTEEL.NS": {
             "qty": 16,
@@ -25,12 +25,6 @@
             "entry_date": "2026-07-03",
             "peak_price": 254.8
         },
-        "HDFCAMC.NS": {
-            "qty": 6,
-            "entry_price": 2662.10009765625,
-            "entry_date": "2026-07-14",
-            "peak_price": 2727.2
-        },
         "GODFRYPHLP.NS": {
             "qty": 2,
             "entry_price": 2133.699951171875,
@@ -41,10 +35,15 @@
             "entry_price": 3075.5,
             "entry_date": "2026-07-21"
         },
-        "TVSMOTOR.NS": {
-            "qty": 4,
-            "entry_price": 3793.300048828125,
-            "entry_date": "2026-07-21"
+        "ANGELONE.NS": {
+            "qty": 68,
+            "entry_price": 312.54998779296875,
+            "entry_date": "2026-07-22"
+        },
+        "BAJAJ-AUTO.NS": {
+            "qty": 1,
+            "entry_price": 10994.5,
+            "entry_date": "2026-07-22"
         }
     },
     "history": [
@@ -929,6 +928,42 @@
             "price": 3793.300048828125,
             "strategy": "ATR Sized (ATR:100.9) [AGGRESSIVE]",
             "total": 15173.2
+        },
+        {
+            "timestamp": "2026-07-22 09:51:25",
+            "ticker": "TVSMOTOR.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 3908.800048828125,
+            "strategy": "Rebalance \u2192 BSE.NS",
+            "total": 15635.2
+        },
+        {
+            "timestamp": "2026-07-22 09:52:10",
+            "ticker": "HDFCAMC.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 2551.5,
+            "strategy": "Capital Rotation -> ANGELONE.NS",
+            "total": 15309.0
+        },
+        {
+            "timestamp": "2026-07-22 09:52:10",
+            "ticker": "ANGELONE.NS",
+            "side": "buy",
+            "qty": 68,
+            "price": 312.54998779296875,
+            "strategy": "ATR Sized (Rotation from HDFCAMC.NS)",
+            "total": 21253.4
+        },
+        {
+            "timestamp": "2026-07-22 09:52:10",
+            "ticker": "BAJAJ-AUTO.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 10994.5,
+            "strategy": "ATR Sized (ATR:235.4) [AGGRESSIVE]",
+            "total": 10994.5
         }
     ]
 }
