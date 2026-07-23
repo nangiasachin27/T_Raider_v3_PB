@@ -1,51 +1,6 @@
 {
-    "cash": 2409.7902030944824,
-    "holdings": {
-        "JSWSTEEL.NS": {
-            "qty": 16,
-            "entry_price": 1239.199951171875,
-            "entry_date": "2026-06-23",
-            "peak_price": 1267.7
-        },
-        "NMDC.NS": {
-            "qty": 13,
-            "entry_price": 85.4800033569336,
-            "entry_date": "2026-06-23",
-            "peak_price": 85.6
-        },
-        "TATAPOWER.NS": {
-            "qty": 24,
-            "entry_price": 375.1000061035156,
-            "entry_date": "2026-07-01",
-            "peak_price": 384.6
-        },
-        "BANKBARODA.NS": {
-            "qty": 81,
-            "entry_price": 252.14999389648438,
-            "entry_date": "2026-07-03",
-            "peak_price": 254.8
-        },
-        "GODFRYPHLP.NS": {
-            "qty": 2,
-            "entry_price": 2133.699951171875,
-            "entry_date": "2026-07-20"
-        },
-        "MUTHOOTFIN.NS": {
-            "qty": 6,
-            "entry_price": 3075.5,
-            "entry_date": "2026-07-21"
-        },
-        "ANGELONE.NS": {
-            "qty": 68,
-            "entry_price": 312.54998779296875,
-            "entry_date": "2026-07-22"
-        },
-        "BAJAJ-AUTO.NS": {
-            "qty": 1,
-            "entry_price": 10994.5,
-            "entry_date": "2026-07-22"
-        }
-    },
+    "cash": 106341.04108047485,
+    "holdings": {},
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -964,6 +919,78 @@
             "price": 10994.5,
             "strategy": "ATR Sized (ATR:235.4) [AGGRESSIVE]",
             "total": 10994.5
+        },
+        {
+            "timestamp": "2026-07-23 09:51:17",
+            "ticker": "JSWSTEEL.NS",
+            "side": "sell",
+            "qty": 16,
+            "price": 1245.4000244140625,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19926.4
+        },
+        {
+            "timestamp": "2026-07-23 09:51:17",
+            "ticker": "NMDC.NS",
+            "side": "sell",
+            "qty": 13,
+            "price": 82.6500015258789,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 1074.45
+        },
+        {
+            "timestamp": "2026-07-23 09:51:17",
+            "ticker": "TATAPOWER.NS",
+            "side": "sell",
+            "qty": 24,
+            "price": 376.25,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 9030.0
+        },
+        {
+            "timestamp": "2026-07-23 09:51:17",
+            "ticker": "BANKBARODA.NS",
+            "side": "sell",
+            "qty": 81,
+            "price": 242.8000030517578,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19666.8
+        },
+        {
+            "timestamp": "2026-07-23 09:51:18",
+            "ticker": "GODFRYPHLP.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 2047.9000244140625,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 4095.8
+        },
+        {
+            "timestamp": "2026-07-23 09:51:18",
+            "ticker": "MUTHOOTFIN.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 3013.10009765625,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 18078.6
+        },
+        {
+            "timestamp": "2026-07-23 09:51:18",
+            "ticker": "ANGELONE.NS",
+            "side": "sell",
+            "qty": 68,
+            "price": 305.6499938964844,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 20784.2
+        },
+        {
+            "timestamp": "2026-07-23 09:51:18",
+            "ticker": "BAJAJ-AUTO.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 11275.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 11275.0
         }
     ]
 }
