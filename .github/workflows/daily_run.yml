@@ -2,9 +2,7 @@ name: T_Raider Daily Autopilot
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 10 * * 1-5'  # 15:40 IST
-
+ 
 permissions:
   contents: write
 
