@@ -1,6 +1,22 @@
 {
-    "cash": 106341.04108047485,
-    "holdings": {},
+    "cash": 46219.44025039673,
+    "holdings": {
+        "KAYNES.NS": {
+            "qty": 6,
+            "entry_price": 3177.300048828125,
+            "entry_date": "2026-07-24"
+        },
+        "MOTILALOFS.NS": {
+            "qty": 24,
+            "entry_price": 871.2000122070312,
+            "entry_date": "2026-07-24"
+        },
+        "PHOENIXLTD.NS": {
+            "qty": 10,
+            "entry_price": 2014.9000244140625,
+            "entry_date": "2026-07-24"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -991,6 +1007,33 @@
             "price": 11275.0,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 11275.0
+        },
+        {
+            "timestamp": "2026-07-24 09:52:39",
+            "ticker": "KAYNES.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 3177.300048828125,
+            "strategy": "ATR Sized (ATR:106.0) [AGGRESSIVE]",
+            "total": 19063.8
+        },
+        {
+            "timestamp": "2026-07-24 09:52:39",
+            "ticker": "MOTILALOFS.NS",
+            "side": "buy",
+            "qty": 24,
+            "price": 871.2000122070312,
+            "strategy": "ATR Sized (ATR:33.6) [AGGRESSIVE]",
+            "total": 20908.8
+        },
+        {
+            "timestamp": "2026-07-24 09:52:39",
+            "ticker": "PHOENIXLTD.NS",
+            "side": "buy",
+            "qty": 10,
+            "price": 2014.9000244140625,
+            "strategy": "ATR Sized (ATR:57.0) [AGGRESSIVE]",
+            "total": 20149.0
         }
     ]
 }
