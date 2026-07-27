@@ -1,10 +1,11 @@
 {
-    "cash": 46219.44025039673,
+    "cash": 5950.4407386779785,
     "holdings": {
         "KAYNES.NS": {
             "qty": 6,
             "entry_price": 3177.300048828125,
-            "entry_date": "2026-07-24"
+            "entry_date": "2026-07-24",
+            "peak_price": 3179.3
         },
         "MOTILALOFS.NS": {
             "qty": 24,
@@ -14,7 +15,18 @@
         "PHOENIXLTD.NS": {
             "qty": 10,
             "entry_price": 2014.9000244140625,
-            "entry_date": "2026-07-24"
+            "entry_date": "2026-07-24",
+            "peak_price": 2037.5
+        },
+        "SBILIFE.NS": {
+            "qty": 11,
+            "entry_price": 1867.0,
+            "entry_date": "2026-07-27"
+        },
+        "SUNPHARMA.NS": {
+            "qty": 10,
+            "entry_price": 1973.199951171875,
+            "entry_date": "2026-07-27"
         }
     },
     "history": [
@@ -1034,6 +1046,24 @@
             "price": 2014.9000244140625,
             "strategy": "ATR Sized (ATR:57.0) [AGGRESSIVE]",
             "total": 20149.0
+        },
+        {
+            "timestamp": "2026-07-27 09:52:05",
+            "ticker": "SBILIFE.NS",
+            "side": "buy",
+            "qty": 11,
+            "price": 1867.0,
+            "strategy": "ATR Sized (ATR:42.7) [AGGRESSIVE]",
+            "total": 20537.0
+        },
+        {
+            "timestamp": "2026-07-27 09:52:05",
+            "ticker": "SUNPHARMA.NS",
+            "side": "buy",
+            "qty": 10,
+            "price": 1973.199951171875,
+            "strategy": "ATR Sized (ATR:33.4) [AGGRESSIVE]",
+            "total": 19732.0
         }
     ]
 }
