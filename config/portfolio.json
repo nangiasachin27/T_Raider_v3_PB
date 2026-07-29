@@ -1,39 +1,37 @@
 {
-    "cash": 35.090824127197266,
+    "cash": 1923.6916542053223,
     "holdings": {
-        "KAYNES.NS": {
-            "qty": 6,
-            "entry_price": 3177.300048828125,
-            "entry_date": "2026-07-24",
-            "peak_price": 3223.3999
-        },
         "MOTILALOFS.NS": {
             "qty": 24,
             "entry_price": 871.2000122070312,
             "entry_date": "2026-07-24"
         },
-        "PHOENIXLTD.NS": {
-            "qty": 10,
-            "entry_price": 2014.9000244140625,
-            "entry_date": "2026-07-24",
-            "peak_price": 2037.5
-        },
         "SBILIFE.NS": {
             "qty": 11,
             "entry_price": 1867.0,
             "entry_date": "2026-07-27",
-            "peak_price": 1887.2
+            "peak_price": 1896.2
         },
         "SUNPHARMA.NS": {
             "qty": 10,
             "entry_price": 1973.199951171875,
             "entry_date": "2026-07-27",
-            "peak_price": 1977.4
+            "peak_price": 1991.1
         },
         "CGPOWER.NS": {
             "qty": 7,
             "entry_price": 845.0499877929688,
             "entry_date": "2026-07-28"
+        },
+        "PHOENIXLTD.NS": {
+            "qty": 11,
+            "entry_price": 1908.0,
+            "entry_date": "2026-07-29"
+        },
+        "GLENMARK.NS": {
+            "qty": 8,
+            "entry_price": 2260.0,
+            "entry_date": "2026-07-29"
         }
     },
     "history": [
@@ -1080,6 +1078,51 @@
             "price": 845.0499877929688,
             "strategy": "ATR Sized (ATR:27.0) [AGGRESSIVE]",
             "total": 5915.35
+        },
+        {
+            "timestamp": "2026-07-29 09:51:36",
+            "ticker": "PHOENIXLTD.NS",
+            "side": "sell",
+            "qty": 10,
+            "price": 1908.300048828125,
+            "strategy": "Adaptive Stop (-5.3%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19083.0
+        },
+        {
+            "timestamp": "2026-07-29 09:51:37",
+            "ticker": "KAYNES.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 3647.10009765625,
+            "strategy": "ConcentrationTrim (20.2% -> 20%)",
+            "total": 3647.1
+        },
+        {
+            "timestamp": "2026-07-29 09:52:04",
+            "ticker": "KAYNES.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 3645.300048828125,
+            "strategy": "Signal Exit",
+            "total": 18226.5
+        },
+        {
+            "timestamp": "2026-07-29 09:52:04",
+            "ticker": "PHOENIXLTD.NS",
+            "side": "buy",
+            "qty": 11,
+            "price": 1908.0,
+            "strategy": "ATR Sized (ATR:54.0) [AGGRESSIVE]",
+            "total": 20988.0
+        },
+        {
+            "timestamp": "2026-07-29 09:52:04",
+            "ticker": "GLENMARK.NS",
+            "side": "buy",
+            "qty": 8,
+            "price": 2260.0,
+            "strategy": "ATR Sized (ATR:49.9) [AGGRESSIVE]",
+            "total": 18080.0
         }
     ]
 }
