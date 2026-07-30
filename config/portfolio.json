@@ -1,5 +1,5 @@
 {
-    "cash": 1923.6916542053223,
+    "cash": 48.091800689697266,
     "holdings": {
         "MOTILALOFS.NS": {
             "qty": 24,
@@ -16,7 +16,7 @@
             "qty": 10,
             "entry_price": 1973.199951171875,
             "entry_date": "2026-07-27",
-            "peak_price": 1991.1
+            "peak_price": 1997.7
         },
         "CGPOWER.NS": {
             "qty": 7,
@@ -28,10 +28,10 @@
             "entry_price": 1908.0,
             "entry_date": "2026-07-29"
         },
-        "GLENMARK.NS": {
-            "qty": 8,
-            "entry_price": 2260.0,
-            "entry_date": "2026-07-29"
+        "DMART.NS": {
+            "qty": 5,
+            "entry_price": 3878.800048828125,
+            "entry_date": "2026-07-30"
         }
     },
     "history": [
@@ -1123,6 +1123,24 @@
             "price": 2260.0,
             "strategy": "ATR Sized (ATR:49.9) [AGGRESSIVE]",
             "total": 18080.0
+        },
+        {
+            "timestamp": "2026-07-30 09:52:01",
+            "ticker": "GLENMARK.NS",
+            "side": "sell",
+            "qty": 8,
+            "price": 2189.800048828125,
+            "strategy": "Signal Exit",
+            "total": 17518.4
+        },
+        {
+            "timestamp": "2026-07-30 09:52:01",
+            "ticker": "DMART.NS",
+            "side": "buy",
+            "qty": 5,
+            "price": 3878.800048828125,
+            "strategy": "ATR Sized (ATR:102.5) [AGGRESSIVE]",
+            "total": 19394.0
         }
     ]
 }
