@@ -21,7 +21,8 @@
         "CGPOWER.NS": {
             "qty": 7,
             "entry_price": 845.0499877929688,
-            "entry_date": "2026-07-28"
+            "entry_date": "2026-07-28",
+            "peak_price": 864.4
         },
         "PHOENIXLTD.NS": {
             "qty": 11,
@@ -31,7 +32,8 @@
         "DMART.NS": {
             "qty": 5,
             "entry_price": 3878.800048828125,
-            "entry_date": "2026-07-30"
+            "entry_date": "2026-07-30",
+            "peak_price": 3918.5
         }
     },
     "history": [
