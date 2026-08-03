@@ -1,5 +1,5 @@
 {
-    "cash": 48.091800689697266,
+    "cash": 1153.7921180725098,
     "holdings": {
         "MOTILALOFS.NS": {
             "qty": 24,
@@ -10,13 +10,7 @@
             "qty": 11,
             "entry_price": 1867.0,
             "entry_date": "2026-07-27",
-            "peak_price": 1896.2
-        },
-        "SUNPHARMA.NS": {
-            "qty": 10,
-            "entry_price": 1973.199951171875,
-            "entry_date": "2026-07-27",
-            "peak_price": 1997.7
+            "peak_price": 1914.5
         },
         "CGPOWER.NS": {
             "qty": 7,
@@ -33,7 +27,12 @@
             "qty": 5,
             "entry_price": 3878.800048828125,
             "entry_date": "2026-07-30",
-            "peak_price": 3918.5
+            "peak_price": 4004.0
+        },
+        "PAYTM.NS": {
+            "qty": 13,
+            "entry_price": 1411.0999755859375,
+            "entry_date": "2026-08-03"
         }
     },
     "history": [
@@ -1143,6 +1142,24 @@
             "price": 3878.800048828125,
             "strategy": "ATR Sized (ATR:102.5) [AGGRESSIVE]",
             "total": 19394.0
+        },
+        {
+            "timestamp": "2026-08-03 09:52:38",
+            "ticker": "SUNPHARMA.NS",
+            "side": "sell",
+            "qty": 10,
+            "price": 1945.0,
+            "strategy": "Signal Exit",
+            "total": 19450.0
+        },
+        {
+            "timestamp": "2026-08-03 09:52:38",
+            "ticker": "PAYTM.NS",
+            "side": "buy",
+            "qty": 13,
+            "price": 1411.0999755859375,
+            "strategy": "ATR Sized (ATR:48.3) [AGGRESSIVE]",
+            "total": 18344.3
         }
     ]
 }
