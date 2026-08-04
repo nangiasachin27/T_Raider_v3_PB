@@ -16,12 +16,13 @@
             "qty": 7,
             "entry_price": 845.0499877929688,
             "entry_date": "2026-07-28",
-            "peak_price": 864.4
+            "peak_price": 881.35
         },
         "PHOENIXLTD.NS": {
             "qty": 11,
             "entry_price": 1908.0,
-            "entry_date": "2026-07-29"
+            "entry_date": "2026-07-29",
+            "peak_price": 1948.0
         },
         "DMART.NS": {
             "qty": 5,
