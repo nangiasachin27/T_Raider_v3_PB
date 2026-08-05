@@ -4,7 +4,8 @@
         "MOTILALOFS.NS": {
             "qty": 24,
             "entry_price": 871.2000122070312,
-            "entry_date": "2026-07-24"
+            "entry_date": "2026-07-24",
+            "peak_price": 880.85
         },
         "SBILIFE.NS": {
             "qty": 11,
@@ -16,7 +17,7 @@
             "qty": 7,
             "entry_price": 845.0499877929688,
             "entry_date": "2026-07-28",
-            "peak_price": 881.35
+            "peak_price": 882.1
         },
         "PHOENIXLTD.NS": {
             "qty": 11,
@@ -33,7 +34,8 @@
         "PAYTM.NS": {
             "qty": 13,
             "entry_price": 1411.0999755859375,
-            "entry_date": "2026-08-03"
+            "entry_date": "2026-08-03",
+            "peak_price": 1432.0
         }
     },
     "history": [
