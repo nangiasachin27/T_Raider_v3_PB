@@ -95,5 +95,21 @@
             "ATR_BREAKOUT": 3,
             "TREND": 1
         }
+    },
+    {
+        "date": "2026-08-08",
+        "total_universe": 204,
+        "strategies": {
+            "STRETCH": 71,
+            "NONE": 62,
+            "MACD": 29,
+            "OBV_MOMENTUM": 17,
+            "RSI": 10,
+            "RSI_DIVERGENCE": 9,
+            "NR7_SQUEEZE": 8,
+            "BREAKOUT": 7,
+            "TREND": 2,
+            "ATR_BREAKOUT": 1
+        }
     }
 ]
