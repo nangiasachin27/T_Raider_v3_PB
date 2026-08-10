@@ -1,11 +1,11 @@
 {
-    "cash": 1153.7921180725098,
+    "cash": 2357.3919715881348,
     "holdings": {
         "MOTILALOFS.NS": {
             "qty": 24,
             "entry_price": 871.2000122070312,
             "entry_date": "2026-07-24",
-            "peak_price": 880.85
+            "peak_price": 881.5
         },
         "SBILIFE.NS": {
             "qty": 11,
@@ -29,13 +29,18 @@
             "qty": 5,
             "entry_price": 3878.800048828125,
             "entry_date": "2026-07-30",
-            "peak_price": 4004.0
+            "peak_price": 4035.1001
         },
         "PAYTM.NS": {
-            "qty": 13,
+            "qty": 7,
             "entry_price": 1411.0999755859375,
             "entry_date": "2026-08-03",
-            "peak_price": 1446.8
+            "peak_price": 1589.1
+        },
+        "MCX.NS": {
+            "qty": 3,
+            "entry_price": 2777.0,
+            "entry_date": "2026-08-10"
         }
     },
     "history": [
@@ -1163,6 +1168,24 @@
             "price": 1411.0999755859375,
             "strategy": "ATR Sized (ATR:48.3) [AGGRESSIVE]",
             "total": 18344.3
+        },
+        {
+            "timestamp": "2026-08-10 09:51:17",
+            "ticker": "PAYTM.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 1589.0999755859375,
+            "strategy": "ActiveTrim (+13%, target 7%)",
+            "total": 9534.6
+        },
+        {
+            "timestamp": "2026-08-10 09:52:09",
+            "ticker": "MCX.NS",
+            "side": "buy",
+            "qty": 3,
+            "price": 2777.0,
+            "strategy": "ATR Sized (ATR:76.4) [AGGRESSIVE]",
+            "total": 8331.0
         }
     ]
 }
