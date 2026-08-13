@@ -1,11 +1,11 @@
 {
-    "cash": 635.4913368225098,
+    "cash": 3921.4913368225098,
     "holdings": {
         "MOTILALOFS.NS": {
             "qty": 24,
             "entry_price": 871.2000122070312,
             "entry_date": "2026-07-24",
-            "peak_price": 895.7
+            "peak_price": 898.0
         },
         "CGPOWER.NS": {
             "qty": 7,
@@ -23,13 +23,7 @@
             "qty": 5,
             "entry_price": 3878.800048828125,
             "entry_date": "2026-07-30",
-            "peak_price": 4055.0
-        },
-        "PAYTM.NS": {
-            "qty": 2,
-            "entry_price": 1411.0999755859375,
-            "entry_date": "2026-08-03",
-            "peak_price": 1602.3
+            "peak_price": 4061.3
         },
         "MCX.NS": {
             "qty": 3,
@@ -45,7 +39,8 @@
         "BDL.NS": {
             "qty": 16,
             "entry_price": 1325.0,
-            "entry_date": "2026-08-12"
+            "entry_date": "2026-08-12",
+            "peak_price": 1376.9
         }
     },
     "history": [
@@ -1254,6 +1249,24 @@
             "price": 1325.0,
             "strategy": "ATR Sized (ATR:31.1) [AGGRESSIVE]",
             "total": 21200.0
+        },
+        {
+            "timestamp": "2026-08-13 09:51:19",
+            "ticker": "PAYTM.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 1643.0,
+            "strategy": "ActiveTrim (+16%, target 7%)",
+            "total": 1643.0
+        },
+        {
+            "timestamp": "2026-08-13 09:51:37",
+            "ticker": "PAYTM.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 1643.0,
+            "strategy": "Profit Target (16.4% >= 15.0%)",
+            "total": 1643.0
         }
     ]
 }
