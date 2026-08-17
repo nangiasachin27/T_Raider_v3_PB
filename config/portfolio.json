@@ -1,29 +1,17 @@
 {
-    "cash": 1.4913368225097656,
+    "cash": 1307.850772857666,
     "holdings": {
-        "MOTILALOFS.NS": {
-            "qty": 24,
-            "entry_price": 871.2000122070312,
-            "entry_date": "2026-07-24",
-            "peak_price": 901.0
-        },
         "CGPOWER.NS": {
             "qty": 7,
             "entry_price": 845.0499877929688,
             "entry_date": "2026-07-28",
-            "peak_price": 890.15
+            "peak_price": 898.8
         },
         "PHOENIXLTD.NS": {
             "qty": 11,
             "entry_price": 1908.0,
             "entry_date": "2026-07-29",
             "peak_price": 1948.0
-        },
-        "DMART.NS": {
-            "qty": 5,
-            "entry_price": 3878.800048828125,
-            "entry_date": "2026-07-30",
-            "peak_price": 4061.3
         },
         "MCX.NS": {
             "qty": 3,
@@ -45,7 +33,18 @@
         "HINDZINC.NS": {
             "qty": 7,
             "entry_price": 560.0,
-            "entry_date": "2026-08-14"
+            "entry_date": "2026-08-14",
+            "peak_price": 568.0
+        },
+        "GOLDBEES.NS": {
+            "qty": 168,
+            "entry_price": 126.4800033569336,
+            "entry_date": "2026-08-17"
+        },
+        "CDSL.NS": {
+            "qty": 15,
+            "entry_price": 1358.0,
+            "entry_date": "2026-08-17"
         }
     },
     "history": [
@@ -1281,6 +1280,51 @@
             "price": 560.0,
             "strategy": "ATR Sized (ATR:17.2) [AGGRESSIVE]",
             "total": 3920.0
+        },
+        {
+            "timestamp": "2026-08-17 09:51:23",
+            "ticker": "MOTILALOFS.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 955.0,
+            "strategy": "ConcentrationTrim (20.2% -> 20%)",
+            "total": 955.0
+        },
+        {
+            "timestamp": "2026-08-17 09:51:37",
+            "ticker": "DMART.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 4001.0,
+            "strategy": "Signal Exit",
+            "total": 20005.0
+        },
+        {
+            "timestamp": "2026-08-17 09:51:37",
+            "ticker": "MOTILALOFS.NS",
+            "side": "sell",
+            "qty": 23,
+            "price": 955.0,
+            "strategy": "Signal Exit",
+            "total": 21965.0
+        },
+        {
+            "timestamp": "2026-08-17 09:51:37",
+            "ticker": "GOLDBEES.NS",
+            "side": "buy",
+            "qty": 168,
+            "price": 126.4800033569336,
+            "strategy": "ATR Sized (ATR:1.5) [AGGRESSIVE]",
+            "total": 21248.64
+        },
+        {
+            "timestamp": "2026-08-17 09:51:37",
+            "ticker": "CDSL.NS",
+            "side": "buy",
+            "qty": 15,
+            "price": 1358.0,
+            "strategy": "ATR Sized (ATR:24.4) [AGGRESSIVE]",
+            "total": 20370.0
         }
     ]
 }
