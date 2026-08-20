@@ -1,5 +1,5 @@
 {
-    "cash": 1307.850772857666,
+    "cash": 1279.949893951416,
     "holdings": {
         "CGPOWER.NS": {
             "qty": 7,
@@ -17,34 +17,34 @@
             "qty": 3,
             "entry_price": 2777.0,
             "entry_date": "2026-08-10",
-            "peak_price": 3040.0
+            "peak_price": 3120.0
         },
         "MAXHEALTH.NS": {
             "qty": 8,
             "entry_price": 1039.4000244140625,
             "entry_date": "2026-08-11"
         },
-        "BDL.NS": {
-            "qty": 16,
-            "entry_price": 1325.0,
-            "entry_date": "2026-08-12",
-            "peak_price": 1398.0
-        },
         "HINDZINC.NS": {
             "qty": 7,
             "entry_price": 560.0,
             "entry_date": "2026-08-14",
-            "peak_price": 568.0
+            "peak_price": 573.0
         },
         "GOLDBEES.NS": {
             "qty": 168,
             "entry_price": 126.4800033569336,
-            "entry_date": "2026-08-17"
+            "entry_date": "2026-08-17",
+            "peak_price": 128.88
         },
         "CDSL.NS": {
             "qty": 15,
             "entry_price": 1358.0,
             "entry_date": "2026-08-17"
+        },
+        "GLENMARK.NS": {
+            "qty": 9,
+            "entry_price": 2339.10009765625,
+            "entry_date": "2026-08-20"
         }
     },
     "history": [
@@ -1325,6 +1325,24 @@
             "price": 1358.0,
             "strategy": "ATR Sized (ATR:24.4) [AGGRESSIVE]",
             "total": 20370.0
+        },
+        {
+            "timestamp": "2026-08-20 09:51:34",
+            "ticker": "BDL.NS",
+            "side": "sell",
+            "qty": 16,
+            "price": 1314.0,
+            "strategy": "Adaptive Stop (-0.8%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 21024.0
+        },
+        {
+            "timestamp": "2026-08-20 09:51:54",
+            "ticker": "GLENMARK.NS",
+            "side": "buy",
+            "qty": 9,
+            "price": 2339.10009765625,
+            "strategy": "ATR Sized (ATR:52.3) [AGGRESSIVE]",
+            "total": 21051.9
         }
     ]
 }
