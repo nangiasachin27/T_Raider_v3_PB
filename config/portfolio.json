@@ -1,12 +1,6 @@
 {
-    "cash": 1279.949893951416,
+    "cash": 11511.500064849854,
     "holdings": {
-        "CGPOWER.NS": {
-            "qty": 7,
-            "entry_price": 845.0499877929688,
-            "entry_date": "2026-07-28",
-            "peak_price": 898.8
-        },
         "PHOENIXLTD.NS": {
             "qty": 11,
             "entry_price": 1908.0,
@@ -17,29 +11,24 @@
             "qty": 3,
             "entry_price": 2777.0,
             "entry_date": "2026-08-10",
-            "peak_price": 3120.0
+            "peak_price": 3179.1001
         },
         "MAXHEALTH.NS": {
             "qty": 8,
             "entry_price": 1039.4000244140625,
             "entry_date": "2026-08-11"
         },
-        "HINDZINC.NS": {
-            "qty": 7,
-            "entry_price": 560.0,
-            "entry_date": "2026-08-14",
-            "peak_price": 573.0
-        },
         "GOLDBEES.NS": {
             "qty": 168,
             "entry_price": 126.4800033569336,
             "entry_date": "2026-08-17",
-            "peak_price": 128.88
+            "peak_price": 131.26
         },
         "CDSL.NS": {
             "qty": 15,
             "entry_price": 1358.0,
-            "entry_date": "2026-08-17"
+            "entry_date": "2026-08-17",
+            "peak_price": 1388.4
         },
         "GLENMARK.NS": {
             "qty": 9,
@@ -1343,6 +1332,24 @@
             "price": 2339.10009765625,
             "strategy": "ATR Sized (ATR:52.3) [AGGRESSIVE]",
             "total": 21051.9
+        },
+        {
+            "timestamp": "2026-08-21 09:51:23",
+            "ticker": "CGPOWER.NS",
+            "side": "sell",
+            "qty": 7,
+            "price": 866.0,
+            "strategy": "Adaptive Stop (2.5%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 6062.0
+        },
+        {
+            "timestamp": "2026-08-21 09:51:37",
+            "ticker": "HINDZINC.NS",
+            "side": "sell",
+            "qty": 7,
+            "price": 595.6500244140625,
+            "strategy": "Signal Exit",
+            "total": 4169.55
         }
     ]
 }
