@@ -128,5 +128,22 @@
             "ATR_BREAKOUT": 2,
             "VOLATILITY": 1
         }
+    },
+    {
+        "date": "2026-08-22",
+        "total_universe": 204,
+        "strategies": {
+            "STRETCH": 69,
+            "NONE": 58,
+            "MACD": 28,
+            "OBV_MOMENTUM": 13,
+            "NR7_SQUEEZE": 11,
+            "RSI": 11,
+            "RSI_DIVERGENCE": 11,
+            "BREAKOUT": 9,
+            "VOLATILITY": 3,
+            "ATR_BREAKOUT": 2,
+            "TREND": 1
+        }
     }
 ]
