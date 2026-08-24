@@ -1,41 +1,6 @@
 {
-    "cash": 11511.500064849854,
-    "holdings": {
-        "PHOENIXLTD.NS": {
-            "qty": 11,
-            "entry_price": 1908.0,
-            "entry_date": "2026-07-29",
-            "peak_price": 1948.0
-        },
-        "MCX.NS": {
-            "qty": 3,
-            "entry_price": 2777.0,
-            "entry_date": "2026-08-10",
-            "peak_price": 3179.1001
-        },
-        "MAXHEALTH.NS": {
-            "qty": 8,
-            "entry_price": 1039.4000244140625,
-            "entry_date": "2026-08-11"
-        },
-        "GOLDBEES.NS": {
-            "qty": 168,
-            "entry_price": 126.4800033569336,
-            "entry_date": "2026-08-17",
-            "peak_price": 131.26
-        },
-        "CDSL.NS": {
-            "qty": 15,
-            "entry_price": 1358.0,
-            "entry_date": "2026-08-17",
-            "peak_price": 1388.4
-        },
-        "GLENMARK.NS": {
-            "qty": 9,
-            "entry_price": 2339.10009765625,
-            "entry_date": "2026-08-20"
-        }
-    },
+    "cash": 115044.4204750061,
+    "holdings": {},
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -1350,6 +1315,60 @@
             "price": 595.6500244140625,
             "strategy": "Signal Exit",
             "total": 4169.55
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "PHOENIXLTD.NS",
+            "side": "sell",
+            "qty": 11,
+            "price": 1929.800048828125,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 21227.8
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "MCX.NS",
+            "side": "sell",
+            "qty": 3,
+            "price": 3258.60009765625,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 9775.8
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "MAXHEALTH.NS",
+            "side": "sell",
+            "qty": 8,
+            "price": 986.4000244140625,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 7891.2
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "GOLDBEES.NS",
+            "side": "sell",
+            "qty": 168,
+            "price": 133.08999633789062,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 22359.12
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "CDSL.NS",
+            "side": "sell",
+            "qty": 15,
+            "price": 1384.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 20760.0
+        },
+        {
+            "timestamp": "2026-08-24 09:51:16",
+            "ticker": "GLENMARK.NS",
+            "side": "sell",
+            "qty": 9,
+            "price": 2391.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 21519.0
         }
     ]
 }
