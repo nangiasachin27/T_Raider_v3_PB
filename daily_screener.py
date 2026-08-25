@@ -43,6 +43,7 @@ from strategies.atr_breakout import atr_breakout_strategy
 from strategies.rsi_divergence import rsi_divergence_strategy
 from autopilot.logger import load_portfolio
 from macro_filter import MacroFilter, MARKET_CONFIGS, FilterAction
+from config.utils import get_fee_config, estimate_round_trip_fee, is_fee_efficient
 from autopilot.beta_filter import BetaFilter
 
 # CHANGE 1: Import CorrelationFilter
@@ -85,18 +86,42 @@ def calculate_atr(df: pd.DataFrame, window: int = 14) -> float:
     atr = tr.rolling(window=window).mean().iloc[-1]
     return float(atr) if pd.notna(atr) else 0.0
 
-def calculate_position_size(capital: float, atr: float, price: float, risk_pct: float = 0.01, max_alloc_pct: float = 0.20) -> int:
+def calculate_position_size(capital: float, atr: float, price: float, risk_pct: float = 0.01, max_alloc_pct: float = 0.20) -> Tuple[int, str]:
+    """
+    Returns (qty, reason). qty == 0 can mean "invalid inputs" OR "rejected —
+    below fee-efficient notional" — the reason string distinguishes them so
+    callers can log/report accordingly instead of treating both as silence.
+    """
     if atr <= 0 or price <= 0:
-        return 0
-    
+        return 0, "Invalid ATR or price"
+
     # Standard ATR risk-based sizing
     atr_qty = int((capital * risk_pct) / (atr * 2))
-    
+
     # Hard cap based on portfolio percentage (e.g., max 20% of capital)
     max_budget_qty = int((capital * max_alloc_pct) / price)
-    
+
     # Return the smaller of the two to ensure we never breach the portfolio bucket size
-    return max(min(atr_qty, max_budget_qty), 0)
+    qty = max(min(atr_qty, max_budget_qty), 0)
+
+    if qty <= 0:
+        return 0, "Sized to zero by risk/budget caps"
+
+    notional = qty * price
+    fee_cfg = get_fee_config()["sizing"]
+
+    # Reject rather than downsize: a trade too small for fixed fees to make
+    # sense doesn't become sensible by shrinking it further.
+    if notional < fee_cfg["min_notional_floor_inr"]:
+        return 0, (f"💸 Below fee-efficient notional "
+                    f"(₹{notional:,.0f} < ₹{fee_cfg['min_notional_floor_inr']:,.0f} floor)")
+
+    if not is_fee_efficient(notional, fee_cfg["max_fee_pct_of_notional"]):
+        est_fee = estimate_round_trip_fee(notional)
+        return 0, (f"💸 Round-trip fee ₹{est_fee:.0f} exceeds "
+                    f"{fee_cfg['max_fee_pct_of_notional']*100:.1f}% of ₹{notional:,.0f} notional")
+
+    return qty, "OK"
 
 # ── Volume confirmation ───────────────────────────────────────────────────────
 
@@ -580,6 +605,7 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
     macro_skipped = 0
     macro_downgraded = 0
     corr_filtered = 0   # CHANGE 2: counter for correlation-blocked signals
+    fee_skipped   = 0   # NEW: counter for trades rejected as fee-inefficient
 
     for ticker in tickers:
         plan = optimized_params.get(ticker)
@@ -727,8 +753,20 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
 
             # Gate 3: ATR sizing + confidence
             atr            = calculate_atr(df)
-            suggested_qty  = calculate_position_size(effective_capital, atr, latest_price)
+            suggested_qty, sizing_reason = calculate_position_size(effective_capital, atr, latest_price)
             estimated_cost = suggested_qty * latest_price
+
+            if suggested_qty <= 0 and sizing_reason.startswith("💸"):
+                fee_skipped += 1
+                all_signals.append(ScreenerSignal(
+                    ticker=ticker, signal_type="BUY", price=latest_price,
+                    strategy=strat_type, expected_return=plan.get('expected_return', 0),
+                    stability_score=stability, confidence_tier="SKIP",
+                    suggested_qty=0, risk_per_trade_inr=0,
+                    current_holdings=current_qty, portfolio_weight_pct=weight_pct,
+                    reason=sizing_reason,
+                ))
+                continue
 
             confidence_tier, reason = classify_buy_confidence(
                 stability, weight_pct, current_qty, cash, estimated_cost
@@ -852,6 +890,11 @@ def run_screener(tickers, capital: Optional[float] = None, min_stability: float 
     if corr_filtered:
         print(f"🔗 Correlation filter BLOCKED {corr_filtered} BUY signal(s) "
               f"(threshold: ±{effective_corr_threshold:.2f}).")
+
+    # NEW: report fee-inefficient rejections in session summary
+    if fee_skipped:
+        print(f"💸 Fee-awareness filter REJECTED {fee_skipped} BUY signal(s) "
+              f"as too small for round-trip fees to make sense.")
 
     print_github_actions_summary(all_signals, portfolio, regime_info)
     log_recommendations(all_signals, portfolio, regime_info)

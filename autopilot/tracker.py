@@ -80,6 +80,43 @@ def _csv_already_has_today(csv_file: str, today_str: str) -> bool:
     return False
 
 
+def _get_previous_net_worth(csv_file: str, today_str: str):
+    """
+    Returns (prev_date, prev_net_worth) for the most recent trading day
+    STRICTLY BEFORE today_str, or (None, None) if there's no prior data.
+
+    FIX 7: Enables a "vs yesterday" day-change readout in the summary.
+    Must be called BEFORE today's row is written/overwritten in the CSV
+    below, otherwise today would end up being compared against itself.
+
+    Handles duplicate-date rows (a handful exist in daily_equity.csv from
+    before FIX 6 was added) by keeping the last value seen for any given
+    date, rather than erroring or double-counting.
+    """
+    if not os.path.isfile(csv_file):
+        return None, None
+
+    by_date = {}
+    with open(csv_file, newline='') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if not row or row[0] == 'Date':
+                continue
+            d = row[0]
+            try:
+                v = float(row[1])
+            except (IndexError, ValueError):
+                continue
+            by_date[d] = v  # last occurrence wins for duplicate dates
+
+    prior_dates = sorted(d for d in by_date if d < today_str)
+    if not prior_dates:
+        return None, None
+
+    prev_date = prior_dates[-1]
+    return prev_date, by_date[prev_date]
+
+
 def generate_report():
     portfolio = load_portfolio()
     cash      = portfolio['cash']
@@ -111,14 +148,32 @@ def generate_report():
             current_price = stock.history(period="1d")['Close'].iloc[-1]
             value         = qty * current_price
             total_market_value += value
+            diff = ((float(current_price) - entry_price)/entry_price)*100
 
             entry_str = f"₹{entry_price:.1f}" if entry_price else "-"
             print(f"{ticker:12} | {qty:<5} | {entry_str:>10} | "
-                  f"₹{current_price:>10.2f} | {float(current_price) - entry_price:<7.2f} |₹{value:>10.2f}")
+                  f"₹{current_price:>10.2f} | {diff:<7.2f}% |₹{value:>10.2f}")
 
     # ── 1. Gross Wealth ───────────────────────────────────────────────────────
     net_worth = cash + total_market_value
- 
+
+    # ── FIX 7: Day-over-day change ──────────────────────────────────────────
+    # Read the prior trading day's net worth from daily_equity.csv BEFORE
+    # today's row is written further down. Comparing against the last
+    # recorded trading day (not literally "yesterday") correctly skips
+    # weekends/holidays with zero extra logic.
+    csv_file  = os.path.join(os.path.dirname(__file__), '..', 'config', 'daily_equity.csv')
+    today_str = datetime.now().strftime('%Y-%m-%d')
+
+    prev_date, prev_net_worth = _get_previous_net_worth(csv_file, today_str)
+
+    if prev_net_worth:
+        day_change     = net_worth - prev_net_worth
+        day_change_pct = (day_change / prev_net_worth) * 100
+    else:
+        day_change     = None
+        day_change_pct = None
+
     # Read base capitals from quarterly_config.json.
     # original_capital     — starting capital at inception (e.g. ₹1,00,000)
     #                        never changes across quarters
@@ -136,17 +191,16 @@ def generate_report():
     except Exception:
         original_capital     = 100000.0
         current_base_capital = 100000.0
- 
+
     # Total return since inception
     gross_profit_loss = net_worth - original_capital
     gross_pl_pct      = (gross_profit_loss / original_capital * 100) if original_capital > 0 else 0
- 
+
     # Current quarter return
     quarter_profit_loss = net_worth - current_base_capital
     quarter_pl_pct      = (quarter_profit_loss / current_base_capital * 100) if current_base_capital > 0 else 0
-    
- 
-     # ── 2. Tax — applied to REALISED gains only ───────────────────────────────
+
+    # ── 2. Tax — applied to REALISED gains only ───────────────────────────────
     # FIX 5: Replaced `gross_profit_loss * 0.20` with realised P&L calculation.
     # The old code taxed unrealised gains too — if you're up 30% on paper but
     # haven't sold anything, you owe ₹0 in STCG today.
@@ -164,14 +218,18 @@ def generate_report():
     print(f"STOCK MARKET VALUE : ₹{total_market_value:,.2f}")
     print(f"CURRENT NET WORTH  : ₹{net_worth:,.2f}")
 
+    if day_change is not None:
+        day_arrow = "🟢▲" if day_change >= 0 else "🔴▼"
+        day_sign  = "+" if day_change >= 0 else ""
+        print(f"DAY CHANGE (vs {prev_date}): {day_arrow} {day_sign}₹{day_change:,.2f} ({day_sign}{day_change_pct:.2f}%)")
+    else:
+        print("DAY CHANGE          : N/A (no prior trading day recorded)")
+
     # ── 4. Daily Snapshot ─────────────────────────────────────────────────────
     # FIX 6: Check for a duplicate date before writing. If today's row is
     # already in the CSV (e.g., workflow ran twice, or tracker.py called
     # manually after the scheduled run), overwrite that row rather than
     # appending a second one.
-    csv_file  = os.path.join(os.path.dirname(__file__), '..', 'config', 'daily_equity.csv')
-    today_str = datetime.now().strftime('%Y-%m-%d')
-
     if _csv_already_has_today(csv_file, today_str):
         # Overwrite: rewrite the whole file, replacing today's existing row
         rows_to_keep = []
@@ -203,7 +261,7 @@ def generate_report():
     print("═" * 50)
     color_total = "🟢" if gross_profit_loss   >= 0 else "🔴"
     color_qtr   = "🟢" if quarter_profit_loss >= 0 else "🔴"
- 
+
     print(f"TOTAL P/L (inception): {color_total} ₹{gross_profit_loss:,.2f} ({gross_pl_pct:.2f}%)")
     print(f"  vs original capital: ₹{original_capital:,.2f}")
     print(f"QUARTER P/L          : {color_qtr} ₹{quarter_profit_loss:,.2f} ({quarter_pl_pct:.2f}%)")

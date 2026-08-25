@@ -7,8 +7,9 @@ Reads quarterly_config.json (profit_target_pct, base capital, quarter dates).
 Reads optimal_params.json (per-stock expected_return, stability, sharpe).
 Reads stocks.json (full universe for proactive opportunity scanning).
 Reads portfolio.json (holdings, entry prices, dates).
-
-NO new config files created.
+Reads fee_config.json (rebalance thresholds + Upstox fee model — was
+    previously hardcoded in ActiveConfig; moved out so thresholds can be
+    tuned without touching code).
 
 Three mechanisms (enhanced):
   1. Portfolio-Level Milestone Check — compares actual vs expected trajectory
@@ -26,6 +27,7 @@ from typing import Dict, List, Tuple, Optional
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from autopilot.logger import load_portfolio, record_transaction, _normalise_holding
+from config.utils import get_fee_config, estimate_round_trip_fee
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -60,9 +62,29 @@ class ActiveConfig:
     RISK_NORMAL = 1.0
 
     # --- Proactive rebalancing ---
-    REBALANCE_MIN_GAP = 20       # new opportunity must score >= holding_score + 20
-    REBALANCE_MAX_POSITIONS = 8  # target max open positions
-    REBALANCE_CASH_BUFFER = 5000   # always keep ₹5,000 cash
+    # NOTE: values now live in config/fee_config.json ("rebalance" section)
+    # so thresholds can be tuned without a code change / redeploy. Exposed as
+    # classmethods (called as ActiveConfig.REBALANCE_MIN_GAP()) since plain
+    # @property doesn't apply to class-level attribute access.
+    @classmethod
+    def REBALANCE_MIN_GAP(cls):
+        return get_fee_config()["rebalance"]["min_gap"]
+
+    @classmethod
+    def REBALANCE_MAX_POSITIONS(cls):
+        return get_fee_config()["rebalance"]["max_positions"]
+
+    @classmethod
+    def REBALANCE_CASH_BUFFER(cls):
+        return get_fee_config()["rebalance"]["cash_buffer_inr"]
+
+    @classmethod
+    def REBALANCE_MIN_NOTIONAL(cls):
+        return get_fee_config()["rebalance"]["min_notional_inr"]
+
+    @classmethod
+    def REBALANCE_FEE_GAP_SCALING(cls):
+        return get_fee_config()["rebalance"]["fee_gap_scaling_factor"]
 
     # --- Target derivation ---
     TARGET_FROM_EXPECTED_RETURN = True  # use optimal_params expected_return * 0.5 as per-stock target
@@ -549,14 +571,22 @@ class ActiveProfitEngine:
         holdings = self.snapshot.get("holdings", [])
         cfg = ActiveConfig
 
-        if len(holdings) < cfg.REBALANCE_MAX_POSITIONS:
+        if len(holdings) < cfg.REBALANCE_MAX_POSITIONS():
             return executed  # Room to add without selling
 
-        # Score all current holdings
+        min_notional = cfg.REBALANCE_MIN_NOTIONAL()
+        gap_scaling = cfg.REBALANCE_FEE_GAP_SCALING()
+
+        # Score all current holdings — but skip positions too small for a
+        # round-trip fee to make sense; churning ₹200 dust positions to gain
+        # a few score points is a guaranteed net loss once fees are counted.
         holding_scores = []
         for h in holdings:
-            score = score_holding(h["ticker"], h, self.optimal,self.dead_money_days)
-            holding_scores.append((score, h))
+            position_value = h["qty"] * h["ltp"]
+            if position_value < min_notional:
+                continue
+            score = score_holding(h["ticker"], h, self.optimal, self.dead_money_days)
+            holding_scores.append((score, h, position_value))
 
         # Score all universe opportunities (not currently held)
         held_tickers = {h["ticker"] for h in holdings}
@@ -568,7 +598,7 @@ class ActiveProfitEngine:
             if score > -500:  # Valid opportunity
                 opportunity_scores.append((score, ticker))
 
-        if not opportunity_scores:
+        if not opportunity_scores or not holding_scores:
             return executed
 
         # Sort: weakest holdings first, best opportunities first
@@ -577,11 +607,19 @@ class ActiveProfitEngine:
 
         # Check if we should rotate
         for opp_score, opp_ticker in opportunity_scores[:3]:  # Top 3 opportunities
-            for hold_score, holding in holding_scores[:2]:  # Bottom 2 holdings
-                if opp_score >= hold_score + cfg.REBALANCE_MIN_GAP:
+            for hold_score, holding, position_value in holding_scores[:2]:  # Bottom 2 holdings
+                # Cost-scaled gap: smaller positions need a bigger score edge
+                # to justify the round-trip fee drag, instead of a single
+                # flat threshold that ignores trade size entirely.
+                est_fee = estimate_round_trip_fee(position_value)
+                fee_pct = est_fee / position_value
+                required_gap = cfg.REBALANCE_MIN_GAP() + (fee_pct * gap_scaling)
+
+                if opp_score >= hold_score + required_gap:
                     # Sell weak holding to free cash for better opportunity
                     print(f"   🔄 REBALANCE: {holding['ticker']} (score {hold_score:.1f}) → "
-                          f"{opp_ticker} (score {opp_score:.1f})")
+                          f"{opp_ticker} (score {opp_score:.1f}), "
+                          f"required_gap={required_gap:.1f} (fee={fee_pct*100:.2f}%)")
 
                     record_transaction(
                         ticker=holding["ticker"],
@@ -598,6 +636,7 @@ class ActiveProfitEngine:
                         "score": hold_score,
                         "replacement": opp_ticker,
                         "replacement_score": opp_score,
+                        "est_fee": est_fee,
                     })
                     break  # Only one rebalance per opportunity
 

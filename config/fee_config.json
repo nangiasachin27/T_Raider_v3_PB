@@ -1,0 +1,26 @@
+{
+  "_comment": "Upstox equity-delivery fee model + fee-aware position sizing thresholds. Edit rates here if Upstox changes its schedule — no code changes needed.",
+
+  "brokerage_per_order_inr": 20.0,
+  "dp_charge_inr": 23.6,
+  "stt_rate": 0.001,
+  "exchange_txn_rate": 0.0000307,
+  "sebi_rate": 0.000001,
+  "stamp_duty_buy_rate": 0.00015,
+  "gst_rate": 0.18,
+
+  "sizing": {
+    "_comment": "A proposed trade is rejected (qty -> 0) rather than downsized if estimated round-trip fee exceeds this fraction of the trade's notional value.",
+    "max_fee_pct_of_notional": 0.006,
+    "min_notional_floor_inr": 12000
+  },
+
+  "rebalance": {
+    "_comment": "Controls autopilot/active_manager.py proactive rebalancing (was: hardcoded in ActiveConfig).",
+    "min_gap": 20,
+    "max_positions": 8,
+    "cash_buffer_inr": 5000,
+    "min_notional_inr": 8000,
+    "fee_gap_scaling_factor": 1000
+  }
+}

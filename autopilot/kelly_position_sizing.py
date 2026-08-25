@@ -14,6 +14,8 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, Tuple, Optional
 
+from config.utils import get_fee_config, estimate_round_trip_fee, is_fee_efficient
+
 class KellyPositionSizer:
     """
     Implements fractional Kelly position sizing.
@@ -57,7 +59,7 @@ class KellyPositionSizer:
 
         # Not enough history — fall back to fixed sizing
         if len(ticker_pnls) < cls.MIN_TRADES_FOR_KELLY:
-            qty, reason = cls._fixed_sizing(capital, atr, mode)
+            qty, reason = cls._fixed_sizing(capital, atr, mode, price=current_price)
             return qty, f"Kelly: {len(ticker_pnls)}/{cls.MIN_TRADES_FOR_KELLY} trades. {reason}"
 
         # Calculate Kelly components
@@ -65,7 +67,7 @@ class KellyPositionSizer:
         losses = [p for p in ticker_pnls if p < 0]
 
         if not wins or not losses:
-            qty, reason = cls._fixed_sizing(capital, atr, mode)
+            qty, reason = cls._fixed_sizing(capital, atr, mode, price=current_price)
             return qty, f"Kelly: No wins/losses mix. {reason}"
 
         win_rate = len(wins) / len(ticker_pnls)
@@ -74,7 +76,7 @@ class KellyPositionSizer:
 
         # Edge case: avg_win == 0
         if avg_win == 0:
-            qty, reason = cls._fixed_sizing(capital, atr, mode)
+            qty, reason = cls._fixed_sizing(capital, atr, mode, price=current_price)
             return qty, f"Kelly: Zero avg win. {reason}"
 
         # Kelly formula: f* = (p*b - q) / b
@@ -105,12 +107,46 @@ class KellyPositionSizer:
         max_affordable_qty = int(capital // current_price)
         target_qty = min(target_qty, max_affordable_qty)
 
+        # Fee-aware floor: reject (don't downsize) trades too small for
+        # Upstox's flat per-order + DP fees to make sense. Thresholds live
+        # in config/fee_config.json, not hardcoded here.
+        rejected_qty, reject_reason = cls._reject_if_fee_inefficient(target_qty, current_price)
+        if rejected_qty == 0:
+            return 0, (
+                f"Kelly={kelly_raw:.3f}, Q-Kelly={kelly_adjusted:.3f}, "
+                f"Risk={risk_fraction*100:.2f}%, WR={win_rate*100:.0f}%, "
+                f"Payoff={payoff_ratio:.2f}x, sized_qty={target_qty} | {reject_reason}"
+            )
+
         return target_qty, (
             f"Kelly={kelly_raw:.3f}, Q-Kelly={kelly_adjusted:.3f}, "
             f"Risk={risk_fraction*100:.2f}%, "
             f"WR={win_rate*100:.0f}%, Payoff={payoff_ratio:.2f}x, "
             f"Qty={target_qty}"
         )
+
+    @classmethod
+    def _reject_if_fee_inefficient(cls, qty: int, price: float) -> Tuple[int, str]:
+        """
+        Returns (qty, reason). qty is passed through unchanged if the trade
+        clears the fee-efficiency bar from config/fee_config.json, else 0.
+        """
+        if qty <= 0:
+            return 0, "Sized to zero"
+
+        notional = qty * price
+        fee_cfg = get_fee_config()["sizing"]
+
+        if notional < fee_cfg["min_notional_floor_inr"]:
+            return 0, (f"💸 Below fee-efficient notional "
+                        f"(₹{notional:,.0f} < ₹{fee_cfg['min_notional_floor_inr']:,.0f} floor)")
+
+        if not is_fee_efficient(notional, fee_cfg["max_fee_pct_of_notional"]):
+            est_fee = estimate_round_trip_fee(notional)
+            return 0, (f"💸 Round-trip fee ₹{est_fee:.0f} exceeds "
+                        f"{fee_cfg['max_fee_pct_of_notional']*100:.1f}% of ₹{notional:,.0f} notional")
+
+        return qty, "OK"
 
     @classmethod
     def _get_ticker_pnls(cls, ticker: str, portfolio: Dict) -> list:
@@ -168,7 +204,8 @@ class KellyPositionSizer:
         return pnls
 
     @classmethod
-    def _fixed_sizing(cls, capital: float, atr: float, mode: str = "CONSERVATIVE") -> Tuple[int, str]:
+    def _fixed_sizing(cls, capital: float, atr: float, mode: str = "CONSERVATIVE",
+                       price: Optional[float] = None) -> Tuple[int, str]:
         """Fallback fixed percentage sizing when Kelly not available."""
         risk_map = {
             "CONSERVATIVE": 0.01,   # 1%
@@ -184,6 +221,14 @@ class KellyPositionSizer:
             return 0, "Invalid risk per share"
 
         qty = int(rupee_risk // risk_per_share)
+
+        # Fee-aware floor (only enforceable when price is known — callers
+        # not yet passing price fall back to the old unguarded behaviour).
+        if price and qty > 0:
+            rejected_qty, reject_reason = cls._reject_if_fee_inefficient(qty, price)
+            if rejected_qty == 0:
+                return 0, f"Fixed {risk_fraction*100:.1f}% sizing (fallback) — {reject_reason}"
+
         return qty, f"Fixed {risk_fraction*100:.1f}% sizing (fallback)"
 
     @classmethod
