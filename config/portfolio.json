@@ -1,6 +1,17 @@
 {
-    "cash": 115044.4204750061,
-    "holdings": {},
+    "cash": 69270.27157974243,
+    "holdings": {
+        "ANGELONE.NS": {
+            "qty": 76,
+            "entry_price": 300.8999938964844,
+            "entry_date": "2026-08-25"
+        },
+        "RVNL.NS": {
+            "qty": 105,
+            "entry_price": 218.14999389648438,
+            "entry_date": "2026-08-25"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -1369,6 +1380,24 @@
             "price": 2391.0,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 21519.0
+        },
+        {
+            "timestamp": "2026-08-25 09:51:36",
+            "ticker": "ANGELONE.NS",
+            "side": "buy",
+            "qty": 76,
+            "price": 300.8999938964844,
+            "strategy": "ATR Sized (ATR:8.5) [AGGRESSIVE]",
+            "total": 22868.4
+        },
+        {
+            "timestamp": "2026-08-25 09:51:36",
+            "ticker": "RVNL.NS",
+            "side": "buy",
+            "qty": 105,
+            "price": 218.14999389648438,
+            "strategy": "ATR Sized (ATR:5.2) [AGGRESSIVE]",
+            "total": 22905.75
         }
     ]
 }
