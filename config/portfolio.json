@@ -1,5 +1,5 @@
 {
-    "cash": 69270.27157974243,
+    "cash": 24707.86207962036,
     "holdings": {
         "ANGELONE.NS": {
             "qty": 76,
@@ -7,9 +7,19 @@
             "entry_date": "2026-08-25"
         },
         "RVNL.NS": {
-            "qty": 105,
+            "qty": 104,
             "entry_price": 218.14999389648438,
             "entry_date": "2026-08-25"
+        },
+        "GLENMARK.NS": {
+            "qty": 9,
+            "entry_price": 2444.0,
+            "entry_date": "2026-08-26"
+        },
+        "HDFCLIFE.NS": {
+            "qty": 41,
+            "entry_price": 555.7999877929688,
+            "entry_date": "2026-08-26"
         }
     },
     "history": [
@@ -1398,6 +1408,33 @@
             "price": 218.14999389648438,
             "strategy": "ATR Sized (ATR:5.2) [AGGRESSIVE]",
             "total": 22905.75
+        },
+        {
+            "timestamp": "2026-08-26 09:51:39",
+            "ticker": "RVNL.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 221.38999938964844,
+            "strategy": "ConcentrationTrim (20.2% -> 20%)",
+            "total": 221.39
+        },
+        {
+            "timestamp": "2026-08-26 09:52:03",
+            "ticker": "GLENMARK.NS",
+            "side": "buy",
+            "qty": 9,
+            "price": 2444.0,
+            "strategy": "ATR Sized (ATR:53.8) [AGGRESSIVE]",
+            "total": 21996.0
+        },
+        {
+            "timestamp": "2026-08-26 09:52:03",
+            "ticker": "HDFCLIFE.NS",
+            "side": "buy",
+            "qty": 41,
+            "price": 555.7999877929688,
+            "strategy": "ATR Sized (ATR:8.9) [AGGRESSIVE]",
+            "total": 22787.8
         }
     ]
 }
