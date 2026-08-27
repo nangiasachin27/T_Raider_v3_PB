@@ -1,5 +1,5 @@
 {
-    "cash": 24707.86207962036,
+    "cash": 38.9614143371582,
     "holdings": {
         "ANGELONE.NS": {
             "qty": 76,
@@ -14,12 +14,23 @@
         "GLENMARK.NS": {
             "qty": 9,
             "entry_price": 2444.0,
-            "entry_date": "2026-08-26"
+            "entry_date": "2026-08-26",
+            "peak_price": 2460.0
         },
         "HDFCLIFE.NS": {
             "qty": 41,
             "entry_price": 555.7999877929688,
             "entry_date": "2026-08-26"
+        },
+        "M&M.NS": {
+            "qty": 6,
+            "entry_price": 3342.10009765625,
+            "entry_date": "2026-08-27"
+        },
+        "PFC.NS": {
+            "qty": 13,
+            "entry_price": 355.1000061035156,
+            "entry_date": "2026-08-27"
         }
     },
     "history": [
@@ -1435,6 +1446,24 @@
             "price": 555.7999877929688,
             "strategy": "ATR Sized (ATR:8.9) [AGGRESSIVE]",
             "total": 22787.8
+        },
+        {
+            "timestamp": "2026-08-27 09:51:31",
+            "ticker": "M&M.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 3342.10009765625,
+            "strategy": "ATR Sized (ATR:54.0) [AGGRESSIVE]",
+            "total": 20052.6
+        },
+        {
+            "timestamp": "2026-08-27 09:51:31",
+            "ticker": "PFC.NS",
+            "side": "buy",
+            "qty": 13,
+            "price": 355.1000061035156,
+            "strategy": "ATR Sized (ATR:8.0) [AGGRESSIVE]",
+            "total": 4616.3
         }
     ]
 }
