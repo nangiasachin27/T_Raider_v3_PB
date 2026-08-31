@@ -1,11 +1,6 @@
 {
-    "cash": 38.9614143371582,
+    "cash": 3.081653594970703,
     "holdings": {
-        "ANGELONE.NS": {
-            "qty": 76,
-            "entry_price": 300.8999938964844,
-            "entry_date": "2026-08-25"
-        },
         "RVNL.NS": {
             "qty": 104,
             "entry_price": 218.14999389648438,
@@ -25,12 +20,18 @@
         "M&M.NS": {
             "qty": 6,
             "entry_price": 3342.10009765625,
-            "entry_date": "2026-08-27"
+            "entry_date": "2026-08-27",
+            "peak_price": 3354.7
         },
         "PFC.NS": {
             "qty": 13,
             "entry_price": 355.1000061035156,
             "entry_date": "2026-08-27"
+        },
+        "BANKBARODA.NS": {
+            "qty": 92,
+            "entry_price": 236.94000244140625,
+            "entry_date": "2026-08-31"
         }
     },
     "history": [
@@ -1464,6 +1465,24 @@
             "price": 355.1000061035156,
             "strategy": "ATR Sized (ATR:8.0) [AGGRESSIVE]",
             "total": 4616.3
+        },
+        {
+            "timestamp": "2026-08-31 09:51:31",
+            "ticker": "ANGELONE.NS",
+            "side": "sell",
+            "qty": 76,
+            "price": 286.3500061035156,
+            "strategy": "Signal Exit",
+            "total": 21762.6
+        },
+        {
+            "timestamp": "2026-08-31 09:51:31",
+            "ticker": "BANKBARODA.NS",
+            "side": "buy",
+            "qty": 92,
+            "price": 236.94000244140625,
+            "strategy": "ATR Sized (ATR:4.1) [AGGRESSIVE]",
+            "total": 21798.48
         }
     ]
 }
