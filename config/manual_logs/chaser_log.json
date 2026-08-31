@@ -1,0 +1,29 @@
+[
+  {
+    "timestamp": "2026-08-31T11:02:36.481986",
+    "mode": "AGGRESSIVE",
+    "dry_run": true,
+    "current_return": -2.25,
+    "target_pct": 7.0,
+    "gap_pct": 9.25,
+    "sells": [
+      {
+        "ticker": "PFC.NS",
+        "qty": 13,
+        "current_price": 336.3,
+        "return_pct": -5.29,
+        "market_value": 4371.9,
+        "reason": "ProfitChaser:Weak (-5.3%)"
+      },
+      {
+        "ticker": "RVNL.NS",
+        "qty": 104,
+        "current_price": 210.0,
+        "return_pct": -3.74,
+        "market_value": 21840.0,
+        "reason": "ProfitChaser:Weak (-3.7%)"
+      }
+    ],
+    "buys": []
+  }
+]

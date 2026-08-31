@@ -1,0 +1,57 @@
+
+──────────────────────────────────────────────────────────────────────
+  T_Raider Profit Chaser  |  2026-08-31 11:02:34
+──────────────────────────────────────────────────────────────────────
+  Target         : 7.0%
+  Urgency        : 1.0x  (effective weak threshold: -3.00%)
+  Days left      : 85
+  Effective mode : AGGRESSIVE
+  Dry run        : True
+
+  Fetching prices for 6 holdings…
+
+  Portfolio return : -2.25%
+  Target           : 7.0%
+  Gap              : 9.25%
+
+  Checking regime & macro gates…
+
+───────────────────────────────────────────────────────
+🌍 MACRO ENVIRONMENT — India (NSE/BSE)
+───────────────────────────────────────────────────────
+  Volatility (VIX)  : 🟢 11.2  [NORMAL]
+  Institutional Flow: 🟢 ₹+5,184M  [BULLISH]
+  Overnight (Ref)   : 🟢 -0.25%
+  Calendar          : 🟢 No scheduled risk events today
+───────────────────────────────────────────────────────
+
+
+  Fetching prices for 4 candidate stocks…
+
+======================================================================
+🎯  T_RAIDER PROFIT CHASER
+======================================================================
+  Mode          : AGGRESSIVE
+  Regime        : Nifty 24080 vs EMA50 24187 -> DOWNTREND ❌ (drop 2.8%)
+  Quarter target: 7.0%  |  Current return : -2.25%
+  Gap to target : 9.25%          |  Days left      : 85
+  Urgency mult  : 1.0x
+  Buys allowed  : NO (downtrend / high-risk day)
+  Run type      : 🔍 DRY RUN — no orders placed
+======================================================================
+
+  📉 SELL (2 positions):
+  Ticker          Qty      Price   Return        Value
+  ------------------------------------------------------
+  PFC.NS           13 ₹  336.30    -5.3% ₹     4,372
+  RVNL.NS         104 ₹  210.00    -3.7% ₹    21,840
+
+  💵  Capital freed — held as cash (downtrend / high-risk mode).
+
+  Capital freed : ₹      26,212
+  Capital used  : ₹           0
+  Residual cash : ₹      26,212
+======================================================================
+  💾 quarterly_config.json saved.
+
+  📁 Chaser log updated -> config/manual_logs/chaser_log.json
