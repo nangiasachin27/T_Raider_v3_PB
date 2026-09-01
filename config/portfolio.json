@@ -1,21 +1,11 @@
 {
-    "cash": 3.081653594970703,
+    "cash": 1646.3521614074707,
     "holdings": {
-        "RVNL.NS": {
-            "qty": 104,
-            "entry_price": 218.14999389648438,
-            "entry_date": "2026-08-25"
-        },
         "GLENMARK.NS": {
             "qty": 9,
             "entry_price": 2444.0,
             "entry_date": "2026-08-26",
             "peak_price": 2515.0
-        },
-        "HDFCLIFE.NS": {
-            "qty": 41,
-            "entry_price": 555.7999877929688,
-            "entry_date": "2026-08-26"
         },
         "M&M.NS": {
             "qty": 6,
@@ -31,7 +21,18 @@
         "BANKBARODA.NS": {
             "qty": 92,
             "entry_price": 236.94000244140625,
-            "entry_date": "2026-08-31"
+            "entry_date": "2026-08-31",
+            "peak_price": 239.5
+        },
+        "DMART.NS": {
+            "qty": 6,
+            "entry_price": 3805.0,
+            "entry_date": "2026-09-01"
+        },
+        "LUPIN.NS": {
+            "qty": 9,
+            "entry_price": 2143.0,
+            "entry_date": "2026-09-01"
         }
     },
     "history": [
@@ -1483,6 +1484,42 @@
             "price": 236.94000244140625,
             "strategy": "ATR Sized (ATR:4.1) [AGGRESSIVE]",
             "total": 21798.48
+        },
+        {
+            "timestamp": "2026-09-01 09:51:23",
+            "ticker": "RVNL.NS",
+            "side": "sell",
+            "qty": 104,
+            "price": 208.3800048828125,
+            "strategy": "Adaptive Stop (-4.5%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 21671.52
+        },
+        {
+            "timestamp": "2026-09-01 09:51:23",
+            "ticker": "HDFCLIFE.NS",
+            "side": "sell",
+            "qty": 41,
+            "price": 538.75,
+            "strategy": "Adaptive Stop (-3.1%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 22088.75
+        },
+        {
+            "timestamp": "2026-09-01 09:51:33",
+            "ticker": "DMART.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 3805.0,
+            "strategy": "ATR Sized (ATR:89.5) [AGGRESSIVE]",
+            "total": 22830.0
+        },
+        {
+            "timestamp": "2026-09-01 09:51:33",
+            "ticker": "LUPIN.NS",
+            "side": "buy",
+            "qty": 9,
+            "price": 2143.0,
+            "strategy": "ATR Sized (ATR:37.7) [AGGRESSIVE]",
+            "total": 19287.0
         }
     ]
 }
