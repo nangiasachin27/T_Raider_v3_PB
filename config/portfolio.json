@@ -1,17 +1,11 @@
 {
-    "cash": 1646.3521614074707,
+    "cash": 1673.1419105529785,
     "holdings": {
         "GLENMARK.NS": {
             "qty": 9,
             "entry_price": 2444.0,
             "entry_date": "2026-08-26",
             "peak_price": 2515.0
-        },
-        "M&M.NS": {
-            "qty": 6,
-            "entry_price": 3342.10009765625,
-            "entry_date": "2026-08-27",
-            "peak_price": 3354.7
         },
         "PFC.NS": {
             "qty": 13,
@@ -22,10 +16,10 @@
             "qty": 92,
             "entry_price": 236.94000244140625,
             "entry_date": "2026-08-31",
-            "peak_price": 239.5
+            "peak_price": 240.41
         },
         "DMART.NS": {
-            "qty": 6,
+            "qty": 5,
             "entry_price": 3805.0,
             "entry_date": "2026-09-01"
         },
@@ -33,6 +27,11 @@
             "qty": 9,
             "entry_price": 2143.0,
             "entry_date": "2026-09-01"
+        },
+        "ASHOKLEY.NS": {
+            "qty": 137,
+            "entry_price": 167.3300018310547,
+            "entry_date": "2026-09-02"
         }
     },
     "history": [
@@ -1520,6 +1519,33 @@
             "price": 2143.0,
             "strategy": "ATR Sized (ATR:37.7) [AGGRESSIVE]",
             "total": 19287.0
+        },
+        {
+            "timestamp": "2026-09-02 09:51:19",
+            "ticker": "M&M.NS",
+            "side": "sell",
+            "qty": 6,
+            "price": 3191.0,
+            "strategy": "Adaptive Stop (-4.5%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19146.0
+        },
+        {
+            "timestamp": "2026-09-02 09:51:19",
+            "ticker": "DMART.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 3805.0,
+            "strategy": "ConcentrationTrim (20.4% -> 20%)",
+            "total": 3805.0
+        },
+        {
+            "timestamp": "2026-09-02 09:51:32",
+            "ticker": "ASHOKLEY.NS",
+            "side": "buy",
+            "qty": 137,
+            "price": 167.3300018310547,
+            "strategy": "ATR Sized (ATR:4.5) [AGGRESSIVE]",
+            "total": 22924.21
         }
     ]
 }
