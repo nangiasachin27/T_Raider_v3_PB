@@ -1,5 +1,5 @@
 {
-    "cash": 1673.1419105529785,
+    "cash": 2518.091938018799,
     "holdings": {
         "GLENMARK.NS": {
             "qty": 9,
@@ -16,7 +16,7 @@
             "qty": 92,
             "entry_price": 236.94000244140625,
             "entry_date": "2026-08-31",
-            "peak_price": 240.41
+            "peak_price": 240.9
         },
         "DMART.NS": {
             "qty": 5,
@@ -29,7 +29,7 @@
             "entry_date": "2026-09-01"
         },
         "ASHOKLEY.NS": {
-            "qty": 137,
+            "qty": 132,
             "entry_price": 167.3300018310547,
             "entry_date": "2026-09-02"
         }
@@ -1546,6 +1546,15 @@
             "price": 167.3300018310547,
             "strategy": "ATR Sized (ATR:4.5) [AGGRESSIVE]",
             "total": 22924.21
+        },
+        {
+            "timestamp": "2026-09-03 09:51:36",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 168.99000549316406,
+            "strategy": "ConcentrationTrim (20.7% -> 20%)",
+            "total": 844.95
         }
     ]
 }
