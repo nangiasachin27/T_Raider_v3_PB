@@ -1,16 +1,11 @@
 {
-    "cash": 2518.091938018799,
+    "cash": 3061.091495513916,
     "holdings": {
-        "GLENMARK.NS": {
-            "qty": 9,
-            "entry_price": 2444.0,
-            "entry_date": "2026-08-26",
-            "peak_price": 2515.0
-        },
         "PFC.NS": {
             "qty": 13,
             "entry_price": 355.1000061035156,
-            "entry_date": "2026-08-27"
+            "entry_date": "2026-08-27",
+            "peak_price": 355.85
         },
         "BANKBARODA.NS": {
             "qty": 92,
@@ -29,9 +24,19 @@
             "entry_date": "2026-09-01"
         },
         "ASHOKLEY.NS": {
-            "qty": 132,
+            "qty": 131,
             "entry_price": 167.3300018310547,
             "entry_date": "2026-09-02"
+        },
+        "POLYCAB.NS": {
+            "qty": 2,
+            "entry_price": 8317.5,
+            "entry_date": "2026-09-04"
+        },
+        "TORNTPHARM.NS": {
+            "qty": 1,
+            "entry_price": 4845.0,
+            "entry_date": "2026-09-04"
         }
     },
     "history": [
@@ -1555,6 +1560,42 @@
             "price": 168.99000549316406,
             "strategy": "ConcentrationTrim (20.7% -> 20%)",
             "total": 844.95
+        },
+        {
+            "timestamp": "2026-09-04 09:51:25",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 169.1999969482422,
+            "strategy": "ConcentrationTrim (20.1% -> 20%)",
+            "total": 169.2
+        },
+        {
+            "timestamp": "2026-09-04 09:51:43",
+            "ticker": "GLENMARK.NS",
+            "side": "sell",
+            "qty": 9,
+            "price": 2428.199951171875,
+            "strategy": "Signal Exit",
+            "total": 21853.8
+        },
+        {
+            "timestamp": "2026-09-04 09:51:43",
+            "ticker": "POLYCAB.NS",
+            "side": "buy",
+            "qty": 2,
+            "price": 8317.5,
+            "strategy": "ATR Sized (ATR:252.8) [AGGRESSIVE]",
+            "total": 16635.0
+        },
+        {
+            "timestamp": "2026-09-04 09:51:43",
+            "ticker": "TORNTPHARM.NS",
+            "side": "buy",
+            "qty": 1,
+            "price": 4845.0,
+            "strategy": "ATR Sized (ATR:107.4) [AGGRESSIVE]",
+            "total": 4845.0
         }
     ]
 }
