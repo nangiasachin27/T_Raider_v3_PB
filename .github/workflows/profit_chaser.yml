@@ -6,9 +6,9 @@ on:
       mode:
         description: 'Trading mode'
         required: true
-        default: 'AGGRESSIVE'
+        default: 'AUTO'
         type: choice
-        options: [CONSERVATIVE, BALANCED, AGGRESSIVE]
+        options: [AUTO, CONSERVATIVE, BALANCED, AGGRESSIVE]
       execute:
         description: 'Execute trades? (false = dry run)'
         required: true
@@ -46,7 +46,7 @@ jobs:
           MODE="${{ github.event.inputs.mode }}"
           EXECUTE="${{ github.event.inputs.execute }}"
           # Defaults for scheduled run
-          MODE=${MODE:-AGGRESSIVE}
+          MODE=${MODE:-AUTO}
           EXECUTE=${EXECUTE:-false}
           echo "mode=$MODE"    >> $GITHUB_OUTPUT
           echo "execute=$EXECUTE" >> $GITHUB_OUTPUT
@@ -122,6 +122,7 @@ jobs:
                   config/performance_chart.png \
                   config/last_chaser_log.txt \
                   config/chaser_output.txt \
+                  config/auto_mode_state.json \
                   config/manual_logs/chaser_log.json || true
 
           git commit -m "ProfitChaser: $(date) [${{ steps.chaser_run.outcome }}] mode=${{ steps.params.outputs.mode }}" || true

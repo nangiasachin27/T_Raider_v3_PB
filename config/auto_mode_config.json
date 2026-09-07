@@ -1,0 +1,25 @@
+{
+  "_comment": "Thresholds for autopilot/auto_mode.py auto_select_mode(). Edit values here, no code changes needed.",
+  "_design": "AGGRESSIVE-by-default with a downgrade-only circuit breaker. Past the new-user window, mode starts at AGGRESSIVE; trailing metrics can only pull it DOWN, never up on their own — recovery requires hysteresis_confirmations consecutive clean reads.",
+
+  "min_trades_for_auto": 10,
+  "lookback_trades": 20,
+  "lookback_equity": 60,
+  "default_start_capital": 100000.0,
+
+  "downgrade_balanced_max_dd": 0.05,
+  "downgrade_balanced_win_rate": 0.45,
+  "downgrade_balanced_sharpe": 0.0,
+  "downgrade_balanced_consecutive_losses": 3,
+
+  "downgrade_conservative_max_dd": 0.10,
+  "downgrade_conservative_win_rate": 0.35,
+  "downgrade_conservative_sharpe": -0.5,
+  "downgrade_conservative_consecutive_losses": 5,
+
+  "hysteresis_confirmations": 2,
+  "_hysteresis_comment": "Recovery to a MORE aggressive mode requires this many consecutive clean (no-breach) evaluations before taking effect. Downgrades always apply immediately.",
+
+  "regime_gate_enabled": true,
+  "_regime_gate_comment": "If true, AGGRESSIVE is capped to BALANCED whenever Nifty 50 is below its 50-day EMA (see ingestion.nse_constituents.get_market_regime), regardless of the account's own trailing metrics."
+}

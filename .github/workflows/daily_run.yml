@@ -26,7 +26,7 @@ jobs:
         id: bot_run
         env:
           UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
-        run: python -u autopilot/quarterly_manager.py --mode AGGRESSIVE
+        run: python -u autopilot/quarterly_manager.py --mode AUTO
 
       # ── Generate Reports ────────────────────────────────────────
       - name: Generate Reports
@@ -71,7 +71,7 @@ jobs:
           
           echo "Run at: $(date) | Status: ${{ steps.bot_run.outcome }}" > config/last_run_log.txt
           
-          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/quarterly_config.json
+          git add config/portfolio.json config/last_run_log.txt config/daily_equity.csv config/quarterly_config.json config/auto_mode_state.json
           git add -f config/capital_override.json config/performance_dashboard.png
           
           git commit -m "Autopilot: $(date) [${{ steps.bot_run.outcome }}]" || true

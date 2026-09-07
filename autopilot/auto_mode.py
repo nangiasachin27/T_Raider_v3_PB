@@ -2,7 +2,21 @@
 autopilot/auto_mode.py
 ──────────────────────
 Auto-selects trading mode based on recent portfolio performance.
-NO CONFIG FILE NEEDED. All thresholds are hardcoded constants.
+
+Design: AGGRESSIVE-by-default with a downgrade-only circuit breaker.
+    - Once past the new-user safety window, the assumed mode is AGGRESSIVE.
+    - Trailing win-rate / drawdown / Sharpe / consecutive-loss checks can
+      only pull the mode DOWN to BALANCED or CONSERVATIVE — they can never
+      push it up. Recovering back toward AGGRESSIVE requires several
+      consecutive clean reads (hysteresis), so one good day right after a
+      downgrade doesn't immediately re-arm full size.
+    - AGGRESSIVE is additionally capped to BALANCED whenever Nifty is below
+      its 50-day EMA (regime gate), independent of the account's own trade
+      history.
+
+All thresholds live in config/auto_mode_config.json (falls back to the
+defaults below if the file is missing/unreadable) — no code changes needed
+to retune.
 
 Usage:
     from autopilot.auto_mode import auto_select_mode
@@ -21,18 +35,54 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 # ═════════════════════════════════════════════════════════════════════════════
-# CONSTANTS — Hardcoded. Edit code to change thresholds.
+# CONFIG LOADING — config/auto_mode_config.json is the source of truth.
+# The literals below are only a safety-net fallback if the file is missing.
 # ═════════════════════════════════════════════════════════════════════════════
 
-MIN_TRADES_FOR_AUTO = 10          # Minimum closed trades before auto-mode activates
-WIN_RATE_AGGRESSIVE = 0.70        # 70%+ win rate for AGGRESSIVE
-WIN_RATE_BALANCED = 0.55          # 55%+ win rate for BALANCED
-MAX_DD_AGGRESSIVE = 0.05          # Max 5% drawdown for AGGRESSIVE
-MAX_DD_BALANCED = 0.10            # Max 10% drawdown for BALANCED
-MIN_SHARPE_AGGRESSIVE = 0.5       # Sharpe > 0.5 for AGGRESSIVE
-LOOKBACK_TRADES = 20              # Win rate calculated over last 20 trades
-LOOKBACK_EQUITY = 60              # Drawdown calculated over last 60 trades
-DEFAULT_START_CAPITAL = 100000.0  # Original capital for equity curve
+_DEFAULTS = {
+    "min_trades_for_auto": 10,
+    "lookback_trades": 20,
+    "lookback_equity": 60,
+    "default_start_capital": 100000.0,
+
+    # ── Downgrade-only circuit breaker thresholds ──────────────────────────
+    # Default mode (once past the new-user window) is AGGRESSIVE. Any ONE
+    # of the conditions below being breached pulls the mode down a tier.
+    "downgrade_balanced_max_dd": 0.05,
+    "downgrade_balanced_win_rate": 0.45,
+    "downgrade_balanced_sharpe": 0.0,
+    "downgrade_balanced_consecutive_losses": 3,
+
+    "downgrade_conservative_max_dd": 0.10,
+    "downgrade_conservative_win_rate": 0.35,
+    "downgrade_conservative_sharpe": -0.5,
+    "downgrade_conservative_consecutive_losses": 5,
+
+    # ── Hysteresis: instant downgrades, delayed upgrades ───────────────────
+    "hysteresis_confirmations": 2,
+
+    # ── Regime gate: caps AGGRESSIVE when Nifty is below its 50-EMA ────────
+    "regime_gate_enabled": True,
+}
+
+
+def _load_auto_mode_config() -> Dict:
+    path = Path(PROJECT_ROOT) / "config" / "auto_mode_config.json"
+    try:
+        with open(path) as f:
+            cfg = json.load(f)
+        return {**_DEFAULTS, **cfg}
+    except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
+        print(f"WARNING: Could not load config/auto_mode_config.json ({e}). Using built-in defaults.")
+        return dict(_DEFAULTS)
+
+
+_CFG = _load_auto_mode_config()
+
+MIN_TRADES_FOR_AUTO = _CFG["min_trades_for_auto"]
+LOOKBACK_TRADES = _CFG["lookback_trades"]
+LOOKBACK_EQUITY = _CFG["lookback_equity"]
+DEFAULT_START_CAPITAL = _CFG["default_start_capital"]
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -177,66 +227,206 @@ def calculate_sharpe(pnls: List[float]) -> float:
     return avg / std if std > 0 else 0.0
 
 
+def calculate_consecutive_losses(pnls: List[float]) -> int:
+    """
+    Count the current trailing streak of non-winning closed trades
+    (pnl <= 0), most-recent-first. Resets to 0 on the first winning trade
+    encountered walking backward. This reacts much faster than the
+    aggregate win-rate/drawdown/Sharpe metrics to a fresh losing streak,
+    since those are averaged/lookback metrics that can stay within normal
+    range even while several trades in a row have just lost.
+    """
+    streak = 0
+    for p in reversed(pnls):
+        if p <= 0:
+            streak += 1
+        else:
+            break
+    return streak
+
+
 # ═════════════════════════════════════════════════════════════════════════════
-# MODE SELECTION LOGIC
+# MODE RANKING + STATE PERSISTENCE (for hysteresis)
 # ═════════════════════════════════════════════════════════════════════════════
 
-def auto_select_mode() -> Tuple[str, str]:
+MODE_RANK = {"CONSERVATIVE": 0, "BALANCED": 1, "AGGRESSIVE": 2}
+STATE_PATH = Path(PROJECT_ROOT) / "config" / "auto_mode_state.json"
+
+
+def _load_state() -> Dict:
+    try:
+        with open(STATE_PATH) as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError, IOError):
+        return {"confirmed_mode": "AGGRESSIVE", "pending_mode": None, "pending_count": 0}
+
+
+def _save_state(state: Dict) -> None:
+    try:
+        STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with open(STATE_PATH, "w") as f:
+            json.dump(state, f, indent=2)
+    except IOError as e:
+        print(f"WARNING: Could not save {STATE_PATH} ({e}). Hysteresis state not persisted.")
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# RAW MODE SELECTION — AGGRESSIVE by default, downgrade-only circuit breaker
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _raw_select_mode() -> Tuple[str, str]:
     """
-    Auto-select trading mode based on portfolio performance.
-    
+    AGGRESSIVE-by-default mode selection. Once the account has enough closed
+    trades to be past the new-user safety window, the assumed mode is
+    AGGRESSIVE; trailing performance can only pull it DOWN a tier (or two),
+    never up. This is the pre-hysteresis, pre-regime-gate signal — use
+    auto_select_mode() for the final production decision.
+
     Returns:
         (mode, reason) where mode is CONSERVATIVE/BALANCED/AGGRESSIVE
     """
     portfolio = load_portfolio()
     history = portfolio.get("history", [])
-    
-    # Calculate realized P&Ls from buy/sell pairs
     trade_pnls = calculate_trade_pnls(history)
-    
-    # NEW USER: Not enough closed trades
+
+    # NEW USER: not enough closed trades to trust any circuit breaker yet —
+    # this safety net is unchanged from the old earn-your-way-up design.
     if len(trade_pnls) < MIN_TRADES_FOR_AUTO:
         return "CONSERVATIVE", (
             f"New user: {len(trade_pnls)}/{MIN_TRADES_FOR_AUTO} closed trades. "
-            f"Defaulting to CONSERVATIVE."
+            f"Defaulting to CONSERVATIVE until enough track record exists."
         )
-    
-    # Calculate metrics
+
     win_rate = calculate_win_rate(trade_pnls)
     equity = calculate_equity_curve(trade_pnls[-LOOKBACK_EQUITY:])
     max_dd = calculate_max_drawdown(equity)
     sharpe = calculate_sharpe(trade_pnls)
-    
-    # ── AGGRESSIVE: All three conditions must be met ──────────────────────
-    if (win_rate >= WIN_RATE_AGGRESSIVE and 
-        max_dd < MAX_DD_AGGRESSIVE and 
-        sharpe > MIN_SHARPE_AGGRESSIVE):
-        return "AGGRESSIVE", (
-            f"WR={win_rate*100:.0f}% (>={WIN_RATE_AGGRESSIVE*100:.0f}%), "
-            f"DD={max_dd*100:.1f}% (<{MAX_DD_AGGRESSIVE*100:.0f}%), "
-            f"Sharpe={sharpe:.2f} (>{MIN_SHARPE_AGGRESSIVE}). "
-            f"AGGRESSIVE approved."
-        )
-    
-    # ── BALANCED: Win rate and drawdown acceptable ────────────────────────
-    if win_rate >= WIN_RATE_BALANCED and max_dd < MAX_DD_BALANCED:
+    consec_losses = calculate_consecutive_losses(trade_pnls)
+
+    metrics_str = f"WR={win_rate*100:.0f}% DD={max_dd*100:.1f}% Sharpe={sharpe:.2f} ConsecLosses={consec_losses}"
+
+    # ── Tier 2 breach: force all the way down to CONSERVATIVE ─────────────
+    con_failures = []
+    if max_dd >= _CFG["downgrade_conservative_max_dd"]:
+        con_failures.append(f"DD={max_dd*100:.1f}% (>={_CFG['downgrade_conservative_max_dd']*100:.0f}%)")
+    if win_rate < _CFG["downgrade_conservative_win_rate"]:
+        con_failures.append(f"WR={win_rate*100:.0f}% (<{_CFG['downgrade_conservative_win_rate']*100:.0f}%)")
+    if sharpe < _CFG["downgrade_conservative_sharpe"]:
+        con_failures.append(f"Sharpe={sharpe:.2f} (<{_CFG['downgrade_conservative_sharpe']})")
+    if consec_losses >= _CFG["downgrade_conservative_consecutive_losses"]:
+        con_failures.append(f"ConsecLosses={consec_losses} (>={_CFG['downgrade_conservative_consecutive_losses']})")
+    if con_failures:
+        return "CONSERVATIVE", f"Circuit breaker (CONSERVATIVE): {' | '.join(con_failures)}. [{metrics_str}]"
+
+    # ── Tier 1 breach: downgrade to BALANCED ───────────────────────────────
+    bal_failures = []
+    if max_dd >= _CFG["downgrade_balanced_max_dd"]:
+        bal_failures.append(f"DD={max_dd*100:.1f}% (>={_CFG['downgrade_balanced_max_dd']*100:.0f}%)")
+    if win_rate < _CFG["downgrade_balanced_win_rate"]:
+        bal_failures.append(f"WR={win_rate*100:.0f}% (<{_CFG['downgrade_balanced_win_rate']*100:.0f}%)")
+    if sharpe < _CFG["downgrade_balanced_sharpe"]:
+        bal_failures.append(f"Sharpe={sharpe:.2f} (<{_CFG['downgrade_balanced_sharpe']})")
+    if consec_losses >= _CFG["downgrade_balanced_consecutive_losses"]:
+        bal_failures.append(f"ConsecLosses={consec_losses} (>={_CFG['downgrade_balanced_consecutive_losses']})")
+    if bal_failures:
+        return "BALANCED", f"Circuit breaker (BALANCED): {' | '.join(bal_failures)}. [{metrics_str}]"
+
+    # ── No breach: stay at the AGGRESSIVE default ──────────────────────────
+    return "AGGRESSIVE", f"All circuit breakers clear. [{metrics_str}]"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# REGIME GATE — caps AGGRESSIVE when the broad market is in a downtrend
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _apply_regime_gate(mode: str, reason: str) -> Tuple[str, str]:
+    """
+    If regime_gate_enabled and mode == AGGRESSIVE, cap to BALANCED whenever
+    Nifty 50 is below its 50-day EMA. Reuses the same regime check already
+    used to gate BUY signals in daily_screener.py, so this stays consistent
+    with the rest of the system rather than introducing a second definition
+    of "downtrend". Fails open (no cap) if the regime check itself fails.
+    """
+    if mode != "AGGRESSIVE" or not _CFG.get("regime_gate_enabled", True):
+        return mode, reason
+
+    try:
+        from ingestion.nse_constituents import get_market_regime, regime_summary
+        is_uptrend, nifty_close, nifty_ema = get_market_regime()
+    except Exception as e:
+        print(f"WARNING: Regime gate check failed ({e}). Not capping mode.")
+        return mode, reason
+
+    if not is_uptrend:
+        summary = regime_summary(is_uptrend, nifty_close, nifty_ema)
         return "BALANCED", (
-            f"WR={win_rate*100:.0f}% (>={WIN_RATE_BALANCED*100:.0f}%), "
-            f"DD={max_dd*100:.1f}% (<{MAX_DD_BALANCED*100:.0f}%), "
-            f"Sharpe={sharpe:.2f}. BALANCED."
+            f"{reason} | Regime gate: Nifty in DOWNTREND ({summary}) — "
+            f"capped AGGRESSIVE to BALANCED."
         )
-    
-    # ── CONSERVATIVE: Identify actual failing metrics ─────────────────────
-    failures = []
-    if win_rate < WIN_RATE_BALANCED:
-        failures.append(f"WR={win_rate*100:.0f}% (<{WIN_RATE_BALANCED*100:.0f}%)")
-    if max_dd >= MAX_DD_BALANCED:
-        failures.append(f"DD={max_dd*100:.1f}% (>={MAX_DD_BALANCED*100:.0f}%)")
-    if sharpe <= 0:
-        failures.append(f"Sharpe={sharpe:.2f} (<=0)")
-    
-    reason = " | ".join(failures) if failures else "Metrics below BALANCED thresholds"
-    return "CONSERVATIVE", f"{reason}. CONSERVATIVE for capital protection."
+    return mode, reason
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# HYSTERESIS — instant downgrades, delayed upgrades
+# ═════════════════════════════════════════════════════════════════════════════
+
+def _apply_hysteresis(raw_mode: str, raw_reason: str) -> Tuple[str, str]:
+    """
+    De-risking (moving to a LESS aggressive mode) always applies immediately
+    — the whole point of a circuit breaker is to cut risk fast. Recovering
+    back toward AGGRESSIVE requires `hysteresis_confirmations` consecutive
+    raw evaluations agreeing that all breakers are clear, so a single clean
+    day right after a downgrade doesn't instantly re-arm full size.
+    """
+    confirmations_needed = int(_CFG.get("hysteresis_confirmations", 2))
+    state = _load_state()
+    confirmed = state.get("confirmed_mode", "AGGRESSIVE")
+
+    if MODE_RANK[raw_mode] <= MODE_RANK[confirmed]:
+        # Downgrade or unchanged: apply immediately, clear any pending upgrade.
+        new_state = {"confirmed_mode": raw_mode, "pending_mode": None, "pending_count": 0}
+        _save_state(new_state)
+        if raw_mode != confirmed:
+            raw_reason = f"{raw_reason} | De-risked immediately from {confirmed} (no hysteresis on downgrades)."
+        return raw_mode, raw_reason
+
+    # Upgrade requested — needs confirmations_needed consecutive agreeing reads.
+    if state.get("pending_mode") == raw_mode:
+        pending_count = state.get("pending_count", 0) + 1
+    else:
+        pending_count = 1
+
+    if pending_count >= confirmations_needed:
+        new_state = {"confirmed_mode": raw_mode, "pending_mode": None, "pending_count": 0}
+        _save_state(new_state)
+        return raw_mode, f"{raw_reason} | Recovery confirmed after {pending_count}/{confirmations_needed} clean reads."
+
+    new_state = {"confirmed_mode": confirmed, "pending_mode": raw_mode, "pending_count": pending_count}
+    _save_state(new_state)
+    return confirmed, (
+        f"{raw_reason} | Recovery to {raw_mode} pending ({pending_count}/{confirmations_needed} "
+        f"clean reads) — staying at {confirmed} for now."
+    )
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# PUBLIC ENTRY POINT
+# ═════════════════════════════════════════════════════════════════════════════
+
+def auto_select_mode() -> Tuple[str, str]:
+    """
+    Production mode decision: AGGRESSIVE-by-default circuit breaker →
+    hysteresis (instant downgrades, delayed recovery) → regime gate (caps
+    AGGRESSIVE in a Nifty downtrend). Call this from quarterly_manager.py /
+    profit_chaser.py.
+
+    Returns:
+        (mode, reason) where mode is CONSERVATIVE/BALANCED/AGGRESSIVE
+    """
+    raw_mode, raw_reason = _raw_select_mode()
+    mode, reason = _apply_hysteresis(raw_mode, raw_reason)
+    mode, reason = _apply_regime_gate(mode, reason)
+    return mode, reason
 
 
 # ═════════════════════════════════════════════════════════════════════════════

@@ -709,9 +709,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--mode",
-        choices=["CONSERVATIVE", "BALANCED", "AGGRESSIVE"],
-        default="CONSERVATIVE",
-        help="Risk mode (default: CONSERVATIVE)",
+        choices=["AUTO", "CONSERVATIVE", "BALANCED", "AGGRESSIVE"],
+        default="AUTO",
+        help="Risk mode: AUTO = auto-select based on trailing performance (default: AUTO)",
     )
     parser.add_argument(
         "--market",
@@ -726,8 +726,21 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    # AUTO mode selection — mirrors autopilot/quarterly_manager.py
+    if args.mode == "AUTO":
+        from autopilot.auto_mode import auto_select_mode
+        selected_mode, reason = auto_select_mode()
+        print(f"\n{'='*60}")
+        print("🎛️ AUTO MODE SELECTION (Profit Chaser)")
+        print(f"{'='*60}")
+        print(f"Selected: {selected_mode}")
+        print(f"Reason: {reason}")
+        print(f"{'='*60}\n")
+    else:
+        selected_mode = args.mode
+
     run_chaser(
-        mode=args.mode,
+        mode=selected_mode,
         market=args.market,
         dry_run=not args.execute,
     )
