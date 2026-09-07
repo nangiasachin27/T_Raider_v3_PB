@@ -1,5 +1,5 @@
 {
-    "cash": 3061.091495513916,
+    "cash": 3230.9014930725098,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
@@ -24,7 +24,7 @@
             "entry_date": "2026-09-01"
         },
         "ASHOKLEY.NS": {
-            "qty": 131,
+            "qty": 130,
             "entry_price": 167.3300018310547,
             "entry_date": "2026-09-02"
         },
@@ -36,7 +36,8 @@
         "TORNTPHARM.NS": {
             "qty": 1,
             "entry_price": 4845.0,
-            "entry_date": "2026-09-04"
+            "entry_date": "2026-09-04",
+            "peak_price": 4900.0
         }
     },
     "history": [
@@ -1596,6 +1597,15 @@
             "price": 4845.0,
             "strategy": "ATR Sized (ATR:107.4) [AGGRESSIVE]",
             "total": 4845.0
+        },
+        {
+            "timestamp": "2026-09-07 09:51:32",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 169.80999755859375,
+            "strategy": "ConcentrationTrim (20.1% -> 20%)",
+            "total": 169.81
         }
     ]
 }
