@@ -26,18 +26,20 @@
         "ASHOKLEY.NS": {
             "qty": 130,
             "entry_price": 167.3300018310547,
-            "entry_date": "2026-09-02"
+            "entry_date": "2026-09-02",
+            "peak_price": 169.0
         },
         "POLYCAB.NS": {
             "qty": 2,
             "entry_price": 8317.5,
-            "entry_date": "2026-09-04"
+            "entry_date": "2026-09-04",
+            "peak_price": 8388.0
         },
         "TORNTPHARM.NS": {
             "qty": 1,
             "entry_price": 4845.0,
             "entry_date": "2026-09-04",
-            "peak_price": 4900.0
+            "peak_price": 4963.5
         }
     },
     "history": [
