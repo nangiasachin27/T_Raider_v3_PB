@@ -1,5 +1,5 @@
 {
-    "cash": 3230.9014930725098,
+    "cash": 21896.90149307251,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
@@ -16,11 +16,6 @@
         "DMART.NS": {
             "qty": 5,
             "entry_price": 3805.0,
-            "entry_date": "2026-09-01"
-        },
-        "LUPIN.NS": {
-            "qty": 9,
-            "entry_price": 2143.0,
             "entry_date": "2026-09-01"
         },
         "ASHOKLEY.NS": {
@@ -1608,6 +1603,15 @@
             "price": 169.80999755859375,
             "strategy": "ConcentrationTrim (20.1% -> 20%)",
             "total": 169.81
+        },
+        {
+            "timestamp": "2026-09-10 09:51:22",
+            "ticker": "LUPIN.NS",
+            "side": "sell",
+            "qty": 9,
+            "price": 2074.0,
+            "strategy": "Adaptive Stop (-3.2%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 18666.0
         }
     ]
 }
