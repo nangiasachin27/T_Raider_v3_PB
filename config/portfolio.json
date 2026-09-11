@@ -1,5 +1,5 @@
 {
-    "cash": 21896.90149307251,
+    "cash": 976.7012367248535,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
@@ -35,6 +35,11 @@
             "entry_price": 4845.0,
             "entry_date": "2026-09-04",
             "peak_price": 4963.5
+        },
+        "SBIN.NS": {
+            "qty": 21,
+            "entry_price": 996.2000122070312,
+            "entry_date": "2026-09-11"
         }
     },
     "history": [
@@ -1612,6 +1617,15 @@
             "price": 2074.0,
             "strategy": "Adaptive Stop (-3.2%, type=VOL-ADAPTIVE TRAIL)",
             "total": 18666.0
+        },
+        {
+            "timestamp": "2026-09-11 09:51:55",
+            "ticker": "SBIN.NS",
+            "side": "buy",
+            "qty": 21,
+            "price": 996.2000122070312,
+            "strategy": "ATR Sized (ATR:16.9) [BALANCED]",
+            "total": 20920.2
         }
     ]
 }
