@@ -1,5 +1,5 @@
 {
-    "cash": 976.7012367248535,
+    "cash": 236.40155410766602,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
@@ -18,12 +18,6 @@
             "entry_price": 3805.0,
             "entry_date": "2026-09-01"
         },
-        "ASHOKLEY.NS": {
-            "qty": 130,
-            "entry_price": 167.3300018310547,
-            "entry_date": "2026-09-02",
-            "peak_price": 169.0
-        },
         "POLYCAB.NS": {
             "qty": 2,
             "entry_price": 8317.5,
@@ -40,6 +34,11 @@
             "qty": 21,
             "entry_price": 996.2000122070312,
             "entry_date": "2026-09-11"
+        },
+        "BEL.NS": {
+            "qty": 55,
+            "entry_price": 385.0,
+            "entry_date": "2026-09-15"
         }
     },
     "history": [
@@ -1626,6 +1625,24 @@
             "price": 996.2000122070312,
             "strategy": "ATR Sized (ATR:16.9) [BALANCED]",
             "total": 20920.2
+        },
+        {
+            "timestamp": "2026-09-15 09:51:21",
+            "ticker": "ASHOKLEY.NS",
+            "side": "sell",
+            "qty": 130,
+            "price": 157.19000244140625,
+            "strategy": "Adaptive Stop (-6.1%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 20434.7
+        },
+        {
+            "timestamp": "2026-09-15 09:51:37",
+            "ticker": "BEL.NS",
+            "side": "buy",
+            "qty": 55,
+            "price": 385.0,
+            "strategy": "ATR Sized (ATR:7.7) [BALANCED]",
+            "total": 21175.0
         }
     ]
 }
