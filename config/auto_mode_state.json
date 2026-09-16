@@ -1,5 +1,5 @@
 {
-  "confirmed_mode": "AGGRESSIVE",
+  "confirmed_mode": "BALANCED",
   "pending_mode": null,
   "pending_count": 0
 }

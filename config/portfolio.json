@@ -38,7 +38,8 @@
         "BEL.NS": {
             "qty": 55,
             "entry_price": 385.0,
-            "entry_date": "2026-09-15"
+            "entry_date": "2026-09-15",
+            "peak_price": 388.2
         }
     },
     "history": [
