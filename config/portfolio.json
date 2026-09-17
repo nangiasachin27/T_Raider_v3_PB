@@ -1,17 +1,11 @@
 {
-    "cash": 236.40155410766602,
+    "cash": 2249.3210487365723,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
             "entry_price": 355.1000061035156,
             "entry_date": "2026-08-27",
             "peak_price": 355.85
-        },
-        "BANKBARODA.NS": {
-            "qty": 92,
-            "entry_price": 236.94000244140625,
-            "entry_date": "2026-08-31",
-            "peak_price": 240.9
         },
         "DMART.NS": {
             "qty": 5,
@@ -39,7 +33,12 @@
             "qty": 55,
             "entry_price": 385.0,
             "entry_date": "2026-09-15",
-            "peak_price": 388.2
+            "peak_price": 394.1
+        },
+        "TITAN.NS": {
+            "qty": 4,
+            "entry_price": 4844.5,
+            "entry_date": "2026-09-17"
         }
     },
     "history": [
@@ -1644,6 +1643,24 @@
             "price": 385.0,
             "strategy": "ATR Sized (ATR:7.7) [BALANCED]",
             "total": 21175.0
+        },
+        {
+            "timestamp": "2026-09-17 09:51:20",
+            "ticker": "BANKBARODA.NS",
+            "side": "sell",
+            "qty": 92,
+            "price": 232.50999450683594,
+            "strategy": "Adaptive Stop (-1.9%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 21390.92
+        },
+        {
+            "timestamp": "2026-09-17 09:51:33",
+            "ticker": "TITAN.NS",
+            "side": "buy",
+            "qty": 4,
+            "price": 4844.5,
+            "strategy": "ATR Sized (ATR:77.4) [BALANCED]",
+            "total": 19378.0
         }
     ]
 }
