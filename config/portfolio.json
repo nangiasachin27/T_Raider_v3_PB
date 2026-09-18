@@ -1,5 +1,5 @@
 {
-    "cash": 2249.3210487365723,
+    "cash": 2646.421054840088,
     "holdings": {
         "PFC.NS": {
             "qty": 13,
@@ -30,10 +30,9 @@
             "entry_date": "2026-09-11"
         },
         "BEL.NS": {
-            "qty": 55,
+            "qty": 54,
             "entry_price": 385.0,
-            "entry_date": "2026-09-15",
-            "peak_price": 394.1
+            "entry_date": "2026-09-15"
         },
         "TITAN.NS": {
             "qty": 4,
@@ -1661,6 +1660,15 @@
             "price": 4844.5,
             "strategy": "ATR Sized (ATR:77.4) [BALANCED]",
             "total": 19378.0
+        },
+        {
+            "timestamp": "2026-09-18 09:51:19",
+            "ticker": "BEL.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 397.1000061035156,
+            "strategy": "ConcentrationTrim (20.1% -> 20%)",
+            "total": 397.1
         }
     ]
 }
