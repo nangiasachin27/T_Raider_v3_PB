@@ -22,7 +22,7 @@
             "qty": 1,
             "entry_price": 4845.0,
             "entry_date": "2026-09-04",
-            "peak_price": 4963.5
+            "peak_price": 4972.0
         },
         "SBIN.NS": {
             "qty": 21,
@@ -32,12 +32,14 @@
         "BEL.NS": {
             "qty": 54,
             "entry_price": 385.0,
-            "entry_date": "2026-09-15"
+            "entry_date": "2026-09-15",
+            "peak_price": 398.0
         },
         "TITAN.NS": {
             "qty": 4,
             "entry_price": 4844.5,
-            "entry_date": "2026-09-17"
+            "entry_date": "2026-09-17",
+            "peak_price": 4875.0
         }
     },
     "history": [
