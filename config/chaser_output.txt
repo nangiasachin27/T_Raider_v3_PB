@@ -3,33 +3,33 @@
 🎛️ AUTO MODE SELECTION (Profit Chaser)
 ============================================================
 Selected: BALANCED
-Reason: All circuit breakers clear. [WR=55% DD=4.1% Sharpe=0.14 ConsecLosses=1] | Regime gate: Nifty in DOWNTREND (Nifty 50: DOWNTREND ▼  |  Close: 23,398  |  EMA50: 24,040  |  Spread: -2.67%) — capped AGGRESSIVE to BALANCED.
+Reason: Circuit breaker (BALANCED): DD=5.6% (>=5%). [WR=50% DD=5.6% Sharpe=0.10 ConsecLosses=0]
 ============================================================
 
 
 ──────────────────────────────────────────────────────────────────────
-  T_Raider Profit Chaser  |  2026-09-14 10:03:06
+  T_Raider Profit Chaser  |  2026-09-21 10:08:19
 ──────────────────────────────────────────────────────────────────────
   Target         : 7.0%
   Urgency        : 1.0x  (effective weak threshold: -4.00%)
-  Days left      : 71
+  Days left      : 64
   Effective mode : BALANCED
   Dry run        : True
 
   Fetching prices for 7 holdings…
 
-  Portfolio return : -4.76%
+  Portfolio return : -4.55%
   Target           : 7.0%
-  Gap              : 11.76%
+  Gap              : 11.55%
 
   Checking regime & macro gates…
 
 ───────────────────────────────────────────────────────
 🌍 MACRO ENVIRONMENT — India (NSE/BSE)
 ───────────────────────────────────────────────────────
-  Volatility (VIX)  : 🟢 12.3  [NORMAL]
-  Institutional Flow: 🟢 ₹+1,968M  [BULLISH]
-  Overnight (Ref)   : 🟢 +0.86%
+  Volatility (VIX)  : 🟢 11.2  [NORMAL]
+  Institutional Flow: 🟢 ₹+1,020M  [BULLISH]
+  Overnight (Ref)   : 🟢 +0.17%
   Calendar          : 🟢 No scheduled risk events today
 ───────────────────────────────────────────────────────
 
