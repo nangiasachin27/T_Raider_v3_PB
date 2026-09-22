@@ -1,12 +1,6 @@
 {
-    "cash": 2646.421054840088,
+    "cash": 241.42108535766602,
     "holdings": {
-        "PFC.NS": {
-            "qty": 13,
-            "entry_price": 355.1000061035156,
-            "entry_date": "2026-08-27",
-            "peak_price": 355.85
-        },
         "DMART.NS": {
             "qty": 5,
             "entry_price": 3805.0,
@@ -39,7 +33,12 @@
             "qty": 4,
             "entry_price": 4844.5,
             "entry_date": "2026-09-17",
-            "peak_price": 4875.0
+            "peak_price": 4949.0
+        },
+        "FEDERALBNK.NS": {
+            "qty": 21,
+            "entry_price": 327.6000061035156,
+            "entry_date": "2026-09-22"
         }
     },
     "history": [
@@ -1671,6 +1670,24 @@
             "price": 397.1000061035156,
             "strategy": "ConcentrationTrim (20.1% -> 20%)",
             "total": 397.1
+        },
+        {
+            "timestamp": "2026-09-22 09:51:31",
+            "ticker": "PFC.NS",
+            "side": "sell",
+            "qty": 13,
+            "price": 344.20001220703125,
+            "strategy": "Adaptive Stop (-3.1%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 4474.6
+        },
+        {
+            "timestamp": "2026-09-22 09:51:48",
+            "ticker": "FEDERALBNK.NS",
+            "side": "buy",
+            "qty": 21,
+            "price": 327.6000061035156,
+            "strategy": "ATR Sized (ATR:6.2) [BALANCED]",
+            "total": 6879.6
         }
     ]
 }
