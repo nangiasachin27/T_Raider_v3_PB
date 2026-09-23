@@ -4,19 +4,20 @@
         "DMART.NS": {
             "qty": 5,
             "entry_price": 3805.0,
-            "entry_date": "2026-09-01"
+            "entry_date": "2026-09-01",
+            "peak_price": 3839.0
         },
         "POLYCAB.NS": {
             "qty": 2,
             "entry_price": 8317.5,
             "entry_date": "2026-09-04",
-            "peak_price": 8388.0
+            "peak_price": 8416.5
         },
         "TORNTPHARM.NS": {
             "qty": 1,
             "entry_price": 4845.0,
             "entry_date": "2026-09-04",
-            "peak_price": 4972.0
+            "peak_price": 4983.5
         },
         "SBIN.NS": {
             "qty": 21,
@@ -38,7 +39,8 @@
         "FEDERALBNK.NS": {
             "qty": 21,
             "entry_price": 327.6000061035156,
-            "entry_date": "2026-09-22"
+            "entry_date": "2026-09-22",
+            "peak_price": 329.75
         }
     },
     "history": [
