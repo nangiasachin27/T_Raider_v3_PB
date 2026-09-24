@@ -1,48 +1,6 @@
 {
-    "cash": 241.42108535766602,
-    "holdings": {
-        "DMART.NS": {
-            "qty": 5,
-            "entry_price": 3805.0,
-            "entry_date": "2026-09-01",
-            "peak_price": 3839.0
-        },
-        "POLYCAB.NS": {
-            "qty": 2,
-            "entry_price": 8317.5,
-            "entry_date": "2026-09-04",
-            "peak_price": 8416.5
-        },
-        "TORNTPHARM.NS": {
-            "qty": 1,
-            "entry_price": 4845.0,
-            "entry_date": "2026-09-04",
-            "peak_price": 4983.5
-        },
-        "SBIN.NS": {
-            "qty": 21,
-            "entry_price": 996.2000122070312,
-            "entry_date": "2026-09-11"
-        },
-        "BEL.NS": {
-            "qty": 54,
-            "entry_price": 385.0,
-            "entry_date": "2026-09-15",
-            "peak_price": 398.0
-        },
-        "TITAN.NS": {
-            "qty": 4,
-            "entry_price": 4844.5,
-            "entry_date": "2026-09-17",
-            "peak_price": 4949.0
-        },
-        "FEDERALBNK.NS": {
-            "qty": 21,
-            "entry_price": 327.6000061035156,
-            "entry_date": "2026-09-22",
-            "peak_price": 329.75
-        }
-    },
+    "cash": 108842.16968154907,
+    "holdings": {},
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -1690,6 +1648,69 @@
             "price": 327.6000061035156,
             "strategy": "ATR Sized (ATR:6.2) [BALANCED]",
             "total": 6879.6
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "DMART.NS",
+            "side": "sell",
+            "qty": 5,
+            "price": 3792.89990234375,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 18964.5
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "POLYCAB.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 8340.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 16680.0
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "TORNTPHARM.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 4902.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 4902.0
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "SBIN.NS",
+            "side": "sell",
+            "qty": 21,
+            "price": 978.5,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 20548.5
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "BEL.NS",
+            "side": "sell",
+            "qty": 54,
+            "price": 393.29998779296875,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 21238.2
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "TITAN.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 4842.0,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 19368.0
+        },
+        {
+            "timestamp": "2026-09-24 09:51:23",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 21,
+            "price": 328.54998779296875,
+            "strategy": "Paper-QuarterlyHarvest",
+            "total": 6899.55
         }
     ]
 }

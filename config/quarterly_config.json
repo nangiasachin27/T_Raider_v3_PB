@@ -7,10 +7,10 @@
   "trailing_stop_pct": 0.1,
   "compound_mode": true,
   "original_capital": 100000.0,
-  "current_base_capital": 115044.42,
-  "highest_value": 115327.62105178833,
-  "quarter_start_date": "2026-08-24T09:51:16.617746",
-  "quarter_number": 4,
+  "current_base_capital": 108842.17,
+  "highest_value": 108842.17,
+  "quarter_start_date": "2026-09-24T09:51:23.635862",
+  "quarter_number": 5,
   "realized_pnl_history": [
     {
       "quarter": 1,
@@ -38,9 +38,18 @@
       "return_pct": 8.18,
       "harvest_date": "2026-08-24T09:51:16.617750",
       "compound_mode": true
+    },
+    {
+      "quarter": 4,
+      "start_capital": 115044.42,
+      "end_value": 108842.17,
+      "realized_pnl": -6202.25,
+      "return_pct": -5.39,
+      "harvest_date": "2026-09-24T09:51:23.635866",
+      "compound_mode": true
     }
   ],
-  "last_harvest_date": "2026-08-24T09:51:16.617750",
+  "last_harvest_date": "2026-09-24T09:51:23.635866",
   "paper_trading": true,
   "broker": "paper",
   "market": "INDIA",
