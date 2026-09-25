@@ -1,6 +1,17 @@
 {
-    "cash": 108842.16968154907,
-    "holdings": {},
+    "cash": 65508.719272613525,
+    "holdings": {
+        "FEDERALBNK.NS": {
+            "qty": 67,
+            "entry_price": 322.3500061035156,
+            "entry_date": "2026-09-25"
+        },
+        "FORTIS.NS": {
+            "qty": 26,
+            "entry_price": 836.0,
+            "entry_date": "2026-09-25"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -1711,6 +1722,24 @@
             "price": 328.54998779296875,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 6899.55
+        },
+        {
+            "timestamp": "2026-09-25 09:51:34",
+            "ticker": "FEDERALBNK.NS",
+            "side": "buy",
+            "qty": 67,
+            "price": 322.3500061035156,
+            "strategy": "ATR Sized (ATR:6.4) [BALANCED]",
+            "total": 21597.45
+        },
+        {
+            "timestamp": "2026-09-25 09:51:34",
+            "ticker": "FORTIS.NS",
+            "side": "buy",
+            "qty": 26,
+            "price": 836.0,
+            "strategy": "ATR Sized (ATR:18.2) [BALANCED]",
+            "total": 21736.0
         }
     ]
 }
