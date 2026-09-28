@@ -1,15 +1,31 @@
 {
-    "cash": 65508.719272613525,
+    "cash": 2706.920322418213,
     "holdings": {
         "FEDERALBNK.NS": {
             "qty": 67,
             "entry_price": 322.3500061035156,
-            "entry_date": "2026-09-25"
+            "entry_date": "2026-09-25",
+            "peak_price": 323.8
         },
         "FORTIS.NS": {
             "qty": 26,
             "entry_price": 836.0,
             "entry_date": "2026-09-25"
+        },
+        "MAXHEALTH.NS": {
+            "qty": 21,
+            "entry_price": 998.5999755859375,
+            "entry_date": "2026-09-28"
+        },
+        "HDFCAMC.NS": {
+            "qty": 9,
+            "entry_price": 2312.0,
+            "entry_date": "2026-09-28"
+        },
+        "TATACONSUM.NS": {
+            "qty": 22,
+            "entry_price": 955.5999755859375,
+            "entry_date": "2026-09-28"
         }
     },
     "history": [
@@ -1740,6 +1756,33 @@
             "price": 836.0,
             "strategy": "ATR Sized (ATR:18.2) [BALANCED]",
             "total": 21736.0
+        },
+        {
+            "timestamp": "2026-09-28 09:51:30",
+            "ticker": "MAXHEALTH.NS",
+            "side": "buy",
+            "qty": 21,
+            "price": 998.5999755859375,
+            "strategy": "ATR Sized (ATR:22.8) [BALANCED]",
+            "total": 20970.6
+        },
+        {
+            "timestamp": "2026-09-28 09:51:30",
+            "ticker": "HDFCAMC.NS",
+            "side": "buy",
+            "qty": 9,
+            "price": 2312.0,
+            "strategy": "ATR Sized (ATR:44.0) [BALANCED]",
+            "total": 20808.0
+        },
+        {
+            "timestamp": "2026-09-28 09:51:30",
+            "ticker": "TATACONSUM.NS",
+            "side": "buy",
+            "qty": 22,
+            "price": 955.5999755859375,
+            "strategy": "ATR Sized (ATR:16.7) [BALANCED]",
+            "total": 21023.2
         }
     ]
 }
