@@ -1,11 +1,10 @@
 {
-    "cash": 2706.920322418213,
+    "cash": 16.050472259521484,
     "holdings": {
         "FEDERALBNK.NS": {
-            "qty": 67,
+            "qty": 66,
             "entry_price": 322.3500061035156,
-            "entry_date": "2026-09-25",
-            "peak_price": 323.8
+            "entry_date": "2026-09-25"
         },
         "FORTIS.NS": {
             "qty": 26,
@@ -25,7 +24,13 @@
         "TATACONSUM.NS": {
             "qty": 22,
             "entry_price": 955.5999755859375,
-            "entry_date": "2026-09-28"
+            "entry_date": "2026-09-28",
+            "peak_price": 961.0
+        },
+        "NHPC.NS": {
+            "qty": 41,
+            "entry_price": 73.5199966430664,
+            "entry_date": "2026-09-29"
         }
     },
     "history": [
@@ -1783,6 +1788,24 @@
             "price": 955.5999755859375,
             "strategy": "ATR Sized (ATR:16.7) [BALANCED]",
             "total": 21023.2
+        },
+        {
+            "timestamp": "2026-09-29 09:51:15",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 323.45001220703125,
+            "strategy": "ConcentrationTrim (20.1% -> 20%)",
+            "total": 323.45
+        },
+        {
+            "timestamp": "2026-09-29 09:51:28",
+            "ticker": "NHPC.NS",
+            "side": "buy",
+            "qty": 41,
+            "price": 73.5199966430664,
+            "strategy": "ATR Sized (ATR:1.2) [BALANCED]",
+            "total": 3014.32
         }
     ]
 }
