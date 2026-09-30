@@ -1,20 +1,10 @@
 {
-    "cash": 16.050472259521484,
+    "cash": 669.9013633728027,
     "holdings": {
         "FEDERALBNK.NS": {
-            "qty": 66,
+            "qty": 65,
             "entry_price": 322.3500061035156,
             "entry_date": "2026-09-25"
-        },
-        "FORTIS.NS": {
-            "qty": 26,
-            "entry_price": 836.0,
-            "entry_date": "2026-09-25"
-        },
-        "MAXHEALTH.NS": {
-            "qty": 21,
-            "entry_price": 998.5999755859375,
-            "entry_date": "2026-09-28"
         },
         "HDFCAMC.NS": {
             "qty": 9,
@@ -22,15 +12,24 @@
             "entry_date": "2026-09-28"
         },
         "TATACONSUM.NS": {
-            "qty": 22,
+            "qty": 21,
             "entry_price": 955.5999755859375,
-            "entry_date": "2026-09-28",
-            "peak_price": 961.0
+            "entry_date": "2026-09-28"
         },
         "NHPC.NS": {
             "qty": 41,
             "entry_price": 73.5199966430664,
             "entry_date": "2026-09-29"
+        },
+        "SBILIFE.NS": {
+            "qty": 12,
+            "entry_price": 1684.699951171875,
+            "entry_date": "2026-09-30"
+        },
+        "NESTLEIND.NS": {
+            "qty": 15,
+            "entry_price": 1314.5,
+            "entry_date": "2026-09-30"
         }
     },
     "history": [
@@ -1806,6 +1805,60 @@
             "price": 73.5199966430664,
             "strategy": "ATR Sized (ATR:1.2) [BALANCED]",
             "total": 3014.32
+        },
+        {
+            "timestamp": "2026-09-30 09:51:19",
+            "ticker": "FORTIS.NS",
+            "side": "sell",
+            "qty": 26,
+            "price": 764.9500122070312,
+            "strategy": "Adaptive Stop (-8.5%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19888.7
+        },
+        {
+            "timestamp": "2026-09-30 09:51:19",
+            "ticker": "MAXHEALTH.NS",
+            "side": "sell",
+            "qty": 21,
+            "price": 925.0,
+            "strategy": "Adaptive Stop (-7.4%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19425.0
+        },
+        {
+            "timestamp": "2026-09-30 09:51:19",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 318.75,
+            "strategy": "ConcentrationTrim (20.0% -> 20%)",
+            "total": 318.75
+        },
+        {
+            "timestamp": "2026-09-30 09:51:19",
+            "ticker": "TATACONSUM.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 955.2999877929688,
+            "strategy": "ConcentrationTrim (20.0% -> 20%)",
+            "total": 955.3
+        },
+        {
+            "timestamp": "2026-09-30 09:51:49",
+            "ticker": "SBILIFE.NS",
+            "side": "buy",
+            "qty": 12,
+            "price": 1684.699951171875,
+            "strategy": "ATR Sized (ATR:40.7) [BALANCED]",
+            "total": 20216.4
+        },
+        {
+            "timestamp": "2026-09-30 09:51:49",
+            "ticker": "NESTLEIND.NS",
+            "side": "buy",
+            "qty": 15,
+            "price": 1314.5,
+            "strategy": "ATR Sized (ATR:27.0) [BALANCED]",
+            "total": 19717.5
         }
     ]
 }
