@@ -9,7 +9,8 @@
         "HDFCAMC.NS": {
             "qty": 9,
             "entry_price": 2312.0,
-            "entry_date": "2026-09-28"
+            "entry_date": "2026-09-28",
+            "peak_price": 2319.8999
         },
         "TATACONSUM.NS": {
             "qty": 21,
@@ -24,7 +25,8 @@
         "SBILIFE.NS": {
             "qty": 12,
             "entry_price": 1684.699951171875,
-            "entry_date": "2026-09-30"
+            "entry_date": "2026-09-30",
+            "peak_price": 1723.6
         },
         "NESTLEIND.NS": {
             "qty": 15,
