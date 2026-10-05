@@ -1,8 +1,8 @@
 {
-    "cash": 669.9013633728027,
+    "cash": 997.0513572692871,
     "holdings": {
         "FEDERALBNK.NS": {
-            "qty": 65,
+            "qty": 64,
             "entry_price": 322.3500061035156,
             "entry_date": "2026-09-25"
         },
@@ -10,7 +10,7 @@
             "qty": 9,
             "entry_price": 2312.0,
             "entry_date": "2026-09-28",
-            "peak_price": 2319.8999
+            "peak_price": 2352.5
         },
         "TATACONSUM.NS": {
             "qty": 21,
@@ -1861,6 +1861,15 @@
             "price": 1314.5,
             "strategy": "ATR Sized (ATR:27.0) [BALANCED]",
             "total": 19717.5
+        },
+        {
+            "timestamp": "2026-10-05 09:51:13",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 327.1499938964844,
+            "strategy": "ConcentrationTrim (20.0% -> 20%)",
+            "total": 327.15
         }
     ]
 }
