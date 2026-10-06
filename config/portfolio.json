@@ -10,12 +10,13 @@
             "qty": 9,
             "entry_price": 2312.0,
             "entry_date": "2026-09-28",
-            "peak_price": 2352.5
+            "peak_price": 2360.0
         },
         "TATACONSUM.NS": {
             "qty": 21,
             "entry_price": 955.5999755859375,
-            "entry_date": "2026-09-28"
+            "entry_date": "2026-09-28",
+            "peak_price": 973.95
         },
         "NHPC.NS": {
             "qty": 41,
@@ -26,12 +27,13 @@
             "qty": 12,
             "entry_price": 1684.699951171875,
             "entry_date": "2026-09-30",
-            "peak_price": 1723.6
+            "peak_price": 1754.0
         },
         "NESTLEIND.NS": {
             "qty": 15,
             "entry_price": 1314.5,
-            "entry_date": "2026-09-30"
+            "entry_date": "2026-09-30",
+            "peak_price": 1338.5
         }
     },
     "history": [
