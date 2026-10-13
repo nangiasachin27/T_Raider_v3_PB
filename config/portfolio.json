@@ -22,7 +22,8 @@
         "NHPC.NS": {
             "qty": 41,
             "entry_price": 73.5199966430664,
-            "entry_date": "2026-09-29"
+            "entry_date": "2026-09-29",
+            "peak_price": 73.78
         },
         "SBILIFE.NS": {
             "qty": 12,
