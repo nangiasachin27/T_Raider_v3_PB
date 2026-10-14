@@ -1,11 +1,11 @@
 {
-    "cash": 997.0513572692871,
+    "cash": 1254.051357269287,
     "holdings": {
         "FEDERALBNK.NS": {
             "qty": 64,
             "entry_price": 322.3500061035156,
             "entry_date": "2026-09-25",
-            "peak_price": 329.4
+            "peak_price": 330.0
         },
         "HDFCAMC.NS": {
             "qty": 9,
@@ -17,7 +17,7 @@
             "qty": 21,
             "entry_price": 955.5999755859375,
             "entry_date": "2026-09-28",
-            "peak_price": 973.95
+            "peak_price": 981.9
         },
         "NHPC.NS": {
             "qty": 41,
@@ -25,17 +25,15 @@
             "entry_date": "2026-09-29",
             "peak_price": 73.78
         },
+        "CHOLAFIN.NS": {
+            "qty": 13,
+            "entry_price": 1561.0,
+            "entry_date": "2026-10-14"
+        },
         "SBILIFE.NS": {
             "qty": 12,
-            "entry_price": 1684.699951171875,
-            "entry_date": "2026-09-30",
-            "peak_price": 1754.0
-        },
-        "NESTLEIND.NS": {
-            "qty": 15,
-            "entry_price": 1314.5,
-            "entry_date": "2026-09-30",
-            "peak_price": 1338.5
+            "entry_price": 1649.0,
+            "entry_date": "2026-10-14"
         }
     },
     "history": [
@@ -1874,6 +1872,42 @@
             "price": 327.1499938964844,
             "strategy": "ConcentrationTrim (20.0% -> 20%)",
             "total": 327.15
+        },
+        {
+            "timestamp": "2026-10-14 09:51:22",
+            "ticker": "SBILIFE.NS",
+            "side": "sell",
+            "qty": 12,
+            "price": 1649.0,
+            "strategy": "Adaptive Stop (-2.1%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19788.0
+        },
+        {
+            "timestamp": "2026-10-14 09:51:36",
+            "ticker": "NESTLEIND.NS",
+            "side": "sell",
+            "qty": 15,
+            "price": 1370.0,
+            "strategy": "Signal Exit",
+            "total": 20550.0
+        },
+        {
+            "timestamp": "2026-10-14 09:51:36",
+            "ticker": "CHOLAFIN.NS",
+            "side": "buy",
+            "qty": 13,
+            "price": 1561.0,
+            "strategy": "ATR Sized (ATR:50.6) [BALANCED]",
+            "total": 20293.0
+        },
+        {
+            "timestamp": "2026-10-14 09:51:36",
+            "ticker": "SBILIFE.NS",
+            "side": "buy",
+            "qty": 12,
+            "price": 1649.0,
+            "strategy": "ATR Sized (ATR:46.1) [BALANCED]",
+            "total": 19788.0
         }
     ]
 }
