@@ -1,23 +1,17 @@
 {
-    "cash": 1254.051357269287,
+    "cash": 1743.2516746520996,
     "holdings": {
         "FEDERALBNK.NS": {
             "qty": 64,
             "entry_price": 322.3500061035156,
             "entry_date": "2026-09-25",
-            "peak_price": 330.0
-        },
-        "HDFCAMC.NS": {
-            "qty": 9,
-            "entry_price": 2312.0,
-            "entry_date": "2026-09-28",
-            "peak_price": 2360.0
+            "peak_price": 331.3
         },
         "TATACONSUM.NS": {
             "qty": 21,
             "entry_price": 955.5999755859375,
             "entry_date": "2026-09-28",
-            "peak_price": 981.9
+            "peak_price": 990.0
         },
         "NHPC.NS": {
             "qty": 41,
@@ -28,12 +22,19 @@
         "CHOLAFIN.NS": {
             "qty": 13,
             "entry_price": 1561.0,
-            "entry_date": "2026-10-14"
+            "entry_date": "2026-10-14",
+            "peak_price": 1588.0
         },
         "SBILIFE.NS": {
             "qty": 12,
             "entry_price": 1649.0,
-            "entry_date": "2026-10-14"
+            "entry_date": "2026-10-14",
+            "peak_price": 1661.4
+        },
+        "CGPOWER.NS": {
+            "qty": 26,
+            "entry_price": 816.7999877929688,
+            "entry_date": "2026-10-15"
         }
     },
     "history": [
@@ -1908,6 +1909,33 @@
             "price": 1649.0,
             "strategy": "ATR Sized (ATR:46.1) [BALANCED]",
             "total": 19788.0
+        },
+        {
+            "timestamp": "2026-10-15 09:51:36",
+            "ticker": "HDFCAMC.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 2414.0,
+            "strategy": "ConcentrationTrim (20.0% -> 20%)",
+            "total": 2414.0
+        },
+        {
+            "timestamp": "2026-10-15 09:51:58",
+            "ticker": "HDFCAMC.NS",
+            "side": "sell",
+            "qty": 8,
+            "price": 2414.0,
+            "strategy": "Signal Exit",
+            "total": 19312.0
+        },
+        {
+            "timestamp": "2026-10-15 09:51:58",
+            "ticker": "CGPOWER.NS",
+            "side": "buy",
+            "qty": 26,
+            "price": 816.7999877929688,
+            "strategy": "ATR Sized (ATR:26.4) [BALANCED]",
+            "total": 21236.8
         }
     ]
 }
