@@ -1,12 +1,6 @@
 {
-    "cash": 2589.601650238037,
+    "cash": 24855.201259613037,
     "holdings": {
-        "FEDERALBNK.NS": {
-            "qty": 64,
-            "entry_price": 322.3500061035156,
-            "entry_date": "2026-09-25",
-            "peak_price": 335.8
-        },
         "TATACONSUM.NS": {
             "qty": 21,
             "entry_price": 955.5999755859375,
@@ -34,7 +28,8 @@
         "CGPOWER.NS": {
             "qty": 25,
             "entry_price": 816.7999877929688,
-            "entry_date": "2026-10-15"
+            "entry_date": "2026-10-15",
+            "peak_price": 853.9
         }
     },
     "history": [
@@ -1945,6 +1940,24 @@
             "price": 846.3499755859375,
             "strategy": "ConcentrationTrim (20.2% -> 20%)",
             "total": 846.35
+        },
+        {
+            "timestamp": "2026-10-19 09:51:19",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 2,
+            "price": 347.8999938964844,
+            "strategy": "ConcentrationTrim (20.4% -> 20%)",
+            "total": 695.8
+        },
+        {
+            "timestamp": "2026-10-19 09:51:39",
+            "ticker": "FEDERALBNK.NS",
+            "side": "sell",
+            "qty": 62,
+            "price": 347.8999938964844,
+            "strategy": "Signal Exit",
+            "total": 21569.8
         }
     ]
 }
