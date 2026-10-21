@@ -1,5 +1,5 @@
 {
-    "cash": 24855.201259613037,
+    "cash": 106.40182113647461,
     "holdings": {
         "TATACONSUM.NS": {
             "qty": 21,
@@ -30,6 +30,16 @@
             "entry_price": 816.7999877929688,
             "entry_date": "2026-10-15",
             "peak_price": 853.9
+        },
+        "VEDL.NS": {
+            "qty": 92,
+            "entry_price": 234.89999389648438,
+            "entry_date": "2026-10-21"
+        },
+        "HINDZINC.NS": {
+            "qty": 6,
+            "entry_price": 523.0,
+            "entry_date": "2026-10-21"
         }
     },
     "history": [
@@ -1958,6 +1968,24 @@
             "price": 347.8999938964844,
             "strategy": "Signal Exit",
             "total": 21569.8
+        },
+        {
+            "timestamp": "2026-10-21 09:51:38",
+            "ticker": "VEDL.NS",
+            "side": "buy",
+            "qty": 92,
+            "price": 234.89999389648438,
+            "strategy": "ATR Sized (ATR:8.1) [BALANCED]",
+            "total": 21610.8
+        },
+        {
+            "timestamp": "2026-10-21 09:51:38",
+            "ticker": "HINDZINC.NS",
+            "side": "buy",
+            "qty": 6,
+            "price": 523.0,
+            "strategy": "ATR Sized (ATR:15.6) [BALANCED]",
+            "total": 3138.0
         }
     ]
 }
