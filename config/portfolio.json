@@ -1,23 +1,11 @@
 {
-    "cash": 106.40182113647461,
+    "cash": 1485.451946258545,
     "holdings": {
         "TATACONSUM.NS": {
             "qty": 21,
             "entry_price": 955.5999755859375,
             "entry_date": "2026-09-28",
             "peak_price": 990.0
-        },
-        "NHPC.NS": {
-            "qty": 41,
-            "entry_price": 73.5199966430664,
-            "entry_date": "2026-09-29",
-            "peak_price": 73.78
-        },
-        "CHOLAFIN.NS": {
-            "qty": 13,
-            "entry_price": 1561.0,
-            "entry_date": "2026-10-14",
-            "peak_price": 1588.0
         },
         "SBILIFE.NS": {
             "qty": 12,
@@ -40,6 +28,11 @@
             "qty": 6,
             "entry_price": 523.0,
             "entry_date": "2026-10-21"
+        },
+        "CHOLAFIN.NS": {
+            "qty": 14,
+            "entry_price": 1472.5,
+            "entry_date": "2026-10-23"
         }
     },
     "history": [
@@ -1986,6 +1979,33 @@
             "price": 523.0,
             "strategy": "ATR Sized (ATR:15.6) [BALANCED]",
             "total": 3138.0
+        },
+        {
+            "timestamp": "2026-10-23 09:51:18",
+            "ticker": "NHPC.NS",
+            "side": "sell",
+            "qty": 41,
+            "price": 69.55000305175781,
+            "strategy": "Adaptive Stop (-5.4%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 2851.55
+        },
+        {
+            "timestamp": "2026-10-23 09:51:18",
+            "ticker": "CHOLAFIN.NS",
+            "side": "sell",
+            "qty": 13,
+            "price": 1472.5,
+            "strategy": "Adaptive Stop (-5.7%, type=VOL-ADAPTIVE TRAIL)",
+            "total": 19142.5
+        },
+        {
+            "timestamp": "2026-10-23 09:51:50",
+            "ticker": "CHOLAFIN.NS",
+            "side": "buy",
+            "qty": 14,
+            "price": 1472.5,
+            "strategy": "ATR Sized (ATR:46.1) [BALANCED]",
+            "total": 20615.0
         }
     ]
 }
