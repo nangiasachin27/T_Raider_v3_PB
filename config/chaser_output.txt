@@ -3,36 +3,18 @@
 🎛️ AUTO MODE SELECTION (Profit Chaser)
 ============================================================
 Selected: BALANCED
-Reason: Circuit breaker (BALANCED): DD=9.2% (>=5%). [WR=60% DD=9.2% Sharpe=0.05 ConsecLosses=0]
+Reason: Circuit breaker (BALANCED): DD=9.4% (>=5%) | WR=40% (<45%) | Sharpe=-0.08 (<0.0) | ConsecLosses=3 (>=3). [WR=40% DD=9.4% Sharpe=-0.08 ConsecLosses=3]
 ============================================================
 
 
 ──────────────────────────────────────────────────────────────────────
-  T_Raider Profit Chaser  |  2026-10-19 10:08:31
+  T_Raider Profit Chaser  |  2026-10-26 10:23:22
 ──────────────────────────────────────────────────────────────────────
   Target         : 7.0%
   Urgency        : 1.0x  (effective weak threshold: -4.00%)
-  Days left      : 66
+  Days left      : 92
   Effective mode : BALANCED
   Dry run        : True
 
-  Fetching prices for 5 holdings…
-
-  Portfolio return : 0.50%
-  Target           : 7.0%
-  Gap              : 6.50%
-
-  Checking regime & macro gates…
-
-───────────────────────────────────────────────────────
-🌍 MACRO ENVIRONMENT — India (NSE/BSE)
-───────────────────────────────────────────────────────
-  Volatility (VIX)  : 🟢 14.7  [NORMAL]
-  Institutional Flow: 🔴 ₹-3,661M  [BEARISH]
-  Overnight (Ref)   : 🟡 -1.09%
-  Calendar          : 🟢 No scheduled risk events today
-───────────────────────────────────────────────────────
-
-
-  ✅ No positions below weak threshold (-4.00%). Nothing to sell.
+  ℹ️  Portfolio is empty — nothing to rotate.
   💾 quarterly_config.json saved.
