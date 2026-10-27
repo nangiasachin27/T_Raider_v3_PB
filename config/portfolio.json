@@ -1,6 +1,12 @@
 {
-    "cash": 105733.75266647339,
-    "holdings": {},
+    "cash": 85823.75266647339,
+    "holdings": {
+        "HINDUNILVR.NS": {
+            "qty": 11,
+            "entry_price": 1810.0,
+            "entry_date": "2026-10-27"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -2026,6 +2032,15 @@
             "price": 1449.800048828125,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 20297.2
+        },
+        {
+            "timestamp": "2026-10-27 09:51:40",
+            "ticker": "HINDUNILVR.NS",
+            "side": "buy",
+            "qty": 11,
+            "price": 1810.0,
+            "strategy": "ATR Sized (ATR:42.1) [BALANCED]",
+            "total": 19910.0
         }
     ]
 }
