@@ -1,11 +1,21 @@
 {
-    "cash": 85823.75266647339,
+    "cash": 44528.352031707764,
     "holdings": {
         "HINDUNILVR.NS": {
             "qty": 11,
             "entry_price": 1810.0,
             "entry_date": "2026-10-27",
             "peak_price": 1865.0
+        },
+        "COROMANDEL.NS": {
+            "qty": 12,
+            "entry_price": 1680.0,
+            "entry_date": "2026-10-30"
+        },
+        "GODREJCP.NS": {
+            "qty": 26,
+            "entry_price": 812.9000244140625,
+            "entry_date": "2026-10-30"
         }
     },
     "history": [
@@ -2042,6 +2052,24 @@
             "price": 1810.0,
             "strategy": "ATR Sized (ATR:42.1) [BALANCED]",
             "total": 19910.0
+        },
+        {
+            "timestamp": "2026-10-30 09:51:40",
+            "ticker": "COROMANDEL.NS",
+            "side": "buy",
+            "qty": 12,
+            "price": 1680.0,
+            "strategy": "ATR Sized (ATR:56.9) [BALANCED]",
+            "total": 20160.0
+        },
+        {
+            "timestamp": "2026-10-30 09:51:40",
+            "ticker": "GODREJCP.NS",
+            "side": "buy",
+            "qty": 26,
+            "price": 812.9000244140625,
+            "strategy": "ATR Sized (ATR:24.8) [BALANCED]",
+            "total": 21135.4
         }
     ]
 }
