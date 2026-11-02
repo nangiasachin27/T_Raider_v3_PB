@@ -8,13 +8,31 @@ Reason: Circuit breaker (BALANCED): DD=9.4% (>=5%) | WR=40% (<45%) | Sharpe=-0.0
 
 
 ──────────────────────────────────────────────────────────────────────
-  T_Raider Profit Chaser  |  2026-10-26 10:23:22
+  T_Raider Profit Chaser  |  2026-11-02 12:45:57
 ──────────────────────────────────────────────────────────────────────
   Target         : 7.0%
   Urgency        : 1.0x  (effective weak threshold: -4.00%)
-  Days left      : 92
+  Days left      : 85
   Effective mode : BALANCED
   Dry run        : True
 
-  ℹ️  Portfolio is empty — nothing to rotate.
+  Fetching prices for 6 holdings…
+
+  Portfolio return : 1.87%
+  Target           : 7.0%
+  Gap              : 5.13%
+
+  Checking regime & macro gates…
+
+───────────────────────────────────────────────────────
+🌍 MACRO ENVIRONMENT — India (NSE/BSE)
+───────────────────────────────────────────────────────
+  Volatility (VIX)  : 🟢 15.5  [NORMAL]
+  Institutional Flow: 🔴 ₹-818M  [BEARISH]
+  Overnight (Ref)   : 🔴 -1.82%
+  Calendar          : 🟢 No scheduled risk events today
+───────────────────────────────────────────────────────
+
+
+  ✅ No positions below weak threshold (-4.00%). Nothing to sell.
   💾 quarterly_config.json saved.
