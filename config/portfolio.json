@@ -1,28 +1,17 @@
 {
-    "cash": 457.1722984313965,
+    "cash": 1433.1722984313965,
     "holdings": {
-        "HINDUNILVR.NS": {
-            "qty": 11,
-            "entry_price": 1810.0,
-            "entry_date": "2026-10-27",
-            "peak_price": 1889.0
-        },
-        "COROMANDEL.NS": {
-            "qty": 12,
-            "entry_price": 1680.0,
-            "entry_date": "2026-10-30",
-            "peak_price": 1712.1
-        },
         "GODREJCP.NS": {
             "qty": 26,
             "entry_price": 812.9000244140625,
             "entry_date": "2026-10-30",
-            "peak_price": 815.0
+            "peak_price": 829.95
         },
         "GLENMARK.NS": {
             "qty": 8,
             "entry_price": 2388.5,
-            "entry_date": "2026-11-02"
+            "entry_date": "2026-11-02",
+            "peak_price": 2407.5
         },
         "TATASTEEL.NS": {
             "qty": 119,
@@ -32,7 +21,18 @@
         "OLECTRA.NS": {
             "qty": 4,
             "entry_price": 992.2999877929688,
-            "entry_date": "2026-11-02"
+            "entry_date": "2026-11-02",
+            "peak_price": 1011.1
+        },
+        "CDSL.NS": {
+            "qty": 16,
+            "entry_price": 1319.0,
+            "entry_date": "2026-11-03"
+        },
+        "SBICARD.NS": {
+            "qty": 39,
+            "entry_price": 537.0,
+            "entry_date": "2026-11-03"
         }
     },
     "history": [
@@ -2114,6 +2114,42 @@
             "price": 992.2999877929688,
             "strategy": "ATR Sized (ATR:31.6) [BALANCED]",
             "total": 3969.2
+        },
+        {
+            "timestamp": "2026-11-03 09:51:41",
+            "ticker": "COROMANDEL.NS",
+            "side": "sell",
+            "qty": 12,
+            "price": 1795.0,
+            "strategy": "Signal Exit",
+            "total": 21540.0
+        },
+        {
+            "timestamp": "2026-11-03 09:51:41",
+            "ticker": "HINDUNILVR.NS",
+            "side": "sell",
+            "qty": 11,
+            "price": 1953.0,
+            "strategy": "Signal Exit",
+            "total": 21483.0
+        },
+        {
+            "timestamp": "2026-11-03 09:51:41",
+            "ticker": "CDSL.NS",
+            "side": "buy",
+            "qty": 16,
+            "price": 1319.0,
+            "strategy": "ATR Sized (ATR:39.5) [BALANCED]",
+            "total": 21104.0
+        },
+        {
+            "timestamp": "2026-11-03 09:51:41",
+            "ticker": "SBICARD.NS",
+            "side": "buy",
+            "qty": 39,
+            "price": 537.0,
+            "strategy": "ATR Sized (ATR:17.2) [BALANCED]",
+            "total": 20943.0
         }
     ]
 }
