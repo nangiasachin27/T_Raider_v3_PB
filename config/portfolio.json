@@ -1,38 +1,45 @@
 {
-    "cash": 1433.1722984313965,
+    "cash": 61.171688079833984,
     "holdings": {
-        "GODREJCP.NS": {
-            "qty": 26,
-            "entry_price": 812.9000244140625,
-            "entry_date": "2026-10-30",
-            "peak_price": 829.95
-        },
         "GLENMARK.NS": {
             "qty": 8,
             "entry_price": 2388.5,
             "entry_date": "2026-11-02",
-            "peak_price": 2407.5
+            "peak_price": 2510.0
         },
         "TATASTEEL.NS": {
             "qty": 119,
             "entry_price": 176.4199981689453,
-            "entry_date": "2026-11-02"
+            "entry_date": "2026-11-02",
+            "peak_price": 179.27
         },
         "OLECTRA.NS": {
             "qty": 4,
             "entry_price": 992.2999877929688,
             "entry_date": "2026-11-02",
-            "peak_price": 1011.1
+            "peak_price": 1057.55
         },
         "CDSL.NS": {
             "qty": 16,
             "entry_price": 1319.0,
-            "entry_date": "2026-11-03"
+            "entry_date": "2026-11-03",
+            "peak_price": 1323.8
         },
         "SBICARD.NS": {
             "qty": 39,
             "entry_price": 537.0,
-            "entry_date": "2026-11-03"
+            "entry_date": "2026-11-03",
+            "peak_price": 554.0
+        },
+        "BDL.NS": {
+            "qty": 16,
+            "entry_price": 1078.0,
+            "entry_date": "2026-11-04"
+        },
+        "HUDCO.NS": {
+            "qty": 40,
+            "entry_price": 153.38999938964844,
+            "entry_date": "2026-11-04"
         }
     },
     "history": [
@@ -2150,6 +2157,33 @@
             "price": 537.0,
             "strategy": "ATR Sized (ATR:17.2) [BALANCED]",
             "total": 20943.0
+        },
+        {
+            "timestamp": "2026-11-04 09:51:54",
+            "ticker": "GODREJCP.NS",
+            "side": "sell",
+            "qty": 26,
+            "price": 846.5999755859375,
+            "strategy": "Capital Rotation -> BDL.NS",
+            "total": 22011.6
+        },
+        {
+            "timestamp": "2026-11-04 09:51:54",
+            "ticker": "BDL.NS",
+            "side": "buy",
+            "qty": 16,
+            "price": 1078.0,
+            "strategy": "ATR Sized (Rotation from GODREJCP.NS)",
+            "total": 17248.0
+        },
+        {
+            "timestamp": "2026-11-04 09:51:54",
+            "ticker": "HUDCO.NS",
+            "side": "buy",
+            "qty": 40,
+            "price": 153.38999938964844,
+            "strategy": "ATR Sized (ATR:5.2) [BALANCED]",
+            "total": 6135.6
         }
     ]
 }
