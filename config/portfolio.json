@@ -1,5 +1,5 @@
 {
-    "cash": 61.171688079833984,
+    "cash": 11.84178352355957,
     "holdings": {
         "GLENMARK.NS": {
             "qty": 8,
@@ -11,7 +11,7 @@
             "qty": 119,
             "entry_price": 176.4199981689453,
             "entry_date": "2026-11-02",
-            "peak_price": 179.27
+            "peak_price": 182.37
         },
         "OLECTRA.NS": {
             "qty": 4,
@@ -23,23 +23,23 @@
             "qty": 16,
             "entry_price": 1319.0,
             "entry_date": "2026-11-03",
-            "peak_price": 1323.8
+            "peak_price": 1334.3
         },
         "SBICARD.NS": {
-            "qty": 39,
+            "qty": 38,
             "entry_price": 537.0,
-            "entry_date": "2026-11-03",
-            "peak_price": 554.0
-        },
-        "BDL.NS": {
-            "qty": 16,
-            "entry_price": 1078.0,
-            "entry_date": "2026-11-04"
+            "entry_date": "2026-11-03"
         },
         "HUDCO.NS": {
             "qty": 40,
             "entry_price": 153.38999938964844,
-            "entry_date": "2026-11-04"
+            "entry_date": "2026-11-04",
+            "peak_price": 157.91
+        },
+        "YESBANK.NS": {
+            "qty": 1091,
+            "entry_price": 16.329999923706055,
+            "entry_date": "2026-11-05"
         }
     },
     "history": [
@@ -2184,6 +2184,33 @@
             "price": 153.38999938964844,
             "strategy": "ATR Sized (ATR:5.2) [BALANCED]",
             "total": 6135.6
+        },
+        {
+            "timestamp": "2026-11-05 09:51:45",
+            "ticker": "SBICARD.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 582.7000122070312,
+            "strategy": "ConcentrationTrim (20.0% -> 20%)",
+            "total": 582.7
+        },
+        {
+            "timestamp": "2026-11-05 09:52:05",
+            "ticker": "BDL.NS",
+            "side": "sell",
+            "qty": 16,
+            "price": 1074.0,
+            "strategy": "Signal Exit",
+            "total": 17184.0
+        },
+        {
+            "timestamp": "2026-11-05 09:52:05",
+            "ticker": "YESBANK.NS",
+            "side": "buy",
+            "qty": 1091,
+            "price": 16.329999923706055,
+            "strategy": "ATR Sized (ATR:0.5) [BALANCED]",
+            "total": 17816.03
         }
     ]
 }
