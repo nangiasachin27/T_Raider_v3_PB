@@ -5,13 +5,13 @@
             "qty": 8,
             "entry_price": 2388.5,
             "entry_date": "2026-11-02",
-            "peak_price": 2510.0
+            "peak_price": 2590.0
         },
         "TATASTEEL.NS": {
             "qty": 119,
             "entry_price": 176.4199981689453,
             "entry_date": "2026-11-02",
-            "peak_price": 182.37
+            "peak_price": 185.7
         },
         "OLECTRA.NS": {
             "qty": 4,
@@ -28,18 +28,20 @@
         "SBICARD.NS": {
             "qty": 38,
             "entry_price": 537.0,
-            "entry_date": "2026-11-03"
+            "entry_date": "2026-11-03",
+            "peak_price": 580.2
         },
         "HUDCO.NS": {
             "qty": 40,
             "entry_price": 153.38999938964844,
             "entry_date": "2026-11-04",
-            "peak_price": 157.91
+            "peak_price": 160.0
         },
         "YESBANK.NS": {
             "qty": 1091,
             "entry_price": 16.329999923706055,
-            "entry_date": "2026-11-05"
+            "entry_date": "2026-11-05",
+            "peak_price": 17.26
         }
     },
     "history": [
