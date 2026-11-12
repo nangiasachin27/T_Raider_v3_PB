@@ -1,6 +1,17 @@
 {
-    "cash": 118466.2103099823,
-    "holdings": {},
+    "cash": 72024.7103099823,
+    "holdings": {
+        "BEL.NS": {
+            "qty": 58,
+            "entry_price": 404.25,
+            "entry_date": "2026-11-12"
+        },
+        "DLF.NS": {
+            "qty": 30,
+            "entry_price": 766.5,
+            "entry_date": "2026-11-12"
+        }
+    },
     "history": [
         {
             "timestamp": "2026-04-30 22:55:14",
@@ -2233,6 +2244,24 @@
             "price": 17.229999542236328,
             "strategy": "Paper-QuarterlyHarvest",
             "total": 18797.93
+        },
+        {
+            "timestamp": "2026-11-12 09:51:57",
+            "ticker": "BEL.NS",
+            "side": "buy",
+            "qty": 58,
+            "price": 404.25,
+            "strategy": "ATR Sized (ATR:9.6) [BALANCED]",
+            "total": 23446.5
+        },
+        {
+            "timestamp": "2026-11-12 09:51:57",
+            "ticker": "DLF.NS",
+            "side": "buy",
+            "qty": 30,
+            "price": 766.5,
+            "strategy": "ATR Sized (ATR:19.0) [BALANCED]",
+            "total": 22995.0
         }
     ]
 }
