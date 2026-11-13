@@ -1,5 +1,5 @@
 {
-    "cash": 72024.7103099823,
+    "cash": 25020.859785079956,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
@@ -10,6 +10,16 @@
             "qty": 30,
             "entry_price": 766.5,
             "entry_date": "2026-11-12"
+        },
+        "BANKINDIA.NS": {
+            "qty": 153,
+            "entry_price": 154.10000610351562,
+            "entry_date": "2026-11-13"
+        },
+        "ANGELONE.NS": {
+            "qty": 67,
+            "entry_price": 349.6499938964844,
+            "entry_date": "2026-11-13"
         }
     },
     "history": [
@@ -2262,6 +2272,24 @@
             "price": 766.5,
             "strategy": "ATR Sized (ATR:19.0) [BALANCED]",
             "total": 22995.0
+        },
+        {
+            "timestamp": "2026-11-13 09:51:46",
+            "ticker": "BANKINDIA.NS",
+            "side": "buy",
+            "qty": 153,
+            "price": 154.10000610351562,
+            "strategy": "ATR Sized (ATR:4.6) [BALANCED]",
+            "total": 23577.3
+        },
+        {
+            "timestamp": "2026-11-13 09:51:46",
+            "ticker": "ANGELONE.NS",
+            "side": "buy",
+            "qty": 67,
+            "price": 349.6499938964844,
+            "strategy": "ATR Sized (ATR:11.6) [BALANCED]",
+            "total": 23426.55
         }
     ]
 }
