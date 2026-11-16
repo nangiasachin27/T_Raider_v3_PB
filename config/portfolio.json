@@ -1,5 +1,5 @@
 {
-    "cash": 25020.859785079956,
+    "cash": 1791.859785079956,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
@@ -20,6 +20,11 @@
             "qty": 67,
             "entry_price": 349.6499938964844,
             "entry_date": "2026-11-13"
+        },
+        "FORTIS.NS": {
+            "qty": 29,
+            "entry_price": 801.0,
+            "entry_date": "2026-11-16"
         }
     },
     "history": [
@@ -2290,6 +2295,15 @@
             "price": 349.6499938964844,
             "strategy": "ATR Sized (ATR:11.6) [BALANCED]",
             "total": 23426.55
+        },
+        {
+            "timestamp": "2026-11-16 09:52:22",
+            "ticker": "FORTIS.NS",
+            "side": "buy",
+            "qty": 29,
+            "price": 801.0,
+            "strategy": "ATR Sized (ATR:25.2) [BALANCED]",
+            "total": 23229.0
         }
     ]
 }
