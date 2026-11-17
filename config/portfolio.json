@@ -1,5 +1,5 @@
 {
-    "cash": 1791.859785079956,
+    "cash": 2429.659772872925,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
@@ -12,19 +12,21 @@
             "entry_date": "2026-11-12"
         },
         "BANKINDIA.NS": {
-            "qty": 153,
+            "qty": 149,
             "entry_price": 154.10000610351562,
             "entry_date": "2026-11-13"
         },
         "ANGELONE.NS": {
             "qty": 67,
             "entry_price": 349.6499938964844,
-            "entry_date": "2026-11-13"
+            "entry_date": "2026-11-13",
+            "peak_price": 350.2
         },
         "FORTIS.NS": {
             "qty": 29,
             "entry_price": 801.0,
-            "entry_date": "2026-11-16"
+            "entry_date": "2026-11-16",
+            "peak_price": 804.7
         }
     },
     "history": [
@@ -2304,6 +2306,15 @@
             "price": 801.0,
             "strategy": "ATR Sized (ATR:25.2) [BALANCED]",
             "total": 23229.0
+        },
+        {
+            "timestamp": "2026-11-17 09:51:38",
+            "ticker": "BANKINDIA.NS",
+            "side": "sell",
+            "qty": 4,
+            "price": 159.4499969482422,
+            "strategy": "ConcentrationTrim (20.5% -> 20%)",
+            "total": 637.8
         }
     ]
 }
