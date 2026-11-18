@@ -9,12 +9,14 @@
         "DLF.NS": {
             "qty": 30,
             "entry_price": 766.5,
-            "entry_date": "2026-11-12"
+            "entry_date": "2026-11-12",
+            "peak_price": 768.4
         },
         "BANKINDIA.NS": {
             "qty": 149,
             "entry_price": 154.10000610351562,
-            "entry_date": "2026-11-13"
+            "entry_date": "2026-11-13",
+            "peak_price": 157.5
         },
         "ANGELONE.NS": {
             "qty": 67,
