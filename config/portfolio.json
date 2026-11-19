@@ -1,5 +1,5 @@
 {
-    "cash": 2429.659772872925,
+    "cash": 2915.4797801971436,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
@@ -13,10 +13,9 @@
             "peak_price": 768.4
         },
         "BANKINDIA.NS": {
-            "qty": 149,
+            "qty": 146,
             "entry_price": 154.10000610351562,
-            "entry_date": "2026-11-13",
-            "peak_price": 157.5
+            "entry_date": "2026-11-13"
         },
         "ANGELONE.NS": {
             "qty": 67,
@@ -28,7 +27,7 @@
             "qty": 29,
             "entry_price": 801.0,
             "entry_date": "2026-11-16",
-            "peak_price": 804.7
+            "peak_price": 807.5
         }
     },
     "history": [
@@ -2317,6 +2316,15 @@
             "price": 159.4499969482422,
             "strategy": "ConcentrationTrim (20.5% -> 20%)",
             "total": 637.8
+        },
+        {
+            "timestamp": "2026-11-19 09:51:27",
+            "ticker": "BANKINDIA.NS",
+            "side": "sell",
+            "qty": 3,
+            "price": 161.94000244140625,
+            "strategy": "ConcentrationTrim (20.3% -> 20%)",
+            "total": 485.82
         }
     ]
 }
