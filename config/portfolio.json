@@ -10,12 +10,13 @@
             "qty": 30,
             "entry_price": 766.5,
             "entry_date": "2026-11-12",
-            "peak_price": 768.4
+            "peak_price": 786.1
         },
         "BANKINDIA.NS": {
             "qty": 146,
             "entry_price": 154.10000610351562,
-            "entry_date": "2026-11-13"
+            "entry_date": "2026-11-13",
+            "peak_price": 163.97
         },
         "ANGELONE.NS": {
             "qty": 67,
@@ -27,7 +28,7 @@
             "qty": 29,
             "entry_price": 801.0,
             "entry_date": "2026-11-16",
-            "peak_price": 807.5
+            "peak_price": 822.4
         }
     },
     "history": [
