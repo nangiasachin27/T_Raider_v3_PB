@@ -3,33 +3,33 @@
 🎛️ AUTO MODE SELECTION (Profit Chaser)
 ============================================================
 Selected: BALANCED
-Reason: Circuit breaker (BALANCED): DD=9.7% (>=5%). [WR=60% DD=9.7% Sharpe=0.13 ConsecLosses=0]
+Reason: Circuit breaker (BALANCED): DD=9.9% (>=5%). [WR=70% DD=9.9% Sharpe=0.07 ConsecLosses=1]
 ============================================================
 
 
 ──────────────────────────────────────────────────────────────────────
-  T_Raider Profit Chaser  |  2026-11-16 13:02:29
+  T_Raider Profit Chaser  |  2026-11-23 15:09:10
 ──────────────────────────────────────────────────────────────────────
   Target         : 7.0%
   Urgency        : 1.0x  (effective weak threshold: -4.00%)
-  Days left      : 87
+  Days left      : 80
   Effective mode : BALANCED
   Dry run        : True
 
-  Fetching prices for 5 holdings…
+  Fetching prices for 4 holdings…
 
-  Portfolio return : -0.61%
+  Portfolio return : 0.42%
   Target           : 7.0%
-  Gap              : 7.61%
+  Gap              : 6.58%
 
   Checking regime & macro gates…
 
 ───────────────────────────────────────────────────────
 🌍 MACRO ENVIRONMENT — India (NSE/BSE)
 ───────────────────────────────────────────────────────
-  Volatility (VIX)  : 🟢 15.7  [NORMAL]
-  Institutional Flow: 🔴 ₹-3,519M  [BEARISH]
-  Overnight (Ref)   : 🟢 -0.40%
+  Volatility (VIX)  : 🟢 17.7  [NORMAL]
+  Institutional Flow: 🔴 ₹-2,760M  [BEARISH]
+  Overnight (Ref)   : 🟢 +4.59%
   Calendar          : 🟢 No scheduled risk events today
 ───────────────────────────────────────────────────────
 
