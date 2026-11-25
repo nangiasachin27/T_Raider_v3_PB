@@ -1,5 +1,5 @@
 {
-    "cash": 25507.880598068237,
+    "cash": 358.23051261901855,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
@@ -10,7 +10,7 @@
             "qty": 30,
             "entry_price": 766.5,
             "entry_date": "2026-11-12",
-            "peak_price": 790.45
+            "peak_price": 797.0
         },
         "BANKINDIA.NS": {
             "qty": 146,
@@ -22,7 +22,17 @@
             "qty": 29,
             "entry_price": 801.0,
             "entry_date": "2026-11-16",
-            "peak_price": 822.4
+            "peak_price": 827.6
+        },
+        "GLENMARK.NS": {
+            "qty": 8,
+            "entry_price": 2718.5,
+            "entry_date": "2026-11-25"
+        },
+        "JSWENERGY.NS": {
+            "qty": 7,
+            "entry_price": 485.95001220703125,
+            "entry_date": "2026-11-25"
         }
     },
     "history": [
@@ -2329,6 +2339,24 @@
             "price": 337.20001220703125,
             "strategy": "Signal Exit",
             "total": 22592.4
+        },
+        {
+            "timestamp": "2026-11-25 09:51:42",
+            "ticker": "GLENMARK.NS",
+            "side": "buy",
+            "qty": 8,
+            "price": 2718.5,
+            "strategy": "ATR Sized (ATR:90.5) [BALANCED]",
+            "total": 21748.0
+        },
+        {
+            "timestamp": "2026-11-25 09:51:42",
+            "ticker": "JSWENERGY.NS",
+            "side": "buy",
+            "qty": 7,
+            "price": 485.95001220703125,
+            "strategy": "ATR Sized (ATR:12.6) [BALANCED]",
+            "total": 3401.65
         }
     ]
 }
