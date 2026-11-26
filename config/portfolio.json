@@ -1,16 +1,16 @@
 {
-    "cash": 358.23051261901855,
+    "cash": 1165.7805004119873,
     "holdings": {
         "BEL.NS": {
             "qty": 58,
             "entry_price": 404.25,
-            "entry_date": "2026-11-12"
+            "entry_date": "2026-11-12",
+            "peak_price": 405.5
         },
         "DLF.NS": {
-            "qty": 30,
+            "qty": 29,
             "entry_price": 766.5,
-            "entry_date": "2026-11-12",
-            "peak_price": 797.0
+            "entry_date": "2026-11-12"
         },
         "BANKINDIA.NS": {
             "qty": 146,
@@ -27,12 +27,14 @@
         "GLENMARK.NS": {
             "qty": 8,
             "entry_price": 2718.5,
-            "entry_date": "2026-11-25"
+            "entry_date": "2026-11-25",
+            "peak_price": 2740.0
         },
         "JSWENERGY.NS": {
             "qty": 7,
             "entry_price": 485.95001220703125,
-            "entry_date": "2026-11-25"
+            "entry_date": "2026-11-25",
+            "peak_price": 486.9
         }
     },
     "history": [
@@ -2357,6 +2359,15 @@
             "price": 485.95001220703125,
             "strategy": "ATR Sized (ATR:12.6) [BALANCED]",
             "total": 3401.65
+        },
+        {
+            "timestamp": "2026-11-26 09:51:25",
+            "ticker": "DLF.NS",
+            "side": "sell",
+            "qty": 1,
+            "price": 807.5499877929688,
+            "strategy": "ConcentrationTrim (20.1% -> 20%)",
+            "total": 807.55
         }
     ]
 }
